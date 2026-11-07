@@ -1,8 +1,8 @@
 ---
 title: 建站第一周：选主题比写代码难
 date: 2025-11-18 22:40:00
-cover: /img/covers/diary-picking-theme.svg
-top_img: /img/covers/diary-picking-theme.svg
+cover: /img/album/daily/morning-coffee.jpg
+top_img: /img/album/daily/morning-coffee.jpg
 description: "折腾了六个主题，最后选了一个配置项有 1342 行的。"
 categories:
   - 开发日常

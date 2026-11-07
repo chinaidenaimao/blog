@@ -1,8 +1,8 @@
 ---
 title: 图片压缩：33MB → 12.6MB
 date: 2026-11-07 17:10:00
-cover: /img/covers/diary-image-compression.svg
-top_img: /img/covers/diary-image-compression.svg
+cover: /img/album/travel/colorful-street.jpg
+top_img: /img/album/travel/colorful-street.jpg
 description: "压了 169 张图，省了 57%，肉眼几乎看不出差别。"
 categories:
   - 开发日常

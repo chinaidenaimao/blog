@@ -1,8 +1,8 @@
 ---
 title: hexo clean 要 3 分钟，我把它干到 3 秒
 date: 2026-11-07 16:20:00
-cover: /img/covers/diary-hexo-clean.svg
-top_img: /img/covers/diary-hexo-clean.svg
+cover: /img/album/night/neon-rain-street.jpg
+top_img: /img/album/night/neon-rain-street.jpg
 description: "一次构建 10 分 45 秒，内部只用了 3.29 秒——剩下 10 分钟全耗在删文件上。"
 categories:
   - 开发日常

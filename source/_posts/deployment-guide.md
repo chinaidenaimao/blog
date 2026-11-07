@@ -1,8 +1,8 @@
 ---
 title: "从本地到上线的部署清单"
 date: 2026-04-27 22:40:00
-cover: /img/covers/deployment-guide.svg
-top_img: /img/covers/deployment-guide.svg
+cover: /img/covers/infra-server.jpg
+top_img: /img/covers/infra-server.jpg
 description: "┌─────────────────────────────────────────────────────────────────┐"
 categories:
   - 后端

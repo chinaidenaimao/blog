@@ -1,8 +1,8 @@
 ---
 title: "认证机制详解：JWT 与 Session 怎么选"
 date: 2026-04-02 22:20:00
-cover: /img/covers/auth-mechanism.svg
-top_img: /img/covers/auth-mechanism.svg
+cover: /img/covers/security.jpg
+top_img: /img/covers/security.jpg
 description: "本项目采用 Token 认证机制，使用 UUID 作为 Token，支持 Bearer token 格式。"
 categories:
   - 后端

@@ -1,8 +1,8 @@
 ---
 title: "Vue 工程化封装：目录、路由与请求层"
 date: 2025-11-28 21:30:00
-cover: /img/covers/vue-engineering.svg
-top_img: /img/covers/vue-engineering.svg
+cover: /img/covers/frontend-design.jpg
+top_img: /img/covers/frontend-design.jpg
 description: "请求拦截器 · 响应拦截器 · 路由守卫 · 状态管理 · 权限控制 · 环境配置 · API 统一封装 每节结构：标杆项目怎么做的（含真实文件路径） → 可直…"
 categories:
   - 前端

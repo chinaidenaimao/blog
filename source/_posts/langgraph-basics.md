@@ -1,8 +1,8 @@
 ---
 title: "LangGraph 基础入门：从状态图开始"
 date: 2026-08-24 22:00:00
-cover: /img/covers/langgraph-basics.svg
-top_img: /img/covers/langgraph-basics.svg
+cover: /img/covers/ai-neural.jpg
+top_img: /img/covers/ai-neural.jpg
 description: "LangChain 提供易于使用的 Agent 高层抽象，LangGraph 提供可靠、可持久化且可精细控制的底层执行能力。"
 categories:
   - AI

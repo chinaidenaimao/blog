@@ -1,8 +1,8 @@
 ---
 title: "工具 Schema 设计：为什么模型选错了工具"
 date: 2026-10-24 21:40:00
-cover: /img/covers/tool-schema-design.svg
-top_img: /img/covers/tool-schema-design.svg
+cover: /img/covers/ai-neural.jpg
+top_img: /img/covers/ai-neural.jpg
 description: "每多注册一个工具，你都要在每一轮对话里为它付两次钱：一次是 schema 本身的 token（固定成本），一次是模型在更大的候选集里选错概率的上升（选择成本）。…"
 categories:
   - AI

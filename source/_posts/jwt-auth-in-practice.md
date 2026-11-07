@@ -1,8 +1,8 @@
 ---
 title: "给项目加 JWT 登录鉴权：完整八步"
 date: 2026-07-11 22:20:00
-cover: /img/covers/jwt-auth-in-practice.svg
-top_img: /img/covers/jwt-auth-in-practice.svg
+cover: /img/covers/security.jpg
+top_img: /img/covers/security.jpg
 description: "我现在想在我的项目中加入 JWT 登录鉴权，我该怎么去操作，写出操作详情。"
 categories:
   - 后端

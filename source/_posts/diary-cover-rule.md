@@ -1,8 +1,8 @@
 ---
 title: 给博客定了一条规矩：每篇文章都要有封面
 date: 2026-01-12 23:10:00
-cover: /img/covers/diary-cover-rule.svg
-top_img: /img/covers/diary-cover-rule.svg
+cover: /img/album/daily/rain-window.jpg
+top_img: /img/album/daily/rain-window.jpg
 description: "没有封面的文章，在列表里就是一坨文字。"
 categories:
   - 开发日常

@@ -1,8 +1,8 @@
 ---
 title: "检查点、中断与持久化"
 date: 2026-08-08 22:40:00
-cover: /img/covers/checkpoint-interrupt.svg
-top_img: /img/covers/checkpoint-interrupt.svg
+cover: /img/covers/api-flow.jpg
+top_img: /img/covers/api-flow.jpg
 description: "- Agent 怎么记住「我们刚才聊到哪」？ - 怎么在执行到一半时暂停，等人审批，然后继续？ - 服务崩了，正在跑的任务怎么办？ 这三个问题的答案都是同一个东…"
 categories:
   - AI

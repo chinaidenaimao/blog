@@ -1,8 +1,8 @@
 ---
 title: "前端面试手册 · JavaScript 核心"
 date: 2025-11-16 21:00:00
-cover: /img/covers/fe-interview-javascript.svg
-top_img: /img/covers/fe-interview-javascript.svg
+cover: /img/covers/code-abstract.jpg
+top_img: /img/covers/code-abstract.jpg
 description: "在 JavaScript 中，我们可以分成两种类型："
 categories:
   - 前端

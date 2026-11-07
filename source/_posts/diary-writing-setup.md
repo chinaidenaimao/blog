@@ -1,8 +1,8 @@
 ---
 title: 写作环境折腾记：从 Typora 到 Obsidian
 date: 2026-03-05 22:20:00
-cover: /img/covers/diary-writing-setup.svg
-top_img: /img/covers/diary-writing-setup.svg
+cover: /img/album/daily/cat-by-window.jpg
+top_img: /img/album/daily/cat-by-window.jpg
 description: "工具换了四轮，最后留在 Obsidian 的理由只有一个：双链。"
 categories:
   - 开发日常

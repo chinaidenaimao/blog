@@ -1,8 +1,8 @@
 ---
 title: "中间件机制：洋葱模型到底怎么穿"
 date: 2026-07-16 22:20:00
-cover: /img/covers/middleware-mechanism.svg
-top_img: /img/covers/middleware-mechanism.svg
+cover: /img/covers/ai-hologram.jpg
+top_img: /img/covers/ai-hologram.jpg
 description: "中间件是 LangChain 1.x 相比旧版最大的新增能力，也是从「写个 Demo」到「上生产」的分水岭。 人机协同、PII 脱敏、上下文摘要、调用限额、模型…"
 categories:
   - AI

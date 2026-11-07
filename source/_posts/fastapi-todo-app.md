@@ -1,8 +1,8 @@
 ---
 title: "FastAPI 实战：写一个 TODO 应用"
 date: 2026-04-08 21:00:00
-cover: /img/covers/fastapi-todo-app.svg
-top_img: /img/covers/fastapi-todo-app.svg
+cover: /img/covers/api-flow.jpg
+top_img: /img/covers/api-flow.jpg
 description: "构建一个完整的 TODO 应用，包含用户认证、CRUD 操作、数据库集成。"
 categories:
   - 后端

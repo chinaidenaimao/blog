@@ -1,8 +1,8 @@
 ---
 title: "上下文工程总论：模型的记忆是有限的"
 date: 2026-10-03 22:40:00
-cover: /img/covers/context-engineering.svg
-top_img: /img/covers/context-engineering.svg
+cover: /img/covers/ai-neural.jpg
+top_img: /img/covers/ai-neural.jpg
 description: "Prompt Engineering 关心「这句话怎么写」，Context Engineering 关心「模型在第 N 步时，眼前到底有什么」。前者是一次性的措…"
 categories:
   - AI

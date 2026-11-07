@@ -1,8 +1,8 @@
 ---
 title: "AI 应用生产落地与选型"
 date: 2026-08-16 21:20:00
-cover: /img/covers/ai-production.svg
-top_img: /img/covers/ai-production.svg
+cover: /img/covers/ai-hologram.jpg
+top_img: /img/covers/ai-hologram.jpg
 description: "前面的笔记讲「怎么用」，这一页讲「什么时候用、怎么上线、哪里会翻车」。 包含一个选型决策树、FastAPI 集成方案、以及一份踩坑清单。"
 categories:
   - AI

@@ -1,8 +1,8 @@
 ---
 title: "把 Java 的架构思路翻译成 Python"
 date: 2026-02-06 22:30:00
-cover: /img/covers/cross-stack-architecture.svg
-top_img: /img/covers/cross-stack-architecture.svg
+cover: /img/covers/architecture.jpg
+top_img: /img/covers/architecture.jpg
 description: "Vue 生态有大量 2 万+ star 的企业级后台框架，FastAPI 生态几乎没有—— 最高的「全栈模板」是官方的 full-stack-fastapi-t…"
 categories:
   - 后端

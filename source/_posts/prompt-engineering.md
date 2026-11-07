@@ -1,8 +1,8 @@
 ---
 title: "Prompt 工程：把指令写清楚比调参有用"
 date: 2026-09-05 22:30:00
-cover: /img/covers/prompt-engineering.svg
-top_img: /img/covers/prompt-engineering.svg
+cover: /img/covers/ai-hologram.jpg
+top_img: /img/covers/ai-hologram.jpg
 description: "大多数人对 prompt 的困惑，源于一个错误的心理模型：把 prompt 当成咒语——念对了就灵，念不对就再换一个说法试。正确的模型是把它当成程序：它有输入输…"
 categories:
   - AI

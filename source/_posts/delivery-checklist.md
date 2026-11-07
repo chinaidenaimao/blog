@@ -1,8 +1,8 @@
 ---
 title: "项目落地蓝图与检查清单"
 date: 2026-05-26 22:30:00
-cover: /img/covers/delivery-checklist.svg
-top_img: /img/covers/delivery-checklist.svg
+cover: /img/covers/planning.jpg
+top_img: /img/covers/planning.jpg
 description: "把 02-前端工程化封装-Vue 与 03-后端工程化封装-FastAPI 的内容组装成一个可执行的落地方案： 目录树 → 命名约定 → 前后端契约 → 四阶段…"
 categories:
   - 工程实践

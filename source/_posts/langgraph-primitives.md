@@ -1,8 +1,8 @@
 ---
 title: "LangGraph 核心原语：节点、边、状态"
 date: 2026-07-30 21:10:00
-cover: /img/covers/langgraph-primitives.svg
-top_img: /img/covers/langgraph-primitives.svg
+cover: /img/covers/ai-neural.jpg
+top_img: /img/covers/ai-neural.jpg
 description: "能自己画一张图，而不是只会调 createagent 模板。 只用四个原语：State（状态）+ Node（节点）+ Edge（边）+ Reducer（合并规则…"
 categories:
   - AI

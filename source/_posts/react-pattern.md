@@ -1,8 +1,8 @@
 ---
 title: "ReAct 模式：思考、行动、观察的循环"
 date: 2026-09-26 21:10:00
-cover: /img/covers/react-pattern.svg
-top_img: /img/covers/react-pattern.svg
+cover: /img/covers/ai-hologram.jpg
+top_img: /img/covers/ai-hologram.jpg
 description: "ReAct = Reasoning + Acting。它最核心的贡献不是「让模型用工具」——而是证明了思考和行动必须交替进行：想一步、做一步、看结果、再想下一步…"
 categories:
   - AI

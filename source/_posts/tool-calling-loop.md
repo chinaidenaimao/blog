@@ -1,8 +1,8 @@
 ---
 title: "工具调用与 Agent 循环"
 date: 2026-07-02 21:30:00
-cover: /img/covers/tool-calling-loop.svg
-top_img: /img/covers/tool-calling-loop.svg
+cover: /img/covers/api-flow.jpg
+top_img: /img/covers/api-flow.jpg
 description: "createagent 到底建了一个什么东西？工具调用的循环是怎么转起来的？ 为什么有时候 Agent 会陷入死循环？ 下面的图节点名和消息轨迹都是实机打印出来…"
 categories:
   - AI

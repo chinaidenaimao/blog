@@ -3,5 +3,5 @@ Allow: /
 Disallow: /js/
 Disallow: /css/
 
-# 部署后把域名换成你的正式地址，例如 https://shen.blog/sitemap.xml
-Sitemap: https://example.com/sitemap.xml
+# 部署后取消下面这行注释，并把域名换成你的正式地址
+# Sitemap: https://your-domain.com/sitemap.xml

@@ -1,8 +1,8 @@
 ---
 title: "用 Passlib 做密码加密：从明文到 bcrypt"
 date: 2026-06-02 21:50:00
-cover: /img/covers/passlib-password-hash.svg
-top_img: /img/covers/passlib-password-hash.svg
+cover: /img/covers/security.jpg
+top_img: /img/covers/security.jpg
 description: "Passlib 是 Python 中最流行的密码哈希库，提供了："
 categories:
   - 后端

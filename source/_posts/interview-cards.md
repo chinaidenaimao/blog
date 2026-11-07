@@ -1,8 +1,8 @@
 ---
 title: "面试自测与速记卡"
 date: 2026-06-08 21:50:00
-cover: /img/covers/interview-cards.svg
-top_img: /img/covers/interview-cards.svg
+cover: /img/covers/interview.jpg
+top_img: /img/covers/interview.jpg
 description: "- 速记卡：面试前 30 分钟扫一遍，建立术语与一句话答案的条件反射 - 自测题库：每题先自己想 30 秒再展开答案；答不出的题回去读对应笔记 - 每题标注了对…"
 categories:
   - 工程实践

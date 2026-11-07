@@ -1,8 +1,8 @@
 ---
 title: 把一年的笔记搬进博客
 date: 2026-07-18 23:40:00
-cover: /img/covers/diary-import-notes.svg
-top_img: /img/covers/diary-import-notes.svg
+cover: /img/album/night/lit-shop.jpg
+top_img: /img/album/night/lit-shop.jpg
 description: "30 篇笔记，213 张图，一次导入，改了七版脚本。"
 categories:
   - 开发日常

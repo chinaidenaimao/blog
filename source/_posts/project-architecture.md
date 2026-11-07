@@ -1,8 +1,8 @@
 ---
 title: "项目架构文档怎么写：一份可复用的模板"
 date: 2026-04-14 21:10:00
-cover: /img/covers/project-architecture.svg
-top_img: /img/covers/project-architecture.svg
+cover: /img/covers/team.jpg
+top_img: /img/covers/team.jpg
 description: "┌─────────────────────────────────────────────────────────────────┐"
 categories:
   - 后端

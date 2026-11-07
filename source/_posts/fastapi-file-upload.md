@@ -1,8 +1,8 @@
 ---
 title: "FastAPI 文件上传：校验、存储与返回"
 date: 2026-06-14 22:00:00
-cover: /img/covers/fastapi-file-upload.svg
-top_img: /img/covers/fastapi-file-upload.svg
+cover: /img/covers/dev-night.jpg
+top_img: /img/covers/dev-night.jpg
 description: "FastAPI 提供了 File 和 UploadFile 来处理文件上传。"
 categories:
   - 后端

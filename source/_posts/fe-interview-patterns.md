@@ -1,8 +1,8 @@
 ---
 title: "前端面试手册 · 设计模式"
 date: 2026-01-09 21:40:00
-cover: /img/covers/fe-interview-patterns.svg
-top_img: /img/covers/fe-interview-patterns.svg
+cover: /img/covers/frontend-design.jpg
+top_img: /img/covers/frontend-design.jpg
 description: "保证一个类仅有一个实例，并提供一个访问它的全局访问点。实现的方法为先判断实例存在与否，如果"
 categories:
   - 前端

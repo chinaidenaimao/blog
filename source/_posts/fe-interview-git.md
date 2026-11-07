@@ -1,8 +1,8 @@
 ---
 title: "前端面试手册 · Git 版本控制"
 date: 2025-12-21 20:30:00
-cover: /img/covers/fe-interview-git.svg
-top_img: /img/covers/fe-interview-git.svg
+cover: /img/covers/code-abstract.jpg
+top_img: /img/covers/code-abstract.jpg
 description: "版本控制系统在当今的软件开发中，被认为是理所当然的配备工具之一，根据类别可以分成："
 categories:
   - 前端

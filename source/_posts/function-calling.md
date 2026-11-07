@@ -1,8 +1,8 @@
 ---
 title: "Function Calling 原理：模型是怎么「调用」工具的"
 date: 2026-09-12 21:20:00
-cover: /img/covers/function-calling.svg
-top_img: /img/covers/function-calling.svg
+cover: /img/covers/ai-neural.jpg
+top_img: /img/covers/ai-neural.jpg
 description: "LLM 不执行任何函数。它只会生成一段「我想调用 getweather，参数是 {\"city\":\"北京\"}」的结构化文本，真正的执行发生在你的应用层代码里。"
 categories:
   - AI

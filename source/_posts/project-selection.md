@@ -1,8 +1,8 @@
 ---
 title: "怎么挑一个能写进简历的项目"
 date: 2026-05-12 21:00:00
-cover: /img/covers/project-selection.svg
-top_img: /img/covers/project-selection.svg
+cover: /img/covers/team.jpg
+top_img: /img/covers/team.jpg
 description: "全部 star / fork / 最近提交时间由 GitHub REST API GET /repos/{owner}/{repo} 于 2026-10-16 …"
 categories:
   - 工程实践

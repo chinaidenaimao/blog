@@ -1,8 +1,8 @@
 ---
 title: "FastAPI 工程化封装：分层、依赖与统一响应"
 date: 2026-01-18 21:00:00
-cover: /img/covers/fastapi-engineering.svg
-top_img: /img/covers/fastapi-engineering.svg
+cover: /img/covers/team.jpg
+top_img: /img/covers/team.jpg
 description: "分层架构 · 全局异常处理 · 统一响应结构 · 依赖注入 · 中间件 · 配置管理 · 日志 · 鉴权 · 分模块分层 标杆来源：fastapi-best-a…"
 categories:
   - 后端

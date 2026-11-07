@@ -1,8 +1,8 @@
 ---
 title: "LangChain 1.x 心智模型与最小上手"
 date: 2026-06-20 22:00:00
-cover: /img/covers/langchain-1x.svg
-top_img: /img/covers/langchain-1x.svg
+cover: /img/covers/ai-hologram.jpg
+top_img: /img/covers/ai-hologram.jpg
 description: "从零跑通第一个 Agent。只讲必须知道的，不讲历史、不讲原理——那些在后面几篇。 所有代码都在 langchain 1.4.7 上实跑通过。"
 categories:
   - AI

@@ -1,8 +1,8 @@
 ---
 title: "路由层实现：把接口按模块拆开"
 date: 2026-03-04 22:00:00
-cover: /img/covers/router-layer.svg
-top_img: /img/covers/router-layer.svg
+cover: /img/covers/dev-night.jpg
+top_img: /img/covers/dev-night.jpg
 description: "路由层（Router）负责定义 API 接口，处理 HTTP 请求和响应。"
 categories:
   - 后端

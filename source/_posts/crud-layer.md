@@ -1,8 +1,8 @@
 ---
 title: "CRUD 层实现：把数据库操作收口"
 date: 2026-03-18 21:40:00
-cover: /img/covers/crud-layer.svg
-top_img: /img/covers/crud-layer.svg
+cover: /img/covers/data-blocks.jpg
+top_img: /img/covers/data-blocks.jpg
 description: "CRUD 层负责数据库的增删改查操作，是连接路由层和模型层的桥梁。"
 categories:
   - 后端

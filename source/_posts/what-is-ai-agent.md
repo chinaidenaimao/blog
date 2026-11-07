@@ -1,8 +1,8 @@
 ---
 title: "什么是 AI Agent：一条判据分清 Agent / LLM / Chatbot"
 date: 2026-08-28 21:00:00
-cover: /img/covers/what-is-ai-agent.svg
-top_img: /img/covers/what-is-ai-agent.svg
+cover: /img/covers/api-flow.jpg
+top_img: /img/covers/api-flow.jpg
 description: "Agent 不是「更聪明的 ChatGPT」。它是一个能自己决定下一步做什么的程序：LLM 负责决策，上下文负责记忆，工具负责改变世界。三者缺一，它就退回成一个…"
 categories:
   - AI

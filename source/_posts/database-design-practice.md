@@ -1,8 +1,8 @@
 ---
 title: "数据库设计与实践：从范式到索引"
 date: 2026-03-26 22:40:00
-cover: /img/covers/database-design-practice.svg
-top_img: /img/covers/database-design-practice.svg
+cover: /img/covers/infra-server.jpg
+top_img: /img/covers/infra-server.jpg
 description: "从零开始学习数据库设计，掌握关系型数据库的最佳实践"
 categories:
   - 后端

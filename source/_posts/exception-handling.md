@@ -1,8 +1,8 @@
 ---
 title: "企业级异常处理工程化：从 try/except 到全局兜底"
 date: 2026-08-20 21:40:00
-cover: /img/covers/exception-handling.svg
-top_img: /img/covers/exception-handling.svg
+cover: /img/covers/architecture.jpg
+top_img: /img/covers/architecture.jpg
 description: "上级：00-首页 · 相关：全局异常处理 · Q-05-工程化实践清单 · Q-06-企业级技术体系全景"
 categories:
   - 后端

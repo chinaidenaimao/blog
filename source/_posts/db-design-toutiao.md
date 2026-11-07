@@ -1,8 +1,8 @@
 ---
 title: "一个内容后台的数据库设计"
 date: 2026-02-22 21:20:00
-cover: /img/covers/db-design-toutiao.svg
-top_img: /img/covers/db-design-toutiao.svg
+cover: /img/covers/data-blocks.jpg
+top_img: /img/covers/data-blocks.jpg
 description: "id int NOT NULL AUTOINCREMENT COMMENT '用户ID',"
 categories:
   - 后端

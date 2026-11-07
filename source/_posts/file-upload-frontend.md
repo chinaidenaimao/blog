@@ -1,8 +1,8 @@
 ---
 title: "文件上传与下载的前端封装"
 date: 2025-12-12 22:10:00
-cover: /img/covers/file-upload-frontend.svg
-top_img: /img/covers/file-upload-frontend.svg
+cover: /img/covers/frontend-design.jpg
+top_img: /img/covers/frontend-design.jpg
 description: "上传接口的复杂度不在\"接收文件\"——那是 8 行代码的事。 真正的复杂度在四件事：校验（类型/大小/安全）、存储（本地/对象存储抽象）、 归属（谁传的、属于哪个…"
 categories:
   - 前端

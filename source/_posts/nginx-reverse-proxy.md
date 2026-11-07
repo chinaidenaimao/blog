@@ -1,8 +1,8 @@
 ---
 title: "Nginx 反向代理详解：从配置到排错"
 date: 2026-07-25 21:00:00
-cover: /img/covers/nginx-reverse-proxy.svg
-top_img: /img/covers/nginx-reverse-proxy.svg
+cover: /img/covers/infra-corridor.jpg
+top_img: /img/covers/infra-corridor.jpg
 description: "「nginx 反向代理又是个什么东西，详细讲一下」"
 categories:
   - 后端
