@@ -1,0 +1,73 @@
+/* ==========================================================
+   自定义样式 · Shen 的小站
+   ========================================================== */
+
+/* 首页顶部横幅：换成自己的图，并让标题可读 */
+#random-banner {
+  background: url('/img/cover-night.jpg') center / cover no-repeat !important;
+  position: relative;
+}
+
+#random-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(18, 14, 36, 0.78) 0%, rgba(18, 14, 36, 0.25) 55%, rgba(18, 14, 36, 0.05) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+#random-banner .banners-title {
+  z-index: 2;
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+#random-banner .banners-title-big {
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+}
+
+#random-banner .banners-title-small {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+#random-banner #random-hover {
+  z-index: 2;
+}
+
+/* 技能图标组只属于「关于」页，首页横幅里不要出现（会盖住标题） */
+#random-banner #skills-tags-group-all {
+  display: none !important;
+}
+
+/* 普通页面（分类/标签/友链/关于）的头图横幅 */
+#page-header.not-home-page {
+  background: linear-gradient(rgba(18, 14, 36, 0.45), rgba(18, 14, 36, 0.45)),
+    url('/img/banner.jpg') center / cover no-repeat;
+}
+
+#page-header.not-home-page #site-title {
+  color: #fff;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+}
+
+/* 侧边栏作者卡片：简介只显示一行，避免被卡片底部裁切 */
+#aside-content .author-info__desc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 9rem;
+}
+
+/* 文章正文里的图片加一点圆角，和卡片风格统一 */
+#article-container img {
+  border-radius: 8px;
+}
+
+/* 滚动条配色 */
+::-webkit-scrollbar-thumb {
+  background: var(--anzhiyu-theme);
+  border-radius: 8px;
+}

@@ -1,0 +1,25 @@
+- creativity_list:
+    - name: Python
+      color: "#3776AB"
+      icon: /img/skills/python.svg
+    - name: FastAPI
+      color: "#009688"
+      icon: /img/skills/fastapi.svg
+    - name: TypeScript
+      color: "#3178C6"
+      icon: /img/skills/typescript.svg
+    - name: Vue
+      color: "#41B883"
+      icon: /img/skills/vue.svg
+    - name: MySQL
+      color: "#00758F"
+      icon: /img/skills/mysql.svg
+    - name: Docker
+      color: "#2496ED"
+      icon: /img/skills/docker.svg
+    - name: Git
+      color: "#F05032"
+      icon: /img/skills/git.svg
+    - name: Linux
+      color: "#333333"
+      icon: /img/skills/linux.svg

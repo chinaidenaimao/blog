@@ -1,0 +1,26 @@
+- title: 即刻短文
+  subTitle: 咸鱼的日常生活。
+  tips: 随时随地，分享生活
+  buttonText: 关于我
+  buttonLink: /about/
+  limit: 30
+  home_essay: true
+  top_background: /img/banner.jpg
+  essay_list:
+    - content: 博客终于搭起来了，用的是 Hexo + AnZhiYu，配色一眼就喜欢上了 🌸
+      date: 2026/11/06
+      image:
+        - /img/cover-summer.jpg
+      from: Shen
+      address: 家里
+    - content: 深夜写完一个组件，看着页面从空白变成想要的样子，这大概就是做前端最爽的时刻。
+      date: 2026/11/05
+    - content: 最近在补《紫罗兰永恒花园》，每一帧都可以当壁纸。
+      date: 2026/11/02
+      from: Shen
+    - content: 把首页大图换成了黄昏的海边坡道，感觉整个站都温柔了。
+      date: 2026/10/28
+      link: /about/
+    - content: 相册页也配置好了，以后出去玩拍的照片就放这里。
+      date: 2026/10/26
+      link: /album/

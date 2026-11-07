@@ -1,0 +1,18 @@
+- class_name: 大佬们
+  class_desc: 一些我经常翻的站点
+  flink_style: anzhiyu
+  link_list:
+    - name: Hexo
+      link: https://hexo.io/
+      avatar: /img/cover-summer.jpg
+      descr: 快速、简洁且高效的博客框架
+      recommend: true
+    - name: AnZhiYu
+      link: https://github.com/anzhiyu-c/hexo-theme-anzhiyu
+      avatar: /img/avatar.jpg
+      descr: 本站正在使用的主题
+      recommend: true
+    - name: Butterfly
+      link: https://butterfly.js.org/
+      avatar: /img/cover-night.jpg
+      descr: 另一款很受欢迎的 Hexo 主题

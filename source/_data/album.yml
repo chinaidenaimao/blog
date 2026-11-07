@@ -1,0 +1,131 @@
+- class_name: 我的日常
+  path_name: /dailyPhoto
+  type: 1
+  description: 一些关于生活的碎片，随手拍下的光。
+  cover: /img/album/daily/sunflower-field.jpg
+  top_background: /img/album/daily/street-sunset.jpg
+  top_link: /album
+  top_btn_text: 返回
+  album_list:
+    - date: 2026/11/06
+      content: 午后三点，猫把自己摊在窗台上，像一块化掉的年糕。
+      address: 家里
+      from: Shen
+      image:
+        - /img/album/daily/cat-sunbath.jpg
+        - /img/album/daily/cat-by-window.jpg
+    - date: 2026/11/02
+      content: 雨天的窗，整座城市在玻璃上融成一片光。
+      address: 窗前
+      from: Shen
+      image:
+        - /img/album/daily/rain-window.jpg
+    - date: 2026/10/26
+      content: 夏天的向日葵和远处的铁轨。
+      address: 郊外
+      from: Shen
+      image:
+        - /img/album/daily/sunflower-field.jpg
+    - date: 2026/10/19
+      content: 下小雨的傍晚，有人打着伞骑车穿过巷子。
+      address: 老城街角
+      from: Shen
+      image:
+        - /img/album/daily/umbrella-cyclist.jpg
+        - /img/album/daily/street-sunset.jpg
+    - date: 2026/10/11
+      content: 第一杯咖啡，一天才算开始。
+      address: 厨房
+      from: Shen
+      image:
+        - /img/album/daily/morning-coffee.jpg
+
+- class_name: 夜行记录
+  path_name: /wordScenery
+  type: 2
+  description: 雨后的城市，霓虹在水里重新亮了一次。
+  cover: /img/album/night/neon-rain-street.jpg
+  top_background: /img/album/night/neon-rain-street.jpg
+  rowHeight: 220
+  limit: 10
+  lazyload: true
+  btnLazyload: false
+  top_link: /album
+  top_btn_text: 返回
+  album_list:
+    - date: 2026/11/06
+      content: 撑着伞走过便利店门口。
+      address: 城市街头
+      from: Shen
+      image:
+        - /img/album/night/convenience-store.jpg
+        - /img/album/night/walking-in-rain.jpg
+        - /img/album/night/neon-rain-street.jpg
+    - date: 2026/10/30
+      content: 霓虹在小巷里重新亮了一次。
+      address: 后街
+      from: Shen
+      image:
+        - /img/album/night/neon-alley.jpg
+        - /img/album/night/narrow-alley.jpg
+        - /img/album/night/lit-shop.jpg
+    - date: 2026/10/22
+      content: 末班车之后，月台只剩下灯。
+      address: 地铁站
+      from: Shen
+      image:
+        - /img/album/night/empty-platform.jpg
+        - /img/album/night/orange-corridor.jpg
+    - date: 2026/10/15
+      content: 雾里的路灯，把行人照成了剪影。
+      address: 河边
+      from: Shen
+      image:
+        - /img/album/night/fog-lamp-people.jpg
+        - /img/album/night/warm-street-night.jpg
+
+- class_name: 城市漫游
+  path_name: /cityWalk
+  type: 1
+  description: 走远一点，世界就多一页。
+  cover: /img/album/travel/seaside-town.jpg
+  top_background: /img/album/travel/seaside-town.jpg
+  top_link: /album
+  top_btn_text: 返回
+  album_list:
+    - date: 2026/11/05
+      content: 海边的房子，一层层叠到水面上。
+      address: 海边小镇
+      from: Shen
+      image:
+        - /img/album/travel/seaside-town.jpg
+    - date: 2026/10/28
+      content: 清晨的湖面，山还没有醒。
+      address: 高山湖
+      from: Shen
+      image:
+        - /img/album/travel/mountain-lake.jpg
+    - date: 2026/10/20
+      content: 红色的独木舟停在码头，像谁忘了收好的颜色。
+      address: 湖畔
+      from: Shen
+      image:
+        - /img/album/travel/red-canoes.jpg
+    - date: 2026/10/13
+      content: 巷子尽头是蓝的，墙上爬满了花。
+      address: 老城
+      from: Shen
+      image:
+        - /img/album/travel/colorful-street.jpg
+    - date: 2026/10/06
+      content: 车窗外的田野，一帧一帧往后退。
+      address: 在途
+      from: Shen
+      image:
+        - /img/album/travel/train-window.jpg
+    - date: 2026/09/29
+      content: 林子里有光，像有人从上面撒下来。
+      address: 山林
+      from: Shen
+      image:
+        - /img/album/travel/forest-light.jpg

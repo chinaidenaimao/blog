@@ -1,0 +1,105 @@
+- class_name: 关于页
+  subtitle: 写代码，也看动画。记录一些会过期的东西。
+  avatarImg: /img/avatar.jpg
+  avatarSkills:
+    left:
+      - 🖥 前端开发
+      - 🐍 Python 后端
+      - 🤖 AI Agent
+      - 📚 长期主义
+    right:
+      - 补番中 🍿
+      - 深夜写码 🌙
+      - 咖啡续命 ☕
+      - 摄影爱好者 📷
+  name: Shen
+  description: 一个在前端、后端和 AI 之间反复横跳的人
+  aboutsiteTips:
+    tips: 追求
+    title1: 源于
+    title2: 热爱而去 感受
+    word:
+      - 学习
+      - 生活
+      - 代码
+      - 动画
+  helloAbout: Hello there!
+  skillsTips:
+    tips: 技能
+    title: 开启创造力
+  careers:
+    tips: 生涯
+    title: 无限进步
+    list:
+      - desc: 前端 · 交互与性能
+        color: "#425AEF"
+      - desc: 后端 · FastAPI / 数据库
+        color: "#43a6c6"
+      - desc: AI · Agent 与上下文工程
+        color: "#b04fe6"
+    img: /img/album/illustration/Anime_illustration_in_Makoto_S_2026-11-07T08-59-18.png
+  statistic:
+    link: /archives
+    text: 文章隧道
+    cover: /img/album/travel/train-window.jpg
+  map:
+    title: 我现在住在
+    StrengthenTitle: 中国，长沙
+    background: /img/album/travel/mountain-lake.jpg
+    backgroundDark: /img/album/night/neon-rain-street.jpg
+  selfInfo:
+    selfInfoTips1: 生于
+    selfInfoContentYear: 2000
+    selfInfoTips2: 目前在学
+    selfInfoContent2: 软件工程
+    selfInfoTips3: 现在职业
+    selfInfoContent3: 前端开发 👨‍💻
+  personalities:
+    author_name: 逻辑学家
+    personality_type: INTP-A
+    personality_type_color: "#7f7fd5"
+    photo_url: /img/avatar.jpg
+    personality_img: /img/mbti.svg
+    name_url: https://www.16personalities.com/ch/intp-%E4%BA%BA%E6%A0%BC
+  maxim:
+    maxim_tips: 座右铭
+    maxim_top: 生活明朗，
+    maxim_bottom: 万物可爱。
+  buff:
+    buff_tips: 特长
+    buff_top: 能把复杂的事讲简单
+    buff_bottom: 二次元浓度 MAX
+  game:
+    game_tips: 爱好游戏
+    game_title: 塞尔达传说
+    game_uid: "UID: 000000000"
+    game_bg: /img/album/night/neon-alley.jpg
+  comic:
+    comic_tips: 爱好番剧
+    comic_title: 追番
+    comic_list:
+      - name: 紫罗兰永恒花园
+        href: https://search.bilibili.com/all?keyword=紫罗兰永恒花园
+        cover: /img/album/travel/forest-light.jpg
+      - name: 葬送的芙莉莲
+        href: https://search.bilibili.com/all?keyword=葬送的芙莉莲
+        cover: /img/album/travel/mountain-lake.jpg
+      - name: 孤独摇滚
+        href: https://search.bilibili.com/all?keyword=孤独摇滚
+        cover: /img/album/travel/colorful-street.jpg
+      - name: 间谍过家家
+        href: https://search.bilibili.com/all?keyword=间谍过家家
+        cover: /img/album/daily/street-sunset.jpg
+      - name: 进击的巨人
+        href: https://search.bilibili.com/all?keyword=进击的巨人
+        cover: /img/album/night/warm-street-night.jpg
+  like:
+    like_tips: 关注偏好
+    like_title: 数码科技
+    like_bg: /img/album/daily/morning-coffee.jpg
+    like_bottom: 键盘、显示器、以及一切能提高效率的东西
+  music:
+    music_tips: 音乐偏好
+    music_title: 久石让、Lo-fi、日系 OST
+    music_bg: /img/album/night/lit-shop.jpg
+    music_link: /archives
