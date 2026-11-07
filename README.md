@@ -39,9 +39,21 @@ npm run rebuild  # clean + build
 | --- | --- |
 | `_config.yml` | `title` / `author` / `description` / `url` |
 | `_config.anzhiyu.yml` → `social` | GitHub、Bilibili、RSS 链接（现在是 `yourname` 占位） |
-| `source/about/index.md` | 自我介绍、联系方式 |
+| `source/_data/about.yml` | **关于页**的全部内容：姓名、简介、技能、生涯、城市、性格、追番、音乐偏好 |
+| `source/_data/creativity.yml` | 关于页技能图标的名称/配色（图标在 `source/img/skills/`） |
 | `source/_data/link.yml` | 友链 |
 | `source/img/` | 头像、首页大图、文章封面（换成自己的图） |
+| `source/robots.txt` | 部署后把 `Sitemap:` 换成正式域名 |
+
+## 页面说明
+
+| 页面 | 数据来源 |
+| --- | --- |
+| 关于 `/about/` | `source/_data/about.yml`（富布局，卡片式） |
+| 相册 `/album/` | `source/_data/album.yml` + 每个相册的 `type: album_detail` 页面 |
+| 即刻短文 `/essay/` | `source/_data/essay.yml` |
+| 友人帐 `/link/` | `source/_data/link.yml` |
+| 分类 / 标签 / 归档 | Hexo 生成器自动生成 |
 
 ## 写文章
 
@@ -90,12 +102,21 @@ python tools/import-obsidian.py   # 重新导入（会覆盖同名文章）
 
 ## 性能说明
 
-这个站有 34 篇文章、213 张配图，在 Windows 上构建时踩过两个坑：
+这个站有 34 篇文章、240+ 张配图，在 Windows 上构建时踩过两个坑：
 
 1. **`hexo clean` 极慢**：删 409 个文件要 **3 分钟**，而原生 `rm -rf public` 只要 **2 秒**。已用 `npm run clean`（Node 的 `fs.rmSync`）替代，降到 3.6 秒。
 2. **搜索索引预加载**：34 篇全文的 `search.xml` 有 **1.87MB**，主题默认 `preload: true` 会让每个页面都拉一遍。已改为 `preload: false`，点击搜索时才加载。
 
+图片也做过压缩（`node tools/compress-images.js`），`source/img` 从 33MB 压到 12.6MB，文件名不变，重复执行只会处理还没压过的图。
+
 另外两篇面试手册（JavaScript 204KB / CSS 107KB 源码）生成的 HTML 分别是 800KB / 951KB，页面高度 4 万像素——这是浏览器端"卡"的主要来源。如果介意，可以把它们按章节拆成多篇。
+
+## SEO
+
+- `sitemap.xml`：由 `hexo-generator-sitemap` 生成，含分类和标签
+- `robots.txt`：`source/robots.txt`，部署后记得改里面的域名
+- `atom.xml`：RSS 订阅
+- Open Graph 元标签：主题已开启
 
 ## 部署
 
