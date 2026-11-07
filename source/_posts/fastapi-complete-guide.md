@@ -1,8 +1,8 @@
 ---
 title: "FastAPI 完整教程：从路由到依赖注入"
 date: 2026-02-14 21:20:00
-cover: /img/cover-night.jpg
-top_img: /img/cover-night.jpg
+cover: /img/covers/fastapi-complete-guide.svg
+top_img: /img/covers/fastapi-complete-guide.svg
 description: "从零开始学习 FastAPI，构建高性能的现代 Web API"
 categories:
   - 后端

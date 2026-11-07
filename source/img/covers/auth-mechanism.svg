@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0%" stop-color="#06131f"/>
+      <stop offset="100%" stop-color="#30cfd0"/>
+    </linearGradient>
+    <radialGradient id="sunGlow">
+      <stop offset="0%" stop-color="#c7fff9" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#c7fff9" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#c7fff9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="471" cy="177" r="198.4" fill="url(#sunGlow)"/>
+  <circle cx="471" cy="177" r="62" fill="#c7fff9" opacity="0.92"/>
+  
+  <g fill="#06131f" opacity="0.92"><rect x="-20" y="523" width="97" height="277" rx="3"/><rect x="-10" y="539" width="8" height="10" opacity="0.5"/><rect x="83" y="483" width="65" height="317" rx="3"/><rect x="93" y="499" width="8" height="10" opacity="0.5"/><rect x="154" y="585" width="56" height="215" rx="3"/><rect x="216" y="510" width="73" height="290" rx="3"/><rect x="226" y="526" width="8" height="10" opacity="0.5"/><rect x="295" y="593" width="107" height="207" rx="3"/><rect x="408" y="519" width="67" height="281" rx="3"/><rect x="481" y="500" width="80" height="300" rx="3"/><rect x="567" y="534" width="59" height="266" rx="3"/><rect x="632" y="525" width="71" height="275" rx="3"/><rect x="642" y="541" width="8" height="10" opacity="0.5"/><rect x="709" y="579" width="96" height="221" rx="3"/><rect x="719" y="595" width="8" height="10" opacity="0.5"/><rect x="811" y="580" width="62" height="220" rx="3"/><rect x="821" y="596" width="8" height="10" opacity="0.5"/><rect x="879" y="600" width="71" height="200" rx="3"/><rect x="956" y="589" width="79" height="211" rx="3"/><rect x="1041" y="493" width="78" height="307" rx="3"/><rect x="1125" y="593" width="52" height="207" rx="3"/><rect x="1135" y="609" width="8" height="10" opacity="0.5"/><rect x="1183" y="602" width="69" height="198" rx="3"/><rect x="1193" y="618" width="8" height="10" opacity="0.5"/></g>
+
+  <rect width="1200" height="800" filter="url(#grain)" opacity="0.06"/>
+</svg>

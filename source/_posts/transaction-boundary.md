@@ -1,8 +1,8 @@
 ---
 title: "事务边界该由谁提交？一次踩坑复盘"
 date: 2026-08-04 23:30:00
-cover: /img/cover-night.jpg
-top_img: /img/cover-night.jpg
+cover: /img/covers/transaction-boundary.svg
+top_img: /img/covers/transaction-boundary.svg
 description: "「但是不是要统一风格再 dbsession 里面提交吗，两次提交不是会出现问题吗」 拆开就是两个问题： 1. db/session.py 的 getdb 里已经…"
 categories:
   - 后端

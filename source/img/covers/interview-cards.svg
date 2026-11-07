@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0%" stop-color="#10312b"/>
+      <stop offset="100%" stop-color="#84fab0"/>
+    </linearGradient>
+    <radialGradient id="sunGlow">
+      <stop offset="0%" stop-color="#f0fff4" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#f0fff4" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#f0fff4" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="463" cy="191" r="339.20000000000005" fill="url(#sunGlow)"/>
+  <circle cx="463" cy="191" r="106" fill="#f0fff4" opacity="0.92"/>
+  
+  <rect x="0" y="698" width="1200" height="102" fill="#10312b" opacity="0.9"/>
+  <g fill="#f0fff4"><rect x="346.4" y="708" width="233.20000000000002" height="6" rx="3" opacity="0.28"/><rect x="354.88" y="734" width="216.24" height="6" rx="3" opacity="0.255"/><rect x="363.36" y="760" width="199.28" height="6" rx="3" opacity="0.23000000000000004"/><rect x="371.84" y="786" width="182.32000000000002" height="6" rx="3" opacity="0.20500000000000002"/><rect x="380.32" y="812" width="165.36" height="6" rx="3" opacity="0.18000000000000002"/><rect x="388.8" y="838" width="148.4" height="6" rx="3" opacity="0.15500000000000003"/><rect x="397.28" y="864" width="131.44000000000003" height="6" rx="3" opacity="0.13"/><rect x="405.76" y="890" width="114.48" height="6" rx="3" opacity="0.10500000000000001"/><rect x="414.24" y="916" width="97.52000000000001" height="6" rx="3" opacity="0.08000000000000002"/></g>
+
+  <rect width="1200" height="800" filter="url(#grain)" opacity="0.06"/>
+</svg>

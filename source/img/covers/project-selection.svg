@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0%" stop-color="#2b1b3d"/>
+      <stop offset="100%" stop-color="#d299c2"/>
+    </linearGradient>
+    <radialGradient id="sunGlow">
+      <stop offset="0%" stop-color="#fff5e6" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#fff5e6" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#fff5e6" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="264" cy="195" r="256" fill="url(#sunGlow)"/>
+  <circle cx="264" cy="195" r="80" fill="#fff5e6" opacity="0.92"/>
+  
+  <path d="-40,800 0,459 171,568 343,568 514,606 686,469 857,517 1029,473 1200,508 1200,800" fill="#2b1b3d" opacity="0.55"/>
+  <path d="-40,800 0,528 171,563 343,624 514,612 686,571 857,563 1029,658 1200,637 1200,800" fill="#2b1b3d" opacity="0.9"/>
+
+  <rect width="1200" height="800" filter="url(#grain)" opacity="0.06"/>
+</svg>

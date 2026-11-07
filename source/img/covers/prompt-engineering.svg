@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0%" stop-color="#120b2e"/>
+      <stop offset="100%" stop-color="#a8c0ff"/>
+    </linearGradient>
+    <radialGradient id="sunGlow">
+      <stop offset="0%" stop-color="#e8ecff" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#e8ecff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#e8ecff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="482" cy="214" r="220.8" fill="url(#sunGlow)"/>
+  <circle cx="482" cy="214" r="69" fill="#e8ecff" opacity="0.92"/>
+  
+  <g fill="#120b2e" opacity="0.92"><rect x="-20" y="578" width="68" height="222" rx="3"/><rect x="54" y="570" width="107" height="230" rx="3"/><rect x="167" y="650" width="56" height="150" rx="3"/><rect x="229" y="566" width="72" height="234" rx="3"/><rect x="307" y="635" width="80" height="165" rx="3"/><rect x="393" y="610" width="68" height="190" rx="3"/><rect x="467" y="666" width="90" height="134" rx="3"/><rect x="477" y="682" width="8" height="10" opacity="0.5"/><rect x="563" y="632" width="77" height="168" rx="3"/><rect x="646" y="574" width="102" height="226" rx="3"/><rect x="754" y="602" width="52" height="198" rx="3"/><rect x="812" y="633" width="80" height="167" rx="3"/><rect x="898" y="570" width="82" height="230" rx="3"/><rect x="986" y="583" width="54" height="217" rx="3"/><rect x="1046" y="650" width="85" height="150" rx="3"/><rect x="1137" y="605" width="86" height="195" rx="3"/><rect x="1229" y="600" width="67" height="200" rx="3"/><rect x="1239" y="616" width="8" height="10" opacity="0.5"/></g>
+
+  <rect width="1200" height="800" filter="url(#grain)" opacity="0.06"/>
+</svg>

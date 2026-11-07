@@ -1,8 +1,8 @@
 ---
 title: "手写第一个 Agent Loop"
 date: 2026-09-19 23:00:00
-cover: /img/banner.jpg
-top_img: /img/banner.jpg
+cover: /img/covers/agent-loop.svg
+top_img: /img/covers/agent-loop.svg
 description: "整个 Agent 领域只有一个真正的核心机制，就是这篇要写的 while 循环。所有框架——LangChain、LangGraph、CrewAI、Claude …"
 categories:
   - AI

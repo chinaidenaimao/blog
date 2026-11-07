@@ -1,8 +1,8 @@
 ---
 title: "SQLAlchemy ORM 完整教程"
 date: 2026-03-12 21:30:00
-cover: /img/cover-night.jpg
-top_img: /img/cover-night.jpg
+cover: /img/covers/sqlalchemy-orm-guide.svg
+top_img: /img/covers/sqlalchemy-orm-guide.svg
 description: "从零开始学习 SQLAlchemy ORM，掌握数据库操作的最佳实践"
 categories:
   - 后端

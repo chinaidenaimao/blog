@@ -1,8 +1,8 @@
 ---
 title: "FastAPI 模块化路由入门"
 date: 2026-04-21 20:20:00
-cover: /img/cover-night.jpg
-top_img: /img/cover-night.jpg
+cover: /img/covers/fastapi-modular-router.svg
+top_img: /img/covers/fastapi-modular-router.svg
 description: "学习时间：2026-07-02 学习进度：刚开始"
 categories:
   - 后端

@@ -1,8 +1,8 @@
 ---
 title: "从零搭一个 FastAPI + LangChain 大模型接口"
 date: 2026-06-27 21:30:00
-cover: /img/cover-night.jpg
-top_img: /img/cover-night.jpg
+cover: /img/covers/fastapi-langchain-api.svg
+top_img: /img/covers/fastapi-langchain-api.svg
 description: "本教程从零搭建生产可用级别的FastAPI项目，包含分层架构、异步数据库、全局异常处理、路由管理，并集成 LangChain 实现大模型问答接口（普通问答\\+流…"
 categories:
   - 后端

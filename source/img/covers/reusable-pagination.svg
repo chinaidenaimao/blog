@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0%" stop-color="#06131f"/>
+      <stop offset="100%" stop-color="#30cfd0"/>
+    </linearGradient>
+    <radialGradient id="sunGlow">
+      <stop offset="0%" stop-color="#c7fff9" stop-opacity="0.95"/>
+      <stop offset="55%" stop-color="#c7fff9" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#c7fff9" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#sky)"/>
+  <circle cx="319" cy="246" r="208" fill="url(#sunGlow)"/>
+  <circle cx="319" cy="246" r="65" fill="#c7fff9" opacity="0.92"/>
+  
+  <g fill="#06131f" opacity="0.92"><rect x="-20" y="551" width="49" height="249" rx="3"/><rect x="35" y="555" width="86" height="245" rx="3"/><rect x="127" y="628" width="99" height="172" rx="3"/><rect x="232" y="663" width="102" height="137" rx="3"/><rect x="242" y="679" width="8" height="10" opacity="0.5"/><rect x="340" y="579" width="92" height="221" rx="3"/><rect x="438" y="579" width="81" height="221" rx="3"/><rect x="525" y="629" width="52" height="171" rx="3"/><rect x="583" y="644" width="74" height="156" rx="3"/><rect x="663" y="604" width="68" height="196" rx="3"/><rect x="737" y="587" width="86" height="213" rx="3"/><rect x="829" y="608" width="65" height="192" rx="3"/><rect x="839" y="624" width="8" height="10" opacity="0.5"/><rect x="900" y="570" width="105" height="230" rx="3"/><rect x="1011" y="649" width="60" height="151" rx="3"/><rect x="1021" y="665" width="8" height="10" opacity="0.5"/><rect x="1077" y="598" width="101" height="202" rx="3"/><rect x="1184" y="561" width="83" height="239" rx="3"/></g>
+
+  <rect width="1200" height="800" filter="url(#grain)" opacity="0.06"/>
+</svg>

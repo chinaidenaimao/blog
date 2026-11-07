@@ -1,8 +1,8 @@
 ---
 title: "分页功能怎么设计成可复用组件"
 date: 2026-08-12 22:10:00
-cover: /img/cover-night.jpg
-top_img: /img/cover-night.jpg
+cover: /img/covers/reusable-pagination.svg
+top_img: /img/covers/reusable-pagination.svg
 description: "拆成三块，每块只写一次：参数用 PageParams（依赖注入）、响应用 Page[T]（泛型外壳）、 查询用 paginate()（通用分页器）。之后每个列表…"
 categories:
   - 后端

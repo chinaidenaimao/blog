@@ -1,8 +1,8 @@
 ---
 title: "MCP 协议：给 Agent 一个统一的工具插座"
 date: 2026-10-17 22:00:00
-cover: /img/banner.jpg
-top_img: /img/banner.jpg
+cover: /img/covers/mcp-protocol.svg
+top_img: /img/covers/mcp-protocol.svg
 description: "MCP 不是「更强的 function calling」，它解决的是一个工程问题：N 个模型 × M 个工具 = N×M 份适配代码，MCP 把它降成 N+M。"
 categories:
   - AI

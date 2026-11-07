@@ -1,8 +1,8 @@
 ---
 title: "MySQL 常用语句速查手册"
 date: 2026-01-27 22:00:00
-cover: /img/cover-night.jpg
-top_img: /img/cover-night.jpg
+cover: /img/covers/mysql-cheatsheet.svg
+top_img: /img/covers/mysql-cheatsheet.svg
 description: "本文档汇总MySQL日常开发、面试高频使用语句，包含数据库操作、数据表操作、增删改查、条件查询、排序分页、聚合分组、多表连接、索引、时间函数、事务等核心内容，所…"
 categories:
   - 后端

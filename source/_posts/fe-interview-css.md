@@ -1,8 +1,8 @@
 ---
 title: "前端面试手册 · CSS 布局与渲染"
 date: 2025-12-03 22:10:00
-cover: /img/cover-summer.jpg
-top_img: /img/cover-summer.jpg
+cover: /img/covers/fe-interview-css.svg
+top_img: /img/covers/fe-interview-css.svg
 description: "boreder ，即边框，围绕元素内容的内边距的一条或多条线，由粗细、样式、颜色三部分组成"
 categories:
   - 前端

@@ -1,8 +1,8 @@
 ---
 title: "ORM 增删查改的几种写法与坑"
 date: 2026-05-18 22:30:00
-cover: /img/cover-night.jpg
-top_img: /img/cover-night.jpg
+cover: /img/covers/orm-crud-notes.svg
+top_img: /img/covers/orm-crud-notes.svg
 description: "学习了 SQLAlchemy ORM 的核心操作：增（Create）、删（Delete）、查（Read）。"
 categories:
   - 后端

@@ -21,7 +21,9 @@ npm run rebuild  # clean + build
 ├─ _config.yml           # 站点配置（标题、作者、URL、主题名）
 ├─ _config.anzhiyu.yml   # 主题配置（覆盖用，优先级高于主题内 _config.yml）
 ├─ tools/
-│  └─ import-obsidian.py # 把 Obsidian 笔记批量导入成文章
+│  ├─ import-obsidian.py    # 把 Obsidian 笔记批量导入成文章
+│  ├─ gen-covers.js         # 按 slug 生成矢量封面
+│  └─ compress-images.js    # 压缩 source/img 下的图片
 ├─ source/
 │  ├─ _posts/            # 文章（Markdown）
 │  ├─ _data/             # 说说 essay.yml / 相册 album.yml / 友链 link.yml
@@ -91,21 +93,45 @@ tags:
 用法：编辑脚本顶部的 `POSTS` 列表，一行一篇文章：
 
 ```python
-(源文件路径, "slug", "标题", "2026-08-28 21:00:00", "AI", ["Agent", "LLM"], "/img/banner.jpg"),
+(源文件路径, "slug", "标题", "2026-08-28 21:00:00", "AI", ["Agent", "LLM"]),
 ```
 
 ```bash
 python tools/import-obsidian.py   # 重新导入（会覆盖同名文章）
+node tools/gen-covers.js          # 给新增文章补封面
 ```
 
 > 脚本放在 `tools/` 而不是 `scripts/`，因为 Hexo 会把 `scripts/` 下的所有文件当插件加载。
 
+目前接的 7 个仓库：
+
+| 变量 | 路径 | 内容 |
+| --- | --- | --- |
+| `VAULT_FRONTEND` | `D:\ai-demo\obsidian` | 前端面试手册、FastAPI 系列 |
+| `VAULT_AGENT` | `D:\ai-demo\langchian\obsidian` | Agent 学习路径 v2 |
+| `VAULT_DB` | `E:\leran\db\server\obsidian` | 项目文档、问题解答 |
+| `VAULT_RAG` | `D:\ai-demo\RAG\obsidian-vault` | 前后端工程化、LangChain/LangGraph |
+| `VAULT_AILAB` | `D:\ai-demo\AI_laboratory\...\docs` | LangGraph 系列 |
+| `VAULT_PDF` | `D:\ai-demo\learn-PDF\docs` | 项目架构、部署文档 |
+| `VAULT_TOUTIAO` | `D:\ai-demo\python\toutiao_houtai\docs` | 从零搭后台系列 |
+
+## 封面
+
+文章封面不是图片，是按 slug 生成的 **SVG 风景**（`tools/gen-covers.js`）：
+
+- 12 组配色 + 3 种构图（山脊 / 城市剪影 / 海面倒影），由 slug 的哈希决定
+- 同一篇文章永远对应同一张，重新生成不会换脸
+- 一张几 KB，60 张加起来 200KB 左右
+- 想换风格改脚本里的 `PALETTES` 即可
+
+手写的 4 篇文章（欢迎、为什么用 Hexo、深夜歌单、建站第一周）保留了 AI 生成的动漫图，作为"精选"的视觉区分。
+
 ## 性能说明
 
-这个站有 34 篇文章、240+ 张配图，在 Windows 上构建时踩过两个坑：
+这个站有 60 篇文章、230+ 张配图，在 Windows 上构建时踩过两个坑：
 
 1. **`hexo clean` 极慢**：删 409 个文件要 **3 分钟**，而原生 `rm -rf public` 只要 **2 秒**。已用 `npm run clean`（Node 的 `fs.rmSync`）替代，降到 3.6 秒。
-2. **搜索索引预加载**：34 篇全文的 `search.xml` 有 **1.87MB**，主题默认 `preload: true` 会让每个页面都拉一遍。已改为 `preload: false`，点击搜索时才加载。
+2. **搜索索引预加载**：60 篇全文的 `search.xml` 接近 **3MB**，主题默认 `preload: true` 会让每个页面都拉一遍。已改为 `preload: false`，点击搜索时才加载。
 
 图片也做过压缩（`node tools/compress-images.js`），`source/img` 从 33MB 压到 12.6MB，文件名不变，重复执行只会处理还没压过的图。
 

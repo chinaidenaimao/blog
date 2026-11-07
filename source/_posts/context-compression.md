@@ -1,8 +1,8 @@
 ---
 title: "上下文压缩与摘要策略"
 date: 2026-10-10 21:30:00
-cover: /img/banner.jpg
-top_img: /img/banner.jpg
+cover: /img/covers/context-compression.svg
+top_img: /img/covers/context-compression.svg
 description: "裁剪只解决「放不下」，压缩才解决「记不住」。这一篇拆解 pi 的 compaction 机制——它是目前公开实现里把「几何阈值触发 + 摘要迭代演进 + 文件操…"
 categories:
   - AI

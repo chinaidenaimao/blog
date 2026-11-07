@@ -1,8 +1,8 @@
 ---
 title: "Pydantic 数据模型教程：校验、序列化与配置"
 date: 2026-02-28 23:00:00
-cover: /img/cover-night.jpg
-top_img: /img/cover-night.jpg
+cover: /img/covers/pydantic-tutorial.svg
+top_img: /img/covers/pydantic-tutorial.svg
 description: "从零开始学习 Pydantic，掌握数据验证、序列化和类型安全的最佳实践"
 categories:
   - 后端

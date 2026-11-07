@@ -1,8 +1,8 @@
 ---
 title: "FastAPI 异步数据库：async session 怎么用"
 date: 2026-05-06 23:10:00
-cover: /img/cover-night.jpg
-top_img: /img/cover-night.jpg
+cover: /img/covers/fastapi-async-db.svg
+top_img: /img/covers/fastapi-async-db.svg
 description: "FastAPI + SQLAlchemy 异步操作学习笔记"
 categories:
   - 后端
