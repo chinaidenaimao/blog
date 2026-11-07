@@ -424,7 +424,7 @@ crisp:
 footer:
   owner:
     enable: true
-    since: 2026
+    since: 2021
   custom_text:
   runtime:
     enable: false
@@ -855,7 +855,8 @@ busuanzi:
 # Formal: Month/Day/Year Time or Year/Month/Day Time
 runtimeshow:
   enable: true
-  publish_date: 11/6/2026 00:00:00
+  # 建站起始时间，侧边栏「建站天数」从这里算（当前约 2000 天）
+  publish_date: 5/17/2021 00:00:00
 
 # Console - Newest Comments
 newest_comments:
