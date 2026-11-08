@@ -1,0 +1,4 @@
+# 线上构建专用配置（GitHub Actions 里会叠加在主配置上）
+# 用法：npx hexo generate --config _config.yml,_config.prod.yml
+url: https://chinaidenaimao.github.io/blog
+root: /blog/
