@@ -340,7 +340,8 @@ def merge_broken_headings(text):
                 if k >= len(lines):
                     break
                 nxt = lines[k].strip()
-                if nxt and len(nxt) <= 12 and not re.match(r"^[#\-*+>|!]|^\d+[.)]\s", nxt):
+                # 注意：不能把 ``` 代码围栏并进标题，否则围栏失效、示例 CSS 会作用到整页
+                if nxt and len(nxt) <= 12 and not re.match(r"^[#\-*+>|!`]|^\d+[.)]\s", nxt):
                     merged += nxt
                     j = k + 1
                 else:
