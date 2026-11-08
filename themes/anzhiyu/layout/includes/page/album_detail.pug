@@ -6,7 +6,7 @@
     - let album_detail_top_link = i.top_link
     - let album_detail_top_btn_text = i.top_btn_text
     if (path_name && i.album_list)
-      .author-content.author-content-item.album.single(style=`${album_detail_background ? `background: url(${album_detail_background}) top / cover no-repeat;` : ""}`)
+      .author-content.author-content-item.album.single(style=`${album_detail_background ? `background: url(${url_for(album_detail_background)}) top / cover no-repeat;` : ""}`)
         .card-content
           .author-content-item-tips 相册集
           span.author-content-item-title=i.class_name
@@ -26,8 +26,8 @@
                     if item.image
                       .album-container-img
                         each iten, indey in item.image
-                          a.album-content-img(href=item.image[indey], target="_blank", data-fancybox="gallery", data-caption="")
-                            img(src=item.image[indey])
+                          a.album-content-img(href=url_for(item.image[indey]), target="_blank", data-fancybox="gallery", data-caption="")
+                            img(src=url_for(item.image[indey]))
                         .album-content-noimg
                         .album-content-noimg
                         .album-content-noimg

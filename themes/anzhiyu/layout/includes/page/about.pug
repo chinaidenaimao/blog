@@ -70,7 +70,7 @@ if site.data.about
                     each item, index in i.creativity_list
                       .skill-info
                         .skill-icon(style=`background: ${item.color}`)
-                          img.no-lightbox(title=item.name, src=item.icon, alt=item.name)
+                          img.no-lightbox(title=item.name, src=url_for(item.icon), alt=item.name)
                         .skill-name
                           span=item.name 
                   .etc ...
@@ -91,7 +91,7 @@ if site.data.about
       
       .author-content
         if theme.LA.enable || theme.umami.enable
-          - let cover = item.statistic.cover
+          - let cover = url_for(item.statistic.cover)
           - let statisticSource = theme.LA.enable ? '51la' : 'Umami'
           - let statisticLink = theme.LA.enable ? 'https://invite.51.la/1NzKqTeb?target=V6' : (theme.umami.apiHost || '#')
           .about-statistic.author-content-item(style=`background: url(${cover}) top / cover no-repeat;`)
@@ -106,13 +106,13 @@ if site.data.about
               .banner-button-group
                 - let link = item.statistic.link
                 - let text = item.statistic.text
-                a.banner-button(onclick=`pjax.loadUrl("${link}")`)
+                a.banner-button(onclick=`pjax.loadUrl("${url_for(link)}")`)
                   i.anzhiyufont.anzhiyu-icon-arrow-circle-right
                   |  
                   span.banner-button-text=text
         .author-content-item-group.column.mapAndInfo
-          - let mapBackground = item.map.background
-          - let mapBackgroundDark = item.map.backgroundDark
+          - let mapBackground = url_for(item.map.background)
+          - let mapBackgroundDark = url_for(item.map.backgroundDark)
           style.
             .author-content-item.map {
               background-image: url(#{mapBackground});
@@ -175,7 +175,7 @@ if site.data.about
 
       .author-content
         - let {game_tips, game_title, game_uid, game_bg} = item.game
-        .author-content-item.game-yuanshen(style=`background: url(${game_bg}) top / cover no-repeat;`)
+        .author-content-item.game-yuanshen(style=`background: url(${url_for(game_bg)}) top / cover no-repeat;`)
           .card-content
             .author-content-item-tips=game_tips
             span.author-content-item-title=game_title
@@ -193,25 +193,25 @@ if site.data.about
                 each i in comic_list
                   a.comic-item(href=i.href, target="_blank", title=i.name)
                     .comic-item-cover
-                      img(src=i.cover, alt=i.name)
+                      img(src=url_for(i.cover), alt=i.name)
       
       .author-content
         - let {music_tips, music_title, music_link, music_bg} = item.music
         - let {like_tips, like_title, like_bottom, like_bg} = item.like
-        .author-content-item.like-technology(style=`background: url(${like_bg}) top / cover no-repeat;`)
+        .author-content-item.like-technology(style=`background: url(${url_for(like_bg)}) top / cover no-repeat;`)
           .card-content
             .author-content-item-tips=like_tips
             span.author-content-item-title=like_title
             .content-bottom
               .tips=like_bottom
-        .author-content-item.like-music(style=`background: url(${music_bg}) top / cover no-repeat;`)
+        .author-content-item.like-music(style=`background: url(${url_for(music_bg)}) top / cover no-repeat;`)
           .card-content
             .author-content-item-tips=music_tips
             span.author-content-item-title=music_title
             .content-bottom
               .tips=_p('about.enjoy_music_with', aboutName)
             .banner-button-group
-              a.banner-button(onclick=`pjax.loadUrl("${music_link}")`)
+              a.banner-button(onclick=`pjax.loadUrl("${url_for(music_link)}")`)
                 i.anzhiyufont.anzhiyu-icon-arrow-circle-right
                 |  
                 span.banner-button-text=_p('about.more_recommend')

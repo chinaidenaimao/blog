@@ -12,8 +12,8 @@
           span.banner-button-text 关于本人
   .card-album
     each i in site.data.album
-      .card(onclick=`pjax.loadUrl("${i.path_name}")`)
-        img.card_cover(src=i.cover)
+      .card(onclick=`pjax.loadUrl("${url_for(i.path_name)}")`)
+        img.card_cover(src=url_for(i.cover))
         .card__content
           p.card__category=i.class_name
           h3.card__heading=i.description
