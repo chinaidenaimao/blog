@@ -18,7 +18,8 @@ tags:
 
 ---
 
-## 一、选型：先问「真的需要 Agent 吗」```mermaidgraph TD
+## 一、选型：先问「真的需要 Agent 吗」
+```
     A["需求"] --> B{"步骤固定吗?"}
     B -->|"固定"| C["普通代码/工作流引擎<br/>别用 LLM 编排"]
     B -->|"不固定"| D{"需要多轮决策吗?"}
@@ -61,14 +62,16 @@ tags:
 > 2. 不够了，**不要推翻重来**——`create_agent` 返回的就是 `CompiledStateGraph`，
 >    可以用 `add_node` 往上面继续加，或者把它当子图嵌进自己的图
 >
-> ```python
+>
+```
 > agent = create_agent(model=..., tools=[...])
 >
 > g = StateGraph(MyState)
 > g.add_node("router", router_node)
 > g.add_node("agent", agent)          # ← 整个 Agent 作为一个节点
 > g.add_node("review", review_node)
-> ```
+>
+```
 
 ---
 
@@ -97,10 +100,12 @@ LANGSMITH_PROJECT=my-agent-prod
 
 > **💡 提示：自托管替代**
 > 不能上云的话，用 OpenTelemetry：
-> ```python
+>
+```
 > from langchain_core.tracers import ConsoleCallbackHandler
 > agent.invoke(input, config={"callbacks": [ConsoleCallbackHandler()]})
-> ```
+>
+```
 > 生产上接 OTel Collector → Jaeger/Tempo，比 LangSmith 麻烦但数据在自己手里。
 
 ---
@@ -109,7 +114,8 @@ LANGSMITH_PROJECT=my-agent-prod
 
 Agent 延迟高，**必须流式**。两种协议：
 
-### 4.1 SSE（Server-Sent Events）```python
+### 4.1 SSE（Server-Sent Events）
+```
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 
@@ -166,7 +172,8 @@ async def chat(payload: ChatReq):
 > 理由：Agent 需要你的业务数据、权限校验、用户体系，拆开后要么重复造轮子，要么跨服务调用。
 > 等 Agent 成为独立产品线再拆。
 
-### 5.2 嵌入 FastAPI 的目录结构```server/├── app/
+### 5.2 嵌入 FastAPI 的目录结构
+```
 │   ├── agent/                 # ★ Agent 模块，与其它业务域平级
 │   │   ├── graph.py           # create_agent / StateGraph 组装
 │   │   ├── tools/             # 该 Agent 的工具
@@ -183,7 +190,8 @@ async def chat(payload: ChatReq):
 > `graph.py` 是**组装**（等价 router 层之上的装配），工具内部该调 `service` 就调 `service`，
 > 不要让 Agent 绕过业务层直接操作数据库。见 03-后端工程化封装-FastAPI。
 
-### 5.3 checkpointer 必须外置```python
+### 5.3 checkpointer 必须外置
+```
 # 单机
 from langgraph.checkpoint.sqlite import SqliteSaver
 

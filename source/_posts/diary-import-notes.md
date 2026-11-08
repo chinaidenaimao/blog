@@ -22,7 +22,8 @@ tags:
 
 ## 第一版脚本：直接复制
 
-```python
+```pytho
+n
 shutil.copy(src, f"source/_posts/{slug}.md")
 ```
 

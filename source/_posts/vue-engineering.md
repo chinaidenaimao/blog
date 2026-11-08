@@ -28,7 +28,8 @@ tags:
 | **业务分层单应用** | [soybean-admin](https://github.com/soybeanjs/soybean-admin) | 15,113 | `src/service`（请求+API）独立于 `src/api` | 3–10 人，1–2 个后台 |
 | **Monorepo 多应用** | [vue-vben-admin](https://github.com/vbenjs/vue-vben-admin) | 33,620 | `apps/*` + `packages/*` + `internal/*` | 多产品线 / 多 UI 库复用 |
 
-### soybean-admin 的 `src/` 分层（推荐中小团队直接照搬）```src/
+### soybean-admin 的 `src/` 分层（推荐中小团队直接照搬）
+```
 ├── api/            # 仅放类型与接口声明
 ├── service/
 │   ├── request/    # axios 实例 + 拦截器 + 类型  ← 与 api 分离是精髓
@@ -53,7 +54,8 @@ tags:
 > `src/api` 只放**接口的类型与路径声明**，`src/service` 才放**运行时逻辑**。
 > 这样类型可被 mock、测试、OpenAPI 生成器安全引用，不会把 axios 实例拖进依赖图。
 
-### vben 的 monorepo 分层（推荐多产品线）```apps/
+### vben 的 monorepo 分层（推荐多产品线）
+```
 ├── web-antd/       # 每个 UI 库一个可独立部署的应用
 ├── web-ele/
 ├── web-naive/
@@ -101,7 +103,8 @@ class RequestClient {
 }
 ```
 
-### 1.2 落地实现（Vue 3 + TS + axios）```ts
+### 1.2 落地实现（Vue 3 + TS + axios）
+```
 // src/service/request/index.ts
 import axios, {
   type AxiosInstance,
@@ -287,7 +290,8 @@ export class BizError extends Error {
 
 ## 3. API 统一封装
 
-### 3.1 分层：类型 / 请求函数 / 组合式 Hook```ts
+### 3.1 分层：类型 / 请求函数 / 组合式 Hook
+```
 // src/api/system/user.ts —— 只放类型与路径常量
 export interface UserVO {
   id: number;
@@ -399,7 +403,8 @@ export type PageResult<T> = components['schemas']['PageResult_' & string] & { li
 > **「守卫（流程控制）」与「动态路由生成（数据获取 + 转换）」必须分文件**。
 > 前者是纯流程，后者是纯函数 + 请求，混在一起后极难测试。
 
-### 4.2 三类路由的划分```ts
+### 4.2 三类路由的划分
+```
 // src/router/routes/index.ts
 /** 1) 静态路由：所有人可见，无需鉴权 */
 export const staticRoutes: RouteRecordRaw[] = [
@@ -425,7 +430,8 @@ export const fallbackRoute: RouteRecordRaw = {
 };
 ```
 
-### 4.3 守卫实现```ts
+### 4.3 守卫实现
+```
 // src/router/guard/route.ts
 import type { Router } from 'vue-router';
 import { useAuthStore } from '@/store/modules/auth';
@@ -647,7 +653,8 @@ pinia.use(piniaPluginPersistedstate);
 > **只做 L1/L2/L3，不做 L4。** 前端的权限控制全部可被绕过（改 JS、直接调接口）。
 > 前端权限是「体验」，后端权限才是「安全」。二者必须用**同一套权限码**。
 
-### 6.2 权限码设计（前后端共用）```
+### 6.2 权限码设计（前后端共用）
+```
 格式：<域>:<资源>:<动作>
 示例：
   system:user:list     查询用户列表
@@ -657,7 +664,8 @@ pinia.use(piniaPluginPersistedstate);
   *:*:*                超级管理员通配
 ```
 
-### 6.3 按钮级权限：指令 + Hook```ts
+### 6.3 按钮级权限：指令 + Hook
+```
 // src/directives/permission.ts
 import type { App, Directive, DirectiveBinding } from 'vue';
 import { useAuthStore } from '@/store/modules/auth';
@@ -728,7 +736,8 @@ export function useAccess() {
 }
 ```
 
-### 6.4 动态路由生成（菜单树 → 路由树）```ts
+### 6.4 动态路由生成（菜单树 → 路由树）
+```
 // src/router/access.ts —— 纯函数，可单测
 import type { RouteRecordRaw } from 'vue-router';
 
@@ -806,7 +815,8 @@ export function transformMenuToRoutes(menus: MenuVO[]): RouteRecordRaw[] {
 | soybean | `.env` / `.env.test` / `.env.prod` | 多了 test 环境 |
 | vue-fastapi-admin | `web/.env.*` | 常规三件套 |
 
-### 7.2 落地实现```bash
+### 7.2 落地实现
+```
 # .env                  —— 所有环境共享
 VITE_APP_TITLE=Vue FastAPI Admin
 VITE_API_BASE_URL=/api

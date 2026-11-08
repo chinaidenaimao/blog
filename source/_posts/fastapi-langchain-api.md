@@ -20,7 +20,8 @@ tags:
 
 **技术栈**：FastAPI \+ 异步SQLAlchemy \+ MySQL \+ Pydantic v2 \+ LangChain \+ SSE流式输出
 
-## 二、项目目录结构```plain
+## 二、项目目录结构
+```
 fastapi-demo/
 ├── app/
 │   ├── __init__.py
@@ -60,7 +61,8 @@ fastapi-demo/
 
 ## 三、安装项目依赖
 
-### 3\.1 编写 requirements\.txt```txt
+### 3\.1 编写 requirements\.txt
+```
 fastapi>=0.112.0
 uvicorn[standard]>=0.30.0
 pydantic-settings>=2.5.2
@@ -71,7 +73,8 @@ langchain>=0.3.0
 langchain-openai>=0.2.0
 ```
 
-### 3\.2 安装依赖```bash
+### 3\.2 安装依赖
+```
 pip install -r requirements.txt
 ```
 
@@ -109,7 +112,8 @@ LLM_MODEL=gpt-4o-mini
 
 ## 五、核心配置文件编写
 
-### 5\.1 全局配置（app/core/config\.py）```python
+### 5\.1 全局配置（app/core/config\.py）
+```
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -137,7 +141,8 @@ class Settings(BaseSettings):
 settings = Settings()
 ```
 
-### 5\.2 全局异常处理（app/core/exceptions\.py）```python
+### 5\.2 全局异常处理（app/core/exceptions\.py）
+```
 from fastapi import Request, FastAPI
 from fastapi.responses import JSONResponse
 
@@ -153,7 +158,8 @@ def register_exception_handler(app: FastAPI):
 
 ## 六、数据库异步配置
 
-### 6\.1 数据库会话（app/db/session\.py）```python
+### 6\.1 数据库会话（app/db/session\.py）
+```
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
 from sqlalchemy.orm import declarative_base
 from app.core.config import settings
@@ -181,7 +187,8 @@ async def get_db() -> AsyncSession:
         yield session
 ```
 
-### 6\.2 数据库模型（app/models/user\.py）```python
+### 6\.2 数据库模型（app/models/user\.py）
+```
 from sqlalchemy import Column, Integer, String, DateTime, func
 from app.db.session import Base
 
@@ -281,7 +288,8 @@ async def chat_stream_generator(question: str, system_prompt: str = "你是一�
 
 ## 十、接口路由编写
 
-### 10\.1 用户接口（app/api/v1/user\.py）```python
+### 10\.1 用户接口（app/api/v1/user\.py）
+```
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -302,7 +310,8 @@ async def query_user(user_id: int, db: AsyncSession = Depends(get_db)):
     return await get_user_by_id(db, user_id)
 ```
 
-### 10\.2 大模型AI接口（app/api/v1/ai\.py）```python
+### 10\.2 大模型AI接口（app/api/v1/ai\.py）
+```
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -332,7 +341,8 @@ async def chat_stream(req: ChatRequest):
     )
 ```
 
-### 10\.3 路由汇总（app/api/v1/router\.py）```python
+### 10\.3 路由汇总（app/api/v1/router\.py）
+```
 from fastapi import APIRouter
 from app.api.v1 import user, ai
 
@@ -342,7 +352,8 @@ api_router.include_router(user.router)
 api_router.include_router(ai.router)
 ```
 
-## 十一、项目主入口（app/main\.py）```python
+## 十一、项目主入口（app/main\.py）
+```
 from fastapi import FastAPI
 from app.core.config import settings
 from app.api.v1.router import api_router
@@ -367,7 +378,8 @@ async def root():
     return {"msg": "项目启动成功！"}
 ```
 
-## 十二、项目启动脚本（run\.py）```python
+## 十二、项目启动脚本（run\.py）
+```
 import uvicorn
 
 if __name__ == "__main__":
@@ -389,7 +401,8 @@ if __name__ == "__main__":
 CREATE DATABASE fastapi_demo DEFAULT CHARACTER SET utf8mb4;
 ```
 
-### 13\.2 启动项目```bash
+### 13\.2 启动项目
+```
 python run.py
 ```
 

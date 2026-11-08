@@ -188,7 +188,8 @@ async def get_students(db, q: StudentQuery) -> PageResult:
 
 ---
 
-## 六、落地顺序建议```mermaidflowchart LR
+## 六、落地顺序建议
+```
     A["① 建 schema/common.py<br/>+ core/pagination.py"] --> B["② 先改 /api/score<br/>（1283 条，最疼的）"]
     B --> C["③ 再改 student/course"]
     C --> D["④ 最后改 /api/user/list<br/>（14 条，改不改都行）"]

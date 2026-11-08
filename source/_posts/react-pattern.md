@@ -22,7 +22,8 @@ tags:
 4. Reflexion（arXiv:2303.11366）如何补上 ReAct 缺的「从失败中学习」
 5. 最常见的失败模式：**只让模型输出思考，不接真实环境反馈** → 幻觉出「已完成」
 
-## 前置要求```bash
+## 前置要求
+```
 pip install openai python-dotenv
 ```
 
@@ -53,7 +54,8 @@ graph LR
 
 这个循环的**关键约束**是：`Observation` 必须来自**真实环境**，不能由模型自己编。一旦 Observation 是模型想象的，整个循环就退化成 CoT 加了一段表演。
 
-## 二、纯 CoT vs ReAct：一张对比图```mermaidgraph TD
+## 二、纯 CoT vs ReAct：一张对比图
+```
     subgraph COT["🧠 纯 CoT"]
         C1["问题"] --> C2["思考 1"]
         C2 --> C3["思考 2"]
@@ -410,7 +412,8 @@ graph TD
 
 > 💡 Reflexion 和 Plan-and-Execute 与 Reflection 里的 Reflection 是同一族思路，但那篇讲的是**单次任务内的自我批判**（refine 当前输出），Reflexion 讲的是**跨尝试的经验积累**。两者常一起用。
 
-### 一个最小 Reflexion 骨架```python
+### 一个最小 Reflexion 骨架
+```
 def solve_with_reflexion(task: str, max_attempts: int = 3) -> str:
     reflections: list[str] = []   # ← 跨尝试累积的经验
 

@@ -44,20 +44,25 @@ agent = create_agent(
 > `"openai:gpt-4o"` / `"anthropic:claude-sonnet-4-5"` / `"google_genai:gemini-2.5-pro"`。
 >
 > 它等价于：
-> ```python
+>
+```
 > from langchain.chat_models import init_chat_model
 > model = init_chat_model("openai:gpt-4o-mini")
-> ```
+>
+```
 > 需要更多控制（超时、重试、base_url）时用 `init_chat_model`，否则直接用字符串。
 
 ---
 
-## 二、环境准备```bash
+## 二、环境准备
+```
 python -m venv venv
 ./venv/Scripts/pip install "langchain==1.4.7" "langchain-openai" "langgraph==1.2.16"
 
 # 用到哪个 provider 装哪个：
-# pip install langchain-anthropic langchain-google-genai``````bash
+# pip install langchain-anthropic langchain-google-genai
+```
+```bash
 # .env —— 只放服务端密钥
 OPENAI_API_KEY=sk-...
 ```
@@ -140,7 +145,8 @@ def get_weather_forecast(city: str, days: int = 1) -> str:
 
 ---
 
-## 五、第一个可运行的 Agent```python
+## 五、第一个可运行的 Agent
+```
 from langchain.agents import create_agent
 from langchain_core.messages import HumanMessage
 
@@ -232,10 +238,12 @@ print(report.city, report.temperature)
 > **⚠️ 注意：官方默认策略可能不被所有模型支持**
 > 上面这种直接传 Pydantic 类的写法用的是 `AutoStrategy`，部分模型不支持原生结构化输出。
 > 显式指定更稳：
-> ```python
+>
+```
 > from langchain.agents.structured_output import ToolStrategy
 > response_format=ToolStrategy(WeatherReport)
-> ```
+>
+```
 > 三种策略：`ProviderStrategy`（模型原生支持时最快）、`ToolStrategy`（用工具调用实现，兼容性最好）、`AutoStrategy`（自动选）。
 
 ---

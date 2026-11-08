@@ -22,7 +22,8 @@ tags:
 4. 一个最小 MCP server 的代码骨架（`pip install mcp`）
 5. 生态现状（含调研日期）与**什么时候不该上 MCP** 的务实判据
 
-## 前置要求```bash
+## 前置要求
+```
 pip install mcp          # ⚠️ 本项目当前未安装，本篇代码需先装
 pip install openai python-dotenv
 ```
@@ -147,7 +148,8 @@ graph TD
 
 ```python
 # ❌ 错的理解：以为 Resources 也会出现在模型的 tools 列表里
-#   → 于是把数据库配置、日志文件都做成 Resource，然后奇怪模型为什么读不到```
+#   → 于是把数据库配置、日志文件都做成 Resource，然后奇怪模型为什么读不到
+```
 
 **正确理解**：Resources **不会**自动变成模型的工具。如果你的场景是「模型自己判断需不需要读某个文件」，那它必须是 **Tool**，不是 Resource。
 

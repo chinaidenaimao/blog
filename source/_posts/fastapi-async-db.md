@@ -18,7 +18,8 @@ tags:
 
 ### 核心知识点
 
-#### 1. 异步数据库连接配置```python
+#### 1. 异步数据库连接配置
+```
 ASYNC_DATA_BASE_URL = 'mysql+aiomysql://root:123456@localhost:3306/fastapi_db?charset=utf8mb4'
 
 async_engine = create_async_engine(
@@ -37,7 +38,8 @@ async_engine = create_async_engine(
 
 ---
 
-#### 2. SQLAlchemy ORM 模型定义```python
+#### 2. SQLAlchemy ORM 模型定义
+```
 class Base(DeclarativeBase):
     create_time: Mapped[datetime] = mapped_column(
         DateTime,
@@ -61,7 +63,8 @@ class Base(DeclarativeBase):
 
 ---
 
-#### 3. 模型表结构```python
+#### 3. 模型表结构
+```
 # 书籍表
 class Book(Base):
     __tablename__ = 'books'
@@ -84,7 +87,8 @@ class User(Base):
 
 ---
 
-#### 4. 应用启动时自动建表```python
+#### 4. 应用启动时自动建表
+```
 async def create_table():
     async with async_engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
@@ -101,7 +105,8 @@ async def startup():
 
 ---
 
-#### 5. 异步会话工厂（重点！）```python
+#### 5. 异步会话工厂（重点！）
+```
 AsyncSessionLocal = async_sessionmaker(
     bind=async_engine,          # 绑定异步引擎
     class_=AsyncSession,        # 使用异步会话类
@@ -213,7 +218,8 @@ async def get_db():
 
 ---
 
-#### 6. 依赖注入获取数据库会话（核心模式）```python
+#### 6. 依赖注入获取数据库会话（核心模式）
+```
 async def get_dbbase():
     async with AsyncSessionLocal() as session:
         try:
@@ -320,7 +326,8 @@ async def health_check():
 
 ---
 
-#### 7. 路由中使用```python
+#### 7. 路由中使用
+```
 @app.get('/books')
 async def get_books(db: AsyncSession = Depends(get_dbbase)):
     res = await db.execute(select(Book))
@@ -468,7 +475,8 @@ class Base(DeclarativeBase):
 - `insert_default`：已废弃，不要使用
 - 同时使用会导致 SQLAlchemy 生成错误的 SQL 语句
 
-### 2. User表添加密码哈希（安全考虑）```python
+### 2. User表添加密码哈希（安全考虑）
+```
 # 实际项目中不要存储明文密码
 from passlib.context import CryptContext
 
@@ -479,7 +487,8 @@ class User(Base):
     password: Mapped[str] = mapped_column(String(255), comment='密码哈希')
 ```
 
-### 3. 配置文件管理数据库URL```python
+### 3. 配置文件管理数据库URL
+```
 # settings.py
 from pydantic_settings import BaseSettings
 

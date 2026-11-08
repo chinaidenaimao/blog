@@ -19,7 +19,8 @@ tags:
 ### 什么是数据库？
 数据库是一个按照数据结构来组织、存储和管理数据的仓库。它允许用户高效地存储、检索和管理数据。
 
-### 数据库类型```
+### 数据库类型
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                      数据库类型                              │
 ├─────────────────────────────────────────────────────────────┤
@@ -51,7 +52,8 @@ tags:
 ### 2.1 关系模型
 关系模型是基于集合论和谓词逻辑的数据库模型。数据以二维表的形式组织，表之间通过键建立关系。
 
-### 2.2 关系类型```python
+### 2.2 关系类型
+```
 # 一对一关系 (1:1)
 # 用户 ↔ 用户资料class User:id: intname: str
 
@@ -89,7 +91,8 @@ class PostTag:  # 关联表
 
 ## 3. 数据类型
 
-### 3.1 数值类型```sql
+### 3.1 数值类型
+```
 -- 整数类型
 TINYINT        -- 1 字节，-128 到 127
 SMALLINT       -- 2 字节，-32768 到 32767
@@ -103,7 +106,8 @@ DOUBLE         -- 双精度浮点
 DECIMAL(M,D)   -- 精确小数
 ```
 
-### 3.2 字符串类型```sql
+### 3.2 字符串类型
+```
 -- 字符串类型
 CHAR(N)        -- 固定长度字符串
 VARCHAR(N)     -- 可变长度字符串
@@ -117,7 +121,8 @@ VARBINARY(N)   -- 可变长度二进制
 BLOB           -- 二进制大对象
 ```
 
-### 3.3 日期时间类型```sql
+### 3.3 日期时间类型
+```
 -- 日期时间类型
 DATE           -- 日期
 TIME           -- 时间
@@ -126,7 +131,8 @@ TIMESTAMP      -- 时间戳
 YEAR           -- 年份
 ```
 
-### 3.4 Python 映射```python
+### 3.4 Python 映射
+```
 from sqlalchemy import Column, Integer, String, Float, DateTime, Text
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -153,7 +159,8 @@ class Product(Base):
 
 ## 4. 约束和索引
 
-### 4.1 约束类型```sql
+### 4.1 约束类型
+```
 -- 主键约束
 CREATE TABLE users (
     id INT PRIMARY KEY,
@@ -187,7 +194,8 @@ CREATE TABLE posts (
 );
 ```
 
-### 4.2 索引类型```sql
+### 4.2 索引类型
+```
 -- 基本索引
 CREATE INDEX idx_users_email ON users(email);
 
@@ -204,7 +212,8 @@ CREATE INDEX idx_users_active ON users(id) WHERE is_active = true;
 CREATE FULLTEXT INDEX idx_posts_content ON posts(content);
 ```
 
-### 4.3 Python 映射```python
+### 4.3 Python 映射
+```
 from sqlalchemy import Column, Integer, String, CheckConstraint, Index
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -229,7 +238,8 @@ class User(Base):
 
 ## 5. ER 图设计
 
-### 5.1 ER 图符号```
+### 5.1 ER 图符号
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                      ER 图符号                              │
 ├─────────────────────────────────────────────────────────────┤
@@ -247,7 +257,8 @@ class User(Base):
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### 5.2 博客系统 ER 图```
+### 5.2 博客系统 ER 图
+```
 ╔═══════════╗         ╔═══════════╗         ╔═══════════╗
 ║   Users   ║         ║   Posts   ║         ║   Tags    ║
 ╠═══════════╣         ╠═══════════╣         ╠═══════════╣
@@ -371,7 +382,8 @@ CREATE TABLE departments (
 - **查询简化**：减少复杂查询
 - **缓存友好**：便于缓存数据
 
-### 7.2 反范式化策略```sql
+### 7.2 反范式化策略
+```
 -- 添加冗余字段
 CREATE TABLE posts (
     id INT PRIMARY KEY,
@@ -407,7 +419,8 @@ GROUP BY u.id, u.name;
 
 ## 8. 数据建模
 
-### 8.1 概念模型```python
+### 8.1 概念模型
+```
 # 概念模型定义class User:"""用户实体"""id: int
     name: str
     email: str
@@ -427,7 +440,8 @@ class Comment:
     author: User
 ```
 
-### 8.2 逻辑模型```python
+### 8.2 逻辑模型
+```
 # 逻辑模型定义
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
@@ -474,7 +488,8 @@ class Comment(Base):
     author = relationship("User", back_populates="comments")
 ```
 
-### 8.3 物理模型```python
+### 8.3 物理模型
+```
 # 物理模型 - 考虑性能和存储
 from sqlalchemy import Column, Integer, String, Text, ForeignKey, DateTime, Index
 from sqlalchemy.orm import relationship
@@ -504,7 +519,8 @@ class User(Base):
 
 ## 9. DDL 操作
 
-### 9.1 创建表```sql
+### 9.1 创建表
+```
 -- 创建用户表
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -527,7 +543,8 @@ CREATE TABLE posts (
 );
 ```
 
-### 9.2 修改表```sql
+### 9.2 修改表
+```
 -- 添加列
 ALTER TABLE users ADD COLUMN age INT;
 
@@ -544,7 +561,8 @@ ALTER TABLE users ADD CONSTRAINT chk_age CHECK (age >= 0 AND age <= 150);
 ALTER TABLE users DROP CONSTRAINT chk_age;
 ```
 
-### 9.3 删除表```sql
+### 9.3 删除表
+```
 -- 删除表
 DROP TABLE IF EXISTS posts;
 
@@ -556,7 +574,8 @@ TRUNCATE TABLE posts;
 
 ## 10. DML 操作
 
-### 10.1 插入数据```sql
+### 10.1 插入数据
+```
 -- 插入单条记录
 INSERT INTO users (username, email, password_hash)
 VALUES ('john', 'john@example.com', 'hashed_password');
@@ -573,7 +592,8 @@ INSERT INTO user_backup (username, email)
 SELECT username, email FROM users WHERE is_active = true;
 ```
 
-### 10.2 更新数据```sql
+### 10.2 更新数据
+```
 -- 更新单条记录
 UPDATE users SET email = 'newemail@example.com' WHERE id = 1;
 
@@ -584,7 +604,8 @@ UPDATE users SET is_active = false WHERE last_login < '2023-01-01';
 UPDATE posts SET view_count = view_count + 1 WHERE id = 1;
 ```
 
-### 10.3 删除数据```sql
+### 10.3 删除数据
+```
 -- 删除单条记录
 DELETE FROM users WHERE id = 1;
 
@@ -599,7 +620,8 @@ DELETE FROM users;
 
 ## 11. 查询优化
 
-### 11.1 使用索引```sql
+### 11.1 使用索引
+```
 -- 创建索引
 CREATE INDEX idx_users_email ON users(email);
 
@@ -610,7 +632,8 @@ SELECT * FROM users WHERE email = 'john@example.com';
 SELECT * FROM users WHERE email LIKE '%john%';
 ```
 
-### 11.2 优化查询```sql
+### 11.2 优化查询
+```
 -- 避免 SELECT *
 SELECT id, username, email FROM users WHERE id = 1;
 
@@ -621,7 +644,8 @@ SELECT * FROM posts ORDER BY created_at DESC LIMIT 10;
 EXPLAIN SELECT * FROM users WHERE email = 'john@example.com';
 ```
 
-### 11.3 连接优化```sql
+### 11.3 连接优化
+```
 -- 使用 INNER JOIN
 SELECT u.username, p.title
 FROM users u
@@ -644,7 +668,8 @@ GROUP BY u.id;
 - **隔离性 (Isolation)**：并发事务互不干扰
 - **持久性 (Durability)**：事务提交后永久保存
 
-### 12.2 事务控制```sql
+### 12.2 事务控制
+```
 -- 开始事务
 START TRANSACTION;
 
@@ -659,7 +684,8 @@ COMMIT;
 ROLLBACK;
 ```
 
-### 12.3 锁机制```sql
+### 12.3 锁机制
+```
 -- 行锁
 SELECT * FROM users WHERE id = 1 FOR UPDATE;
 
@@ -674,7 +700,8 @@ SELECT * FROM users WHERE id = 1 LOCK IN SHARE MODE;
 
 ## 13. 数据库选型
 
-### 13.1 选型考虑因素```
+### 13.1 选型考虑因素
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                    数据库选型考虑因素                        │
 ├─────────────────────────────────────────────────────────────┤
@@ -710,7 +737,8 @@ SELECT * FROM users WHERE id = 1 LOCK IN SHARE MODE;
 
 ## 14. 性能优化
 
-### 14.1 查询优化```python
+### 14.1 查询优化
+```
 # 使用索引
 from sqlalchemy import Index
 
@@ -734,7 +762,8 @@ users = session.query(User).options(joinedload(User.posts)).all()
 users = session.query(User).offset(0).limit(10).all()
 ```
 
-### 14.2 缓存策略```python
+### 14.2 缓存策略
+```
 from functools import lru_cache
 from sqlalchemy.orm import Session
 
@@ -765,7 +794,8 @@ def get_user_with_cache(user_id: int):
     return user
 ```
 
-### 14.3 连接池优化```python
+### 14.3 连接池优化
+```
 from sqlalchemy import create_engine
 from sqlalchemy.pool import QueuePool
 
@@ -784,7 +814,8 @@ engine = create_engine(
 
 ## 15. 安全最佳实践
 
-### 15.1 SQL 注入防护```python
+### 15.1 SQL 注入防护
+```
 # 使用参数化查询
 session.query(User).filter(User.email == email).first()
 
@@ -795,7 +826,8 @@ user = session.query(User).filter(User.email == email).first()
 # session.execute(f"SELECT * FROM users WHERE email = '{email}'")
 ```
 
-### 15.2 密码安全```python
+### 15.2 密码安全
+```
 from passlib.context import CryptContext
 from pydantic import BaseModel
 
@@ -813,7 +845,8 @@ hashed_password = get_password_hash("secret123")
 is_valid = verify_password("secret123", hashed_password)
 ```
 
-### 15.3 访问控制```python
+### 15.3 访问控制
+```
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException
 
@@ -841,7 +874,8 @@ def get_current_active_user(
 
 ## 16. 监控和维护
 
-### 16.1 性能监控```pythonimport time
+### 16.1 性能监控
+```
 import logging
 from sqlalchemy import event
 
@@ -863,7 +897,8 @@ def after_cursor_execute(conn, cursor, statement, parameters, context, executema
     logging.info(f"Query executed in {total:.4f} seconds")
 ```
 
-### 16.2 数据库维护```python
+### 16.2 数据库维护
+```
 # 定期备份
 import subprocess
 from datetime import datetime
@@ -895,7 +930,8 @@ def cleanup_old_data(days: int = 30):
     session.commit()
 ```
 
-### 16.3 健康检查```python
+### 16.3 健康检查
+```
 from fastapi import FastAPI, Depends
 from sqlalchemy.orm import Session
 
@@ -941,7 +977,8 @@ def health_check(db: Session = Depends(get_db)):
 
 > 在这里记录你的学习笔记和心得
 
-### 常用 SQL 语句```sql
+### 常用 SQL 语句
+```
 -- 查询
 SELECT * FROM users WHERE email = 'john@example.com';
 

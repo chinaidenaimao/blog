@@ -16,7 +16,8 @@ tags:
 
 ## 1. 部署架构
 
-### 1.1 开发环境```
+### 1.1 开发环境
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        开发环境架构                               │
 │                                                                 │
@@ -35,7 +36,8 @@ tags:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### 1.2 生产环境```
+### 1.2 生产环境
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        生产环境架构                               │
 │                                                                 │
@@ -77,7 +79,8 @@ tags:
 | npm/yarn/pnpm | 最新 | 包管理器 |
 | Git | >= 2.0 | 版本控制 |
 
-### 2.2 后端搭建```bash
+### 2.2 后端搭建
+```
 # 1. 进入后端目录cd backend
 
 # 2. 创建虚拟环境
@@ -103,7 +106,8 @@ alembic upgrade head
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### 2.3 前端搭建```bash
+### 2.3 前端搭建
+```
 # 1. 进入前端目录cd frontend
 
 # 2. 安装依赖npm install
@@ -112,7 +116,8 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 cp .env.example .env.local
 # 编辑 .env.local 文件
 
-# 4. 启动开发服务器npm run dev```
+# 4. 启动开发服务器npm run dev
+```
 
 ### 2.4 访问地址
 
@@ -188,7 +193,8 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 ```
 
-#### 3.1.3 Nginx 配置```nginx
+#### 3.1.3 Nginx 配置
+```
 # frontend/nginx.confserver {listen 80;
     server_name localhost;
     root /usr/share/nginx/html;
@@ -215,7 +221,8 @@ CMD ["nginx", "-g", "daemon off;"]
 }
 ```
 
-#### 3.1.4 Docker Compose```yaml
+#### 3.1.4 Docker Compose
+```
 # docker-compose.yml
 version: '3.8'
 
@@ -277,7 +284,8 @@ networks:
     driver: bridge
 ```
 
-#### 3.1.5 启动服务```bash
+#### 3.1.5 启动服务
+```
 # 构建并启动
 docker-compose up -d
 
@@ -292,7 +300,8 @@ docker-compose down
 
 ### 3.2 传统部署
 
-#### 3.2.1 后端部署```bash
+#### 3.2.1 后端部署
+```
 # 1. 安装依赖
 pip install gunicorn uvicorn[standard]
 
@@ -306,16 +315,19 @@ gunicorn app.main:app \
     --error-logfile /var/log/learn-pdf/error.log
 ```
 
-#### 3.2.2 前端部署```bash
+#### 3.2.2 前端部署
+```
 # 1. 构建
 npm run build
 
 # 2. 复制到 Nginx 目录
 cp -r dist/* /var/www/learn-pdf/
 
-# 3. 配置 Nginx (见上方 nginx.conf)```
+# 3. 配置 Nginx (见上方 nginx.conf)
+```
 
-#### 3.2.3 Nginx 安装配置```bash
+#### 3.2.3 Nginx 安装配置
+```
 # 安装 Nginx
 sudo apt update
 sudo apt install nginx
@@ -338,7 +350,8 @@ sudo systemctl restart nginx
 
 ## 4. 环境变量配置
 
-### 4.1 后端环境变量```env
+### 4.1 后端环境变量
+```
 # backend/.env
 
 # 数据库
@@ -362,9 +375,11 @@ SECRET_KEY=your-secret-key-here
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 
-# 调试DEBUG=false```
+# 调试DEBUG=false
+```
 
-### 4.2 前端环境变量```env
+### 4.2 前端环境变量
+```
 # frontend/.env
 
 # API 地址
@@ -379,7 +394,8 @@ VITE_APP_VERSION=1.0.0
 
 ## 5. 数据库部署
 
-### 5.1 PostgreSQL 安装```bash
+### 5.1 PostgreSQL 安装
+```
 # Ubuntu/Debian
 sudo apt update
 sudo apt install postgresql postgresql-contrib
@@ -389,7 +405,8 @@ sudo systemctl start postgresql
 sudo systemctl enable postgresql
 ```
 
-### 5.2 创建数据库```bash
+### 5.2 创建数据库
+```
 # 切换到 postgres 用户
 sudo -u postgres psql
 
@@ -398,9 +415,11 @@ CREATE USER learn_pdf WITH PASSWORD 'your_password';
 CREATE DATABASE learn_pdf OWNER learn_pdf;
 GRANT ALL PRIVILEGES ON DATABASE learn_pdf TO learn_pdf;
 
-# 退出\q```
+# 退出\q
+```
 
-### 5.3 数据库迁移```bash
+### 5.3 数据库迁移
+```
 # 配置 alembic.ini 中的数据库连接
 # sqlalchemy.url = postgresql+asyncpg://learn_pdf:your_password@localhost/learn_pdf
 
@@ -412,7 +431,8 @@ alembic upgrade head
 
 ## 6. 监控和日志
 
-### 6.1 应用日志```python
+### 6.1 应用日志
+```
 # app/core/logging.py
 import logging
 from logging.handlers import RotatingFileHandler
@@ -436,7 +456,8 @@ def setup_logging():
     )
 ```
 
-### 6.2 健康检查```python
+### 6.2 健康检查
+```
 # app/api/v1/health.py
 from fastapi import APIRouter
 from sqlalchemy import text
@@ -458,7 +479,8 @@ async def health_check(db=Depends(get_db)):
 
 ## 7. SSL/TLS 配置
 
-### 7.1 Let's Encrypt```bash
+### 7.1 Let's Encrypt
+```
 # 安装 Certbot
 sudo apt install certbot python3-certbot-nginx
 
@@ -469,7 +491,8 @@ sudo certbot --nginx -d yourdomain.com
 sudo certbot renew --dry-run
 ```
 
-### 7.2 Nginx SSL 配置```nginxserver {
+### 7.2 Nginx SSL 配置
+```
     listen 443 ssl http2;
     server_name yourdomain.com;
 
@@ -493,7 +516,8 @@ sudo certbot renew --dry-run
 
 ## 8. 性能优化
 
-### 8.1 Gunicorn 配置```python
+### 8.1 Gunicorn 配置
+```
 # gunicorn_config.py
 import multiprocessing
 
@@ -515,7 +539,8 @@ errorlog = "/var/log/learn-pdf/error.log"
 loglevel = "info"
 ```
 
-### 8.2 Nginx 缓存```nginx
+### 8.2 Nginx 缓存
+```
 # 静态资源缓存
 location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)$ {
     expires 1y;
@@ -542,7 +567,8 @@ location /api/v1/templates {
 | CORS 错误 | 跨域配置 | 检查 `CORS_ORIGINS` 配置 |
 | 数据库连接失败 | 连接配置错误 | 检查 `DATABASE_URL` |
 
-### 9.2 日志查看```bash
+### 9.2 日志查看
+```
 # 查看 Nginx 日志
 tail -f /var/log/nginx/error.log
 tail -f /var/log/nginx/access.log
@@ -560,7 +586,8 @@ docker-compose logs -f frontend
 
 ## 10. 备份策略
 
-### 10.1 数据库备份```bash
+### 10.1 数据库备份
+```
 # 创建备份脚本
 #!/bin/bash
 DATE=$(date +%Y%m%d_%H%M%S)
@@ -570,12 +597,14 @@ pg_dump -U postgres learn_pdf > /backups/learn_pdf_$DATE.sql
 find /backups -name "*.sql" -mtime +7 -delete
 ```
 
-### 10.2 文件备份```bash
+### 10.2 文件备份
+```
 # 备份上传文件
 tar -czf /backups/uploads_$(date +%Y%m%d).tar.gz /path/to/uploads
 ```
 
-### 10.3 定时任务```bash
+### 10.3 定时任务
+```
 # 添加定时备份任务crontab -e
 
 # 每天凌晨 2 点备份数据库

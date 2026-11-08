@@ -14,7 +14,8 @@ tags:
 
 ## 📊 数据库表结构
 
-### 1. 用户表（user）存储用户基本信息。```sql
+### 1. 用户表（user）存储用户基本信息。
+```
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `username` varchar(50) NOT NULL COMMENT '用户名',
@@ -32,7 +33,8 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 ```
 
-### 2. 用户令牌表（user_token）存储用户登录令牌。```sql
+### 2. 用户令牌表（user_token）存储用户登录令牌。
+```
 CREATE TABLE `user_token` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '用户令牌ID',
   `user_id` int NOT NULL COMMENT '用户ID',
@@ -44,7 +46,8 @@ CREATE TABLE `user_token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户令牌表';
 ```
 
-### 3. 新闻分类表（news_category）存储新闻分类信息。```sql
+### 3. 新闻分类表（news_category）存储新闻分类信息。
+```
 CREATE TABLE `news_category` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '分类id',
   `name` varchar(50) NOT NULL COMMENT '分类名称',
@@ -54,7 +57,8 @@ CREATE TABLE `news_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='新闻分类表';
 ```
 
-### 4. 新闻表（news）存储新闻内容。```sql
+### 4. 新闻表（news）存储新闻内容。
+```
 CREATE TABLE `news` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '新闻id',
   `title` varchar(100) NOT NULL COMMENT '新闻标题',
@@ -72,7 +76,8 @@ CREATE TABLE `news` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='新闻表';
 ```
 
-### 5. 收藏表（favorite）存储用户收藏的新闻。```sql
+### 5. 收藏表（favorite）存储用户收藏的新闻。
+```
 CREATE TABLE `favorite` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '收藏id',
   `user_id` int NOT NULL COMMENT '用户id',
@@ -84,7 +89,8 @@ CREATE TABLE `favorite` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='收藏表';
 ```
 
-### 6. 历史记录表（history）存储用户浏览历史。```sql
+### 6. 历史记录表（history）存储用户浏览历史。
+```
 CREATE TABLE `history` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '历史id',
   `user_id` int NOT NULL COMMENT '用户id',
@@ -96,7 +102,8 @@ CREATE TABLE `history` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='历史记录表';
 ```
 
-## 🔗 表关系图```
+## 🔗 表关系图
+```
 ┌─────────────────┐     ┌─────────────────┐
 │      user       │     │    user_token   │
 ├─────────────────┤     ├─────────────────┤
@@ -142,14 +149,16 @@ CREATE TABLE `history` (
 
 ## 📐 ORM 模型定义
 
-### models/base.py```python
+### models/base.py
+```
 from sqlalchemy.orm import DeclarativeBase
 
 class Base(DeclarativeBase):
     pass
 ```
 
-### models/users.py```python
+### models/users.py
+```
 from typing import Optional
 from sqlalchemy import DateTime, Integer, String, Index, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column

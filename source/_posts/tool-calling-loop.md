@@ -60,7 +60,8 @@ AgentState.__annotations__
 #   'messages': Required[Annotated[list[AnyMessage], add_messages]],
 #   'jump_to':  NotRequired[Annotated[JumpTo | None, ...]],
 #   'structured_response': NotRequired[Annotated[ResponseT, OmitFromInput]],
-# }```
+# }
+```
 
 三个字段，日常只需要关心第一个：
 
@@ -71,9 +72,11 @@ AgentState.__annotations__
 | `structured_response` | 用了 `response_format` 时，结构化结果放这里 |
 
 > **📝 说明：`add_messages` 是个 reducer，不是简单赋值**
-> ```python
+>
+```
 > messages: Annotated[list[AnyMessage], add_messages]
-> ```
+>
+```
 > 它决定「节点返回 `{"messages": [...]}` 时会发生什么」：
 > - **相同 ID 的消息 → 更新替换**（流式时把分片合并成完整消息就靠这个）
 > - **新 ID 的消息 → 追加**
@@ -111,7 +114,8 @@ AgentState.__annotations__
 
 ---
 
-## 四、自己查看图结构调试时非常有用：```python
+## 四、自己查看图结构调试时非常有用：
+```
 # 拿 Mermaid 文本，可贴进 Markdown 或 mermaid.live
 print(agent.get_graph().draw_mermaid())
 
@@ -147,7 +151,8 @@ agent = create_agent(
 > 模型就能自己决定「换个参数重试」还是「告诉用户做不到」。
 > 这比让异常冒泡到用户面前体验好得多。
 
-### 5.2 一次返回「给人看的」和「给模型看的」```python
+### 5.2 一次返回「给人看的」和「给模型看的」
+```
 @tool(response_format="content_and_artifact")
 def query_db(sql: str):
     """执行 SQL 查询
@@ -157,9 +162,11 @@ def query_db(sql: str):
     """
     rows = run_query(sql)                     # list[dict]
     return json.dumps(rows, ensure_ascii=False), rows
-    #      ↑ content 给模型看            ↑ artifact 给程序用```
+    #      ↑ content 给模型看            ↑ artifact 给程序用
+```
 
-### 5.3 工具里访问 state 和 store```python
+### 5.3 工具里访问 state 和 store
+```
 from langchain.tools import ToolRuntime
 
 

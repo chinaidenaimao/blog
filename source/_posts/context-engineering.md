@@ -236,7 +236,8 @@ self-attention 里，每个 token 和所有 token 算相关性。第 n 步的输
 
 ## 七、一次 agent run 里，上下文到底怎么长
 
-### 增长曲线```mermaidgraph LR
+### 增长曲线
+```
     S0["🟢 step 0<br/>system + tools<br/>≈ 2k"] --> S1["step 1<br/>+user +assistant +tool<br/>≈ 5k"]
     S1 --> S2["step 2<br/>+tool +assistant +tool<br/>≈ 12k"]
     S2 --> S3["step 3<br/>≈ 22k"]

@@ -20,7 +20,8 @@ tags:
 
 ## 一、增加操作（Create）
 
-### 1. 添加单条记录```python
+### 1. 添加单条记录
+```
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import User
 
@@ -39,7 +40,8 @@ async def create_user(session: AsyncSession):
     await session.commit()
 ```
 
-### 2. 批量添加```python
+### 2. 批量添加
+```
 async def batch_create_users(session: AsyncSession):
     users = [
         User(name="用户1", email="user1@example.com", age=20),
@@ -51,7 +53,8 @@ async def batch_create_users(session: AsyncSession):
     return users
 ```
 
-### 3. 添加后立即获取ID```python
+### 3. 添加后立即获取ID
+```
 async def create_and_get_id(session: AsyncSession):
     new_user = User(name="王五", email="wangwu@example.com", age=28)
     session.add(new_user)
@@ -69,7 +72,8 @@ async def create_and_get_id(session: AsyncSession):
 
 ## 二、查询操作（Read）
 
-### 1. 基础查询```python
+### 1. 基础查询
+```
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from models import User
@@ -92,7 +96,8 @@ async def get_user(session: AsyncSession, user_id: int):
     return user
 ```
 
-### 2. 条件查询```python
+### 2. 条件查询
+```
 # 精确匹配
 result = await session.execute(
     select(User).where(User.name == "张三")
@@ -127,7 +132,8 @@ result = await session.execute(
 )
 ```
 
-### 3. 聚合查询```python
+### 3. 聚合查询
+```
 from sqlalchemy import func
 
 # 统计数量
@@ -149,7 +155,8 @@ result = await session.execute(
 max_age, min_age = result.one()
 ```
 
-### 4. 关联查询（预加载）```python
+### 4. 关联查询（预加载）
+```
 from sqlalchemy.orm import selectinload, joinedload
 
 # 假设有 User 和 Post 的一对多关系
@@ -174,7 +181,8 @@ async def get_users_with_posts(session: AsyncSession):
 
 ## 三、删除操作（Delete）
 
-### 1. 删除单条记录```python
+### 1. 删除单条记录
+```
 async def delete_user(session: AsyncSession, user_id: int):
     # 先查询
     user = await session.get(User, user_id)
@@ -185,7 +193,8 @@ async def delete_user(session: AsyncSession, user_id: int):
     return False
 ```
 
-### 2. 批量删除```python
+### 2. 批量删除
+```
 from sqlalchemy import delete
 
 # 删除所有年龄小于18的用户
@@ -197,7 +206,8 @@ async def delete未成年_users(session: AsyncSession):
     print(f"删除了 {result.rowcount} 条记录")
 ```
 
-### 3. 软删除（推荐）```python
+### 3. 软删除（推荐）
+```
 from sqlalchemy import update
 from datetime import datetime
 
@@ -222,7 +232,8 @@ async def get_active_users(session: AsyncSession):
 
 ## 四、更新操作（Update）
 
-### 1. 更新单条记录```python
+### 1. 更新单条记录
+```
 async def update_user(session: AsyncSession, user_id: int, new_data: dict):
     user = await session.get(User, user_id)
     if user:
@@ -234,7 +245,8 @@ async def update_user(session: AsyncSession, user_id: int, new_data: dict):
     return None
 ```
 
-### 2. 批量更新```python
+### 2. 批量更新
+```
 # 批量更新所有用户
 await session.execute(
     update(User).values(is_active=True)
@@ -250,7 +262,8 @@ await session.execute(
 
 ---
 
-## 五、完整示例：CRUD API```python
+## 五、完整示例：CRUD API
+```
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -342,7 +355,8 @@ async def delete_user(user_id: int, session: AsyncSession = Depends(get_session)
 
 ## 六、常见坑与最佳实践
 
-### ⚠️ 常见错误```python
+### ⚠️ 常见错误
+```
 # ❌ 错误：忘记await
 result = session.execute(select(User))  # 错误！
 
@@ -375,7 +389,8 @@ print(user.id)
 
 ## 七、数据库连接配置
 
-### 1. 异步数据库引擎```python
+### 1. 异步数据库引擎
+```
 from sqlalchemy.ext.asyncio import async_sessionmaker, AsyncSession, create_async_engine
 
 # 数据库配置
@@ -390,7 +405,8 @@ async_engine = create_async_engine(
 )
 ```
 
-### 2. 异步会话工厂```python
+### 2. 异步会话工厂
+```
 # 异步会话工厂
 AsyncSessionLocal = async_sessionmaker(
     bind=async_engine,
@@ -399,7 +415,8 @@ AsyncSessionLocal = async_sessionmaker(
 )
 ```
 
-### 3. 获取数据库会话（依赖注入）```python
+### 3. 获取数据库会话（依赖注入）
+```
 async def get_db():
     async with AsyncSessionLocal as session:
         try:
@@ -412,7 +429,8 @@ async def get_db():
             await session.close()
 ```
 
-### 4. 在 FastAPI 中使用```python
+### 4. 在 FastAPI 中使用
+```
 from fastapi import FastAPI, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -440,7 +458,8 @@ async def get_users(db: AsyncSession = Depends(get_db)):
 
 FastAPI 内置了 CORSMiddleware，不需要额外安装。
 
-### 3. 基本配置```python
+### 3. 基本配置
+```
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -456,7 +475,8 @@ app.add_middleware(
 )
 ```
 
-### 4. 生产环境配置```python
+### 4. 生产环境配置
+```
 # 生产环境应该指定具体的域名
 app.add_middleware(
     CORSMiddleware,
@@ -480,7 +500,8 @@ app.add_middleware(
 | `allow_headers` | 允许的请求头，`["*"]` 表示允许所有 |
 | `allow_origin_regex` | 使用正则表达式匹配来源 |
 
-### 6. 完整示例```python
+### 6. 完整示例
+```
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -515,7 +536,8 @@ from fastapi import APIRouter
 router = APIRouter()
 ```
 
-### 2. 在路由器上定义路由```python
+### 2. 在路由器上定义路由
+```
 from fastapi import APIRouter
 
 router = APIRouter()
@@ -530,7 +552,8 @@ async def create_user(name: str):
     return {"name": name}
 ```
 
-### 3. 在主应用中注册路由器```python
+### 3. 在主应用中注册路由器
+```
 from fastapi import FastAPI
 from routers import users  # 导入路由文件
 
@@ -540,7 +563,8 @@ app = FastAPI()
 app.include_router(users.router)
 ```
 
-### 4. 目录结构示例```项目目录/
+### 4. 目录结构示例
+```
 ├── main.py              # 主应用入口
 ├── routers/             # 路由文件夹
 │   ├── __init__.py      # 空文件，让 Python 认识这个文件夹
@@ -548,7 +572,8 @@ app.include_router(users.router)
 │   └── items.py         # 商品相关路由
 ```
 
-### 5. 添加前缀（prefix）```python
+### 5. 添加前缀（prefix）
+```
 # 给这个路由器的所有路由添加统一前缀
 app.include_router(
     users.router,
@@ -587,7 +612,8 @@ async def get_users():
 **文件：`routers/__init__.py`**
 ```python
 # 这个文件可以是空的，但必须存在
-# 它的作用是让 Python 把 routers 文件夹识别为"包"```
+# 它的作用是让 Python 把 routers 文件夹识别为"包"
+```
 
 ---
 

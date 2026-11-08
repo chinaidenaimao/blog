@@ -21,7 +21,8 @@ tags:
 
 ---
 
-## 1. 基础：APIRouter 的创建```python
+## 1. 基础：APIRouter 的创建
+```
 from fastapi import APIRouter
 
 # 创建一个路由器
@@ -32,7 +33,8 @@ router = APIRouter()
 
 ---
 
-## 2. 在路由器上定义路由```python
+## 2. 在路由器上定义路由
+```
 from fastapi import APIRouter
 
 router = APIRouter()
@@ -49,7 +51,8 @@ async def create_user(name: str):
 
 ---
 
-## 3. 在主应用中注册路由器```python
+## 3. 在主应用中注册路由器
+```
 from fastapi import FastAPI
 from routers import users  # 导入路由文件
 
@@ -61,7 +64,8 @@ app.include_router(users.router)
 
 ---
 
-## 4. 目录结构示例```项目目录/
+## 4. 目录结构示例
+```
 ├── main.py              # 主应用入口
 ├── routers/             # 路由文件夹
 │   ├── __init__.py      # 空文件，让 Python 认识这个文件夹
@@ -71,7 +75,8 @@ app.include_router(users.router)
 
 ---
 
-## 5. 添加前缀（prefix）```python
+## 5. 添加前缀（prefix）
+```
 # 给这个路由器的所有路由添加统一前缀
 app.include_router(
     users.router,
@@ -85,7 +90,8 @@ app.include_router(
 
 ---
 
-## 6. 添加标签（tags）```python
+## 6. 添加标签（tags）
+```
 # tags 用于 API 文档中的分组
 app.include_router(
     users.router,
@@ -97,7 +103,8 @@ app.include_router(
 
 ## 7. 导入的写法
 
-### 文件：`main.py````python
+### 文件：`main.py
+```
 from fastapi import FastAPI
 
 # 方式1：直接导入模块
@@ -109,7 +116,8 @@ app.include_router(users.router)
 app.include_router(items.router)
 ```
 
-### 文件：`routers/users.py````python
+### 文件：`routers/users.py
+```
 from fastapi import APIRouter
 
 router = APIRouter()
@@ -119,9 +127,11 @@ async def get_users():
     return []
 ```
 
-### 文件：`routers/__init__.py````python
+### 文件：`routers/__init__.py
+```
 # 这个文件可以是空的，但必须存在
-# 它的作用是让 Python 把 routers 文件夹识别为"包"```
+# 它的作用是让 Python 把 routers 文件夹识别为"包"
+```
 
 ---
 

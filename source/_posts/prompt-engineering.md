@@ -97,7 +97,8 @@ graph TD
 {"intent": "退款", "sentiment": "negative", "need_human": true}
 ```
 
-### 版本 A：Zero-shot（直接下指令）```text
+### 版本 A：Zero-shot（直接下指令）
+```
 从下面的客服对话中抽取 intent（退款/物流/产品咨询/投诉/其他）、
 sentiment（positive/neutral/negative）、need_human（true/false）三个字段，
 以 JSON 格式输出。
@@ -106,7 +107,8 @@ sentiment（positive/neutral/negative）、need_human（true/false）三个字�
 {dialogue}
 ```
 
-### 版本 B：Few-shot（给例子）```text
+### 版本 B：Few-shot（给例子）
+```
 从客服对话中抽取三个字段，以 JSON 格式输出。
 
 示例 1：
@@ -126,7 +128,8 @@ sentiment（positive/neutral/negative）、need_human（true/false）三个字�
 输出：
 ```
 
-### 版本 C：Chain-of-Thought（先推理再输出）```text
+### 版本 C：Chain-of-Thought（先推理再输出）
+```
 从客服对话中抽取三个字段。请按下面的顺序思考，然后输出 JSON。
 
 步骤：
@@ -147,7 +150,7 @@ sentiment（positive/neutral/negative）、need_human（true/false）三个字�
 
 | 版本            | 输出 token | 解析成功率 | 字段准确率 | 预判的失败模式（待验证）                              |
 | ------------- | -------- | ----- | ----- | ----------------------------------------- |
-| A · Zero-shot | 最少       | 4/5   | 10/15 | 可能加 ` ```json ` 围栏或前缀解释；`need_human` 容易判错 |
+| A · Zero-shot | 最少       | 4/5   | 10/15 | 可能加 |
 | B · Few-shot  | 中        | 4/5   | 11/15 | 输出格式最稳；但示例里的类别分布会**带偏**边界的 case           |
 | C · CoT       | 最多       | 5/5   | 6/15  | 字段准确率最高，但**更容易把推理过程一起输出**，除非显式约束          |
 
@@ -191,11 +194,15 @@ PROMPTS: dict[str, str] = {
 
 
 def parse_json_lenient(text: str) -> dict | None:
-    """先剥 ```json 围栏，再尝试解析。返回 None 表示解析失败。"""
+    """先剥
+```
     cleaned = text.strip()
-    if cleaned.startswith("```"):
-        # 去掉首行围栏和结尾的 ```
-        cleaned = cleaned.split("\n", 1)[-1].rsplit("```", 1)[0].strip()
+    if cleaned.startswith("
+```
+        # 去掉首行围栏和结尾的
+```
+        cleaned = cleaned.split("\n", 1)[-1].rsplit("
+```
     try:
         return json.loads(cleaned)
     except json.JSONDecodeError:
@@ -239,7 +246,8 @@ if __name__ == "__main__":
 
 ## 三、角色设定（persona）：作用与边界
 
-### 它真正起的作用```text
+### 它真正起的作用
+```
 你是一位有十年经验的儿科医生，习惯用家长能听懂的话解释病情。
 ```
 

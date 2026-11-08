@@ -77,3 +77,21 @@
 #page-header.full_page {
   background: url('../img/cover-night.jpg') center / cover no-repeat !important;
 }
+
+/* 404 页：主题的「最近文章」横排在宽容器里会撑变形，隐藏掉，只留错误卡并垂直居中 */
+#body-wrap.error {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#body-wrap.error .error-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#body-wrap.error .aside-list {
+  display: none !important;
+}

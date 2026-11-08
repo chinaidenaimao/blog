@@ -20,7 +20,8 @@ tags:
 
 ---
 
-## 一、最小可运行例子```python
+## 一、最小可运行例子
+```
 from typing import Annotated, TypedDict
 
 from langgraph.graph import END, START, StateGraph
@@ -46,7 +47,8 @@ g.add_conditional_edges("a", should_loop)
 
 app = g.compile()
 out = app.invoke({"messages": [], "rounds": 0})
-# 实跑结果：rounds = 3，messages = ['A 执行', 'A 执行', 'A 执行']```四个原语都在这里了：```
+# 实跑结果：rounds = 3，messages = ['A 执行', 'A 执行', 'A 执行']
+```
 StateGraph(State)         ← State：状态长什么样
 g.add_node("a", node_a)   ← Node：一个处理步骤
 g.set_entry_point("a")    ← Edge：从哪开始
@@ -55,7 +57,8 @@ g.add_conditional_edges   ← Edge：根据状态决定去哪
 
 ---
 
-## 二、State 与 Reducer：状态怎么合并```python
+## 二、State 与 Reducer：状态怎么合并
+```
 class State(TypedDict):
     messages: Annotated[list, lambda a, b: a + b]
     rounds: int
@@ -90,7 +93,8 @@ class State(TypedDict):
 
 ---
 
-## 三、Node：返回增量，不是全量```python
+## 三、Node：返回增量，不是全量
+```
 def my_node(state: State) -> dict:
     # state 是当前完整状态
     # 返回值是「要合并进去的增量」
@@ -112,13 +116,15 @@ async def node(state): ...                    # 异步节点
 
 ## 四、Edge：固定边与条件边
 
-### 4.1 固定边```python
+### 4.1 固定边
+```
 g.add_edge("a", "b")          # a 执行完必然去 b
 g.add_edge(START, "a")        # 等价 g.set_entry_point("a")
 g.add_edge("b", END)          # 等价 g.set_finish_point("b")
 ```
 
-### 4.2 条件边```python
+### 4.2 条件边
+```
 def route(state: State) -> str:
     if state["error"]:
         return "handle_error"
@@ -162,14 +168,17 @@ g.add_edge("worker", END)
 
 app = g.compile()
 out = app.invoke({"topics": ["A", "B", "C"], "results": []})
-# 实跑结果：['已处理:A', '已处理:B', '已处理:C']```
+# 实跑结果：['已处理:A', '已处理:B', '已处理:C']
+```
 
 > **🚫 危险：`Send` 只能从**条件边**返回，不能从节点返回**
 > 如果你在节点里 `return [Send(...), Send(...)]`，会报：
-> ```
+>
+```
 > langgraph.errors.InvalidUpdateError:
 >   Expected dict, got [Send(node='worker', arg={'topic': 'A'}), ...]
-> ```
+>
+```
 > 因为节点的返回值被当作「状态增量」，而 `Send` 列表不是 dict。
 >
 > **正确写法是 `add_conditional_edges(..., fan_out)` 或 `set_conditional_entry_point(fan_out, [...])`。**
@@ -180,7 +189,8 @@ out = app.invoke({"topics": ["A", "B", "C"], "results": []})
 
 ---
 
-## 六、`Command`：一次同时做「改状态 + 跳转」```python
+## 六、`Command`：一次同时做「改状态 + 跳转」
+```
 from langgraph.types import Command
 
 
@@ -203,7 +213,8 @@ g.set_entry_point("a")
 g.add_edge("b", END)
 
 out = g.compile().invoke({"log": []})
-# 实跑结果：['跳转到 b', 'b 执行']```实测签名：```python
+# 实跑结果：['跳转到 b', 'b 执行']
+```
 Command(
     *,
     graph: str | None = None,        # 多图（子图）场景用
@@ -225,7 +236,8 @@ Command(
 
 ---
 
-## 七、编译与调用```python
+## 七、编译与调用
+```
 app = g.compile()                          # 编译成可执行对象
 app.compile(checkpointer=..., store=...)   # 带持久化，见第 15 篇
 
@@ -252,7 +264,8 @@ config = {
 
 ---
 
-## 八、验证与可视化```python
+## 八、验证与可视化
+```
 g.validate()                              # 静态检查图是否合法
 
 print(app.get_graph().draw_mermaid())     # 导出 Mermaid，可贴进 Markdown

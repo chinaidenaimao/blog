@@ -26,7 +26,8 @@ Hexo 的主题很多，但真正"二次元味"拉满的其实没几个。AnZhiYu
 
 ## 安装
 
-```bash
+```bas
+h
 # 初始化站点
 hexo init my-blog
 cd my-blog
@@ -40,7 +41,8 @@ npm install hexo-renderer-pug hexo-renderer-stylus --save
 
 然后把站点配置里的主题名改掉：
 
-```yaml
+```yam
+l
 # _config.yml
 theme: anzhiyu
 ```
@@ -49,7 +51,8 @@ theme: anzhiyu
 
 主题的 `_config.yml` 有一千多行。**不要直接改它**，否则下次更新主题就全丢了。正确做法是复制一份到根目录：
 
-```bash
+```bas
+h
 cp themes/anzhiyu/_config.yml _config.anzhiyu.yml
 ```
 
@@ -70,7 +73,8 @@ cp themes/anzhiyu/_config.yml _config.anzhiyu.yml
 
 这两个页面需要 `source/_data/` 下的数据文件：
 
-```yaml
+```yam
+l
 # source/_data/essay.yml
 - title: 即刻短文
   subTitle: 咸鱼的日常生活。

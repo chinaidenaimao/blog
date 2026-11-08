@@ -83,7 +83,8 @@ SHOW CREATE TABLE student;
 
 ## 三、数据增删改（DML 核心操作）
 
-### 1\. 数据插入 INSERT```sql
+### 1\. 数据插入 INSERT
+```
 -- 指定字段插入单条数据
 INSERT INTO student(name,age) VALUES ('张三',18);
 
@@ -95,7 +96,8 @@ VALUES ('李四',19,1),('王五',20,2),('赵六',17,1);
 INSERT INTO student VALUES(4,'孙七',22,1,'2026-01-01 10:00:00');
 ```
 
-### 2\. 数据更新 UPDATE（重要：必须加WHERE，否则全表更新）```sql
+### 2\. 数据更新 UPDATE（重要：必须加WHERE，否则全表更新）
+```
 -- 单字段更新
 UPDATE student SET age=21 WHERE id=1;
 
@@ -103,7 +105,8 @@ UPDATE student SET age=21 WHERE id=1;
 UPDATE student SET age=22,name='小张' WHERE id=2;
 ```
 
-### 3\. 数据删除 DELETE/TRUNCATE```sql
+### 3\. 数据删除 DELETE/TRUNCATE
+```
 -- 删除指定条件数据
 DELETE FROM student WHERE id=3;
 
@@ -116,7 +119,8 @@ TRUNCATE TABLE student;
 
 ## 四、数据查询（SELECT 最常用核心）
 
-### 1\. 基础查询```sql
+### 1\. 基础查询
+```
 -- 查询表中所有字段所有数据
 SELECT * FROM student;
 
@@ -130,7 +134,8 @@ SELECT id AS 编号, name 姓名, age 年龄 FROM student;
 SELECT DISTINCT age FROM student;
 ```
 
-### 2\. 条件查询 WHERE```sql
+### 2\. 条件查询 WHERE
+```
 -- 基础比较运算
 SELECT * FROM student WHERE age = 18; -- 等于
 SELECT * FROM student WHERE age > 18; -- 大于
@@ -155,13 +160,15 @@ SELECT * FROM student WHERE age IS NULL; -- 查询为空的数据
 SELECT * FROM student WHERE age IS NOT NULL; -- 查询非空数据
 ```
 
-### 3\. 排序查询 ORDER BY```sql
+### 3\. 排序查询 ORDER BY
+```
 -- ASC 升序（默认可不写），DESC 降序
 SELECT * FROM student ORDER BY age ASC; -- 年龄升序
 SELECT * FROM student ORDER BY age DESC, id DESC; -- 年龄降序，年龄相同则ID降序
 ```
 
-### 4\. 分页查询 LIMIT```sql
+### 4\. 分页查询 LIMIT
+```
 -- 语法：LIMIT 偏移量, 每页条数 （偏移量从0开始）
 SELECT * FROM student LIMIT 0,10; -- 第1页，10条数据
 SELECT * FROM student LIMIT 10,10; -- 第2页，10条数据
@@ -257,7 +264,8 @@ CREATE UNIQUE INDEX idx_stu_idcard ON student(id_card);
 DROP INDEX idx_stu_name ON student;
 ```
 
-## 九、常用时间函数```sql
+## 九、常用时间函数
+```
 SELECT NOW();        -- 获取当前完整日期时间
 SELECT CURDATE();    -- 获取当前日期（仅年月日）
 SELECT CURTIME();    -- 获取当前时间（仅时分秒）
@@ -280,7 +288,8 @@ COMMIT;  -- 提交事务（数据永久生效）
 ROLLBACK; -- 回滚事务（撤销所有操作，数据恢复原样）
 ```
 
-## 十一、常用辅助语句```sql
+## 十一、常用辅助语句
+```
 -- 查看MySQL版本
 SELECT VERSION();
 

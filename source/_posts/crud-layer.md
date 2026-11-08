@@ -16,7 +16,8 @@ tags:
 
 CRUD 层负责数据库的增删改查操作，是连接路由层和模型层的桥梁。
 
-## 📁 文件结构```crud/
+## 📁 文件结构
+```
 ├── users.py        # 用户 CRUD
 ├── news.py         # 新闻 CRUD
 ├── favorite.py     # 收藏 CRUD
@@ -25,7 +26,8 @@ CRUD 层负责数据库的增删改查操作，是连接路由层和模型层的
 
 ## 👤 第一步：实现用户 CRUD
 
-### crud/users.py```pythonimport uuid
+### crud/users.py
+```
 from datetime import timedelta, datetime
 
 from fastapi import HTTPException, status
@@ -139,7 +141,8 @@ async def update_user_password(db: AsyncSession, user: User, password: UpdatePas
 
 ## 📰 第二步：实现新闻 CRUD
 
-### crud/news.py```python
+### crud/news.py
+```
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, update
 from models.news import Categories, News
@@ -193,7 +196,8 @@ async def get_related_news(db: AsyncSession, news_id: int, category_id: int):
 
 ## ⭐ 第三步：实现收藏 CRUD
 
-### crud/favorite.py```python
+### crud/favorite.py
+```
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, update, delete
 from fastapi import HTTPException
@@ -273,7 +277,8 @@ async def delete_favorite_news_all(db: AsyncSession, user_id: int):
 
 ## 📜 第四步：实现历史记录 CRUD
 
-### crud/history.py```python
+### crud/history.py
+```
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, update, delete
 from fastapi import HTTPException

@@ -28,7 +28,8 @@ tags:
 
 ---
 
-## 🧭 一、先给结论：企业版的六层模型```mermaidflowchart TD
+## 🧭 一、先给结论：企业版的六层模型
+```
     A["① 定义层<br/>错误码表 + 异常类体系"] --> B["② 抛出层<br/>业务代码 raise，绝不 catch"]
     B --> C["③ 事务边界<br/>rollback 后继续向上抛"]
     C --> D["④ 拦截层<br/>全局处理器按类型分派"]
@@ -221,10 +222,12 @@ flowchart TD
 > 这就是你现在**响应结构有两套**（`{"detail": ...}` vs `{"code","msg","data"}`）的根因。
 > FastAPI 内置的处理器优先级更高，所以你自己的 `Exception` 处理器拦不到 `HTTPException`。
 > 解法是**显式注册 `StarletteHTTPException` 的处理器**，把两套格式合并成一套：
-> ```python
+>
+```
 > from starlette.exceptions import HTTPException as StarletteHTTPException
 > app.add_exception_handler(StarletteHTTPException, http_exception_handler)
-> ```
+>
+```
 > 详见 全局异常处理 · 接口总览。
 
 ---
@@ -236,11 +239,13 @@ flowchart TD
 > **这句话不准确**。查源码可知（2026-09-13 读依赖源码确认，未实跑）：
 >
 > - `.venv/.../starlette/middleware/errors.py:183-186`：
->   ```python
+>
+```
 >   # We always continue to raise the exception.
 >   # This allows servers to log the error ...
 >   raise exc
->   ```
+>
+```
 >   Starlette 在处理完之后**总是把异常重新抛出去**，就是为了让服务器能记日志。
 > - `.venv/.../uvicorn/protocols/http/h11_impl.py:420`：uvicorn 接住后打印
 >   `"Exception in ASGI application"` + 完整堆栈。
@@ -299,10 +304,12 @@ class TraceIdMiddleware:
 > **💡 提示：日志格式要选「结构化」**
 > `logging.Formatter` 输出的纯文本在 ELK / Loki 里要靠正则解析，**很脆**。
 > 企业一般用 `python-json-logger` 输出 JSON，一行一条，字段直接可查：
-> ```json
+>
+```
 > {"time":"2026-09-13T10:00:00Z","level":"ERROR","trace_id":"a1b2c3",
 >  "error_code":500002,"path":"/api/score","msg":"...","exc_info":"..."}
-> ```
+>
+```
 
 ---
 
@@ -347,7 +354,8 @@ async def get_db() -> AsyncSession:
 # 实测会返回给前端的内容（from 全局异常处理 笔记）：
 #   服务器异常:(pymysql.err.IntegrityError) (1452, 'Cannot add or update a child row:
 #   a foreign key constraint fails (`school_db`.`scores`, CONSTRAINT `fk_scores_student` ...)'
-#   → 库名 school_db、表名 scores、外键名 fk_scores_student 全部泄漏```企业的分层策略：
+#   → 库名 school_db、表名 scores、外键名 fk_scores_student 全部泄漏
+```
 
 | 信息                | 进响应？      | 进日志？       |
 | :---------------- | :-------- | :--------- |
@@ -675,7 +683,8 @@ self._state = State(self.scope["state"])
 > 用户看到的是 500，但日志里什么都没记下来（因为日志本身就是崩的那一步）。
 >
 > 企业做法有两层防护：
-> ```python
+>
+```
 > # 防护 1：用 Literal 把取值锁死在编译期
 > from typing import Literal
 > LogLevel = Literal["debug", "info", "warning", "error"]
@@ -687,7 +696,8 @@ self._state = State(self.scope["state"])
 >     getattr(logger, exc.log_level)(...)
 > except Exception:                    # 日志写不进去，绝不能连累响应
 >     logger.error("异常处理器记录日志失败", exc_info=True)
-> ```
+>
+```
 > **原则：异常处理器是最后一道防线，它自己必须是"不会失败"的。**
 
 **④ `"业务异常 code=%s %s %s", int(exc.code), request.method, request.url.path`**
@@ -866,7 +876,8 @@ sequenceDiagram
 
 ---
 
-## 🗺️ 五、落地路线：按性价比排序```mermaidflowchart LR
+## 🗺️ 五、落地路线：按性价比排序
+```
     A["第 1 天<br/>只改 1 个文件<br/>core/exceptions.py"] --> B["第 2 天<br/>日志 + trace_id"]
     B --> C["第 3 天<br/>错误码 + 自定义异常"]
     C --> D["之后<br/>Sentry 告警"]

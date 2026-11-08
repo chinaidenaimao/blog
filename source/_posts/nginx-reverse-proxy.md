@@ -177,7 +177,8 @@ flowchart LR
 > `allow_origins=["*"] + allow_credentials=True` 是**非法组合**
 > （浏览器规范禁止），见 Q-06 §5.2。
 
-### 3.2 ② 统一入口（一个域名搞定所有）```mermaidflowchart TD
+### 3.2 ② 统一入口（一个域名搞定所有）
+```
     U["用户只访问<br/>https://example.com"]
     U --> N["Nginx :443"]
     N -->|"/  → 静态文件"| W["前端 dist/"]
@@ -204,9 +205,11 @@ flowchart LR
 
 > **💡 提示：现在这件事有多简单**
 > Let's Encrypt 的 `certbot` 一条命令自动签证书 + 自动续期：
-> ```bash
+>
+```
 > certbot --nginx -d example.com
-> ```
+>
+```
 > 免费、自动、业界标准。**不要自己手搓证书。**
 
 ### 3.4 ④ 负载均衡（多实例分流）
@@ -284,7 +287,8 @@ location /api/user/login {
 | **静态资源缓存** | `expires 30d;` | 浏览器不再重复下载 |
 | **请求缓冲** | `proxy_buffering on;` | 慢客户端不占用后端连接 |
 
-### 3.8 ⑧ 灰度发布 / 蓝绿部署```nginx
+### 3.8 ⑧ 灰度发布 / 蓝绿部署
+```
 # 让 10% 的流量去新版本
 split_clients "${remote_addr}" $version {
     10%     new;
@@ -336,7 +340,8 @@ flowchart TD
 > 你不需要懂 Nginx 的其他东西，只要会写：
 > 「**什么路径**（location）→ **转给谁**（proxy_pass）」。
 
-### 4.1 location 的匹配优先级```nginx
+### 4.1 location 的匹配优先级
+```
 location = /api/health { }      # ① 精确匹配（最高优先级）
 location ^~ /api/static/ { }    # ② 前缀匹配，且不再检查正则
 location ~ \.php$ { }           # ③ 正则匹配（区分大小写）
@@ -360,7 +365,8 @@ location / { }                  # ⑥ 兜底（所有请求都匹配）
 > （`find` 搜索 `*nginx*` / `Dockerfile` / `*.conf` 无结果）。
 > 下面这份是从零开始的生产配置。
 
-### 5.1 部署全貌```mermaidflowchart LR
+### 5.1 部署全貌
+```
     B["浏览器<br/>https://example.com"]
     N["Nginx :443<br/><i>唯一对外入口</i>"]
 
@@ -379,7 +385,8 @@ location / { }                  # ⑥ 兜底（所有请求都匹配）
     style A fill:#c8e6c9
 ```
 
-### 5.2 完整配置```nginx
+### 5.2 完整配置
+```
 # /etc/nginx/conf.d/student.conf
 
 # ① 定义后端机器组（现在只有一台，将来加机器只要在这里加一行）
@@ -487,14 +494,16 @@ client_max_body_size 10m;
 ### 坑点 1 🔴 `proxy_pass` 末尾的斜杠（最经典的坑）
 
 > **🚫 危险：有无斜杠，行为完全不同**
-> ```nginx
+>
+```
 > location /api/ {
 >     proxy_pass http://backend;      # ← 无斜杠：保留完整原始路径
 > }
 > location /api/ {
 >     proxy_pass http://backend/;     # ← 有斜杠：把 /api/ 替换掉
 > }
-> ```
+>
+```
 
 | 原始请求 | `proxy_pass .../backend`（无斜杠） | `proxy_pass .../backend/`（有斜杠） |
 | :--- | :--- | :--- |
@@ -506,9 +515,11 @@ Nginx 就会**把 `location` 匹配到的那部分替换掉**；不带则原样�
 > **⚠️ 注意：对你的项目，**必须用无斜杠版本****
 > 因为你的后端 `/api` 前缀是**真实存在的**——
 > `core/config.py:11` 的 `api_url`，`main.py:14-17` 用它做 `include_router` 的 prefix。
-> ```python
+>
+```
 > app.include_router(user_router, prefix=settings.api_url)   # prefix = "/api"
-> ```
+>
+```
 > 所以：
 > - `proxy_pass http://student_api;` → 后端收到 `/api/user/login` ✅ **正确**
 > - `proxy_pass http://student_api/;` → 后端收到 `/user/login` → **404** ❌
@@ -516,12 +527,14 @@ Nginx 就会**把 `location` 匹配到的那部分替换掉**；不带则原样�
 > **这是部署时最高频的 404 原因**，而且报错信息完全不会提示是代理配错。
 
 > **💡 提示：少踩这个坑的应急方案：用 `rewrite` 显式写清楚**
-> ```nginx
+>
+```
 > location /api/ {
 >     rewrite ^/api/(.*)$ /$1 break;    # 显式剥离 /api
 >     proxy_pass http://student_api/;   # 此时用带斜杠的
 > }
-> ```
+>
+```
 > 可读性更好，但**没必要**——记住那条规则就行。
 
 ### 坑点 2 🔴 SPA 刷新 404（`try_files`）
@@ -621,16 +634,19 @@ uvicorn main:app --host 127.0.0.1 --port 8000  # 只有本机能访问，外网�
 
 ## 🔍 八、怎么确认代理生效了 / 怎么排查
 
-### 8.1 看请求到底走到哪了```bash
+### 8.1 看请求到底走到哪了
+```
 # ① 看响应头，有没有 Nginx
 curl -I https://example.com
 
 # ② 看后端有没有收到（对比两边日志）
 #    Nginx 日志
 tail -f /var/log/nginx/access.log
-#    FastAPI 日志（uvicorn 默认打控制台）```
+#    FastAPI 日志（uvicorn 默认打控制台）
+```
 
-### 8.2 Nginx 日志要记录真实 IP```nginx
+### 8.2 Nginx 日志要记录真实 IP
+```
 log_format main '$remote_addr - $remote_user [$time_local] '
                 '"$request" $status $body_bytes_sent '
                 '"$http_referer" "$http_user_agent" '
@@ -646,7 +662,8 @@ access_log /var/log/nginx/access.log main;
 > 如果 `request_time` 远大于 `upstream_response_time`，说明**瓶颈在网络或 Nginx**，
 > 不在你的 Python 代码——这个判断能省下大量无谓的代码优化。
 
-### 8.3 常用命令```bash
+### 8.3 常用命令
+```
 nginx -t                    # 🔑 改完配置先测语法，别直接 reload
 nginx -s reload             # 热重载（不中断服务）
 nginx -T                    # 打印完整生效配置（含 include 进来的）
@@ -670,7 +687,8 @@ systemctl status nginx      # 看服务状态
 > 5. **🔴 SPA 必须配 `try_files $uri $uri/ /index.html`**，否则刷新页面 404
 
 > **💡 提示：最小可用配置（抄这一份就够）**
-> ```nginx
+>
+```
 > upstream student_api { server 127.0.0.1:8000; }
 >
 > server {
@@ -688,7 +706,8 @@ systemctl status nginx      # 看服务状态
 >         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 >     }
 > }
-> ```
+>
+```
 
 ---
 

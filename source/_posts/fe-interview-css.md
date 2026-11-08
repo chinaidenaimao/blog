@@ -67,7 +67,8 @@ CSS 中的 box-sizing 属性定义了引擎应该如何计算一个元素的总�
 content-box 默认值，元素的 width/height 不包含padding，border，与标准盒子模型表现一致
 ### 1.3. IE 怪异盒子模型
 
-### 1.4. Box-sizing```css
+### 1.4. Box-sizing
+```
 box-sizing: content-box|border-box|inherit:1
 ```
 border-box 元素的 width/height 包含 padding，border，与怪异盒子模型表现一致
@@ -80,7 +81,8 @@ inherit 指定 box-sizing 属性的值，应该从父元素继承
 这个元素高度怎么没了？
 ## 2. 谈谈你对BFC的理解？
 
-### 2.1. 是什么```html<style>.box {
+### 2.1. 是什么
+```
 width: 200px;
 height: 100px;
 padding: 20px;
@@ -201,7 +203,8 @@ overflow: hidden;
 ![图片](/img/posts/fe-interview-css/32aa82fefa.png)
 
 效果图如下：
-#### 2.3.3. 自适应多栏布局```html<style>body {
+#### 2.3.3. 自适应多栏布局
+```
 width: 300px;
 position: relative;
 }
@@ -264,7 +267,8 @@ user-scalable:是用户的可以缩放的操作
 百分比
 vw/vh
 rem
-### 3.2. 实现方式```html
+### 3.2. 实现方式
+```
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum
 -scale=1, user-scalable=no”>
 ```
@@ -288,7 +292,8 @@ border-radius不一样，如果设置border-radius为百分比，则是相对于
 可以看到每个属性都使用百分比，会照成布局的复杂度，所以不建议使用百分比来实现响应式
 #### 3.2.1. 媒体查询
 
-#### 3.2.2. 百分比```css
+#### 3.2.2. 百分比
+```
 @media screen and (max-width: 1920px) { ... }1
 ```
 ```css
@@ -307,7 +312,8 @@ px ，此时  1rem = 16px
 为了更准确监听设备可视窗口变化，我们可以在 css 之前插入  script 标签，内容如下：
 #### 3.2.3. vw/vh
 
-#### 3.2.4. rem```css
+#### 3.2.4. rem
+```
 @media screen and (max-width: 414px) {
 html {
 font-size: 18px
@@ -383,7 +389,8 @@ table布局
 绝大多数情况下，设置父元素为相对定位， 子元素移动自身50%实现水平垂直居中
 #### 4.2.1. 利用定位+margin:auto
 
-#### 4.2.2. 利用定位+margin:负值```html<style>.father{
+#### 4.2.2. 利用定位+margin:负值
+```
 width:500px;
 height:300px;
 border:1px solid #0a3b98;
@@ -445,7 +452,8 @@ translate(-50%, -50%) 将会将元素位移自己宽度和高度的-50%
 知道自身元素的宽高
 设置父元素为 display:table-cell ，子元素设置  display: inline-block 。利用  vertica
 l 和  text-align 可以让所有的行内块级元素水平垂直居中
-#### 4.2.4. table布局```css<style>.father {
+#### 4.2.4. table布局
+```
 position: relative;
 width: 200px;
 height: 200px;
@@ -466,7 +474,8 @@ background: red;
 </div>
 ```
 还是看看实现的整体代码：
-#### 4.2.5. flex弹性布局```html<style>.father {
+#### 4.2.5. flex弹性布局
+```
 display: table-cell;
 width: 200px;
 height: 200px;
@@ -490,7 +499,8 @@ css3 中了  flex 布局，可以非常简单实现垂直水平居中
 display: flex时，表示该容器内部的元素将按照flex进行布局
 align-items: center表示这些元素将相对于本容器水平居中
 justify-content: center也是同样的道理垂直居中
-#### 4.2.6. grid网格布局```html<style>.father {
+#### 4.2.6. grid网格布局
+```
 display: flex;
 justify-content: center;
 align-items: center;
@@ -521,7 +531,8 @@ grid布局
 
 ### 4.3. 总结
 
-#### 4.3.1. 内联元素居中布局```html<style>.father {
+#### 4.3.1. 内联元素居中布局
+```
 display: grid;
 align-items:center;
 justify-content: center;
@@ -586,7 +597,8 @@ grid(不定高，不定宽)，兼容性相对比较差
 ### 5.2. 两栏布局
 
 还有一种更为简单的使用则是采取：flex弹性布局
-#### 5.2.1. flex弹性布局```html<style>.box{
+#### 5.2.1. flex弹性布局
+```
 overflow: hidden; 添加BFC
 }
 .left {
@@ -679,7 +691,8 @@ margin-right: 140px;
 ```
 基于绝对定位的三栏布局：注意绝对定位的元素脱离文档流，相对于最近的已经定位的祖先元素进行定
 位。无需考虑HTML中结构的顺序
-#### 5.3.2. 两边使用 absolute，中间使用 margin实现流程：```html
+#### 5.3.2. 两边使用 absolute，中间使用 margin实现流程：
+```
 左右两边使用绝对定位，固定在两侧。●
 <style>
 .container {
@@ -720,7 +733,8 @@ color: white;
 ```
 中间占满一行，但通过 margin和左右两边留出10px的间隔
 实现过程：
-#### 5.3.3. 两边使用 float 和负 margin```html<style>.left,
+#### 5.3.3. 两边使用 float 和负 margin
+```
 .right,
 .main {
 height: 200px;
@@ -759,14 +773,15 @@ margin-left: -100px; /* 同自身宽度 */
 缺点：
 增加了 .main-wrapper 一层，结构变复杂
 使用负 margin，调试也相对麻烦
-<table>  标签用于展示行列数据，不适合用于布局。但是可以使用  display: table  来实现布局
+&lt;table&gt;  标签用于展示行列数据，不适合用于布局。但是可以使用  display: table  来实现布局
 的效果
 #### 5.3.4. 使用 display: table 实现实现原理：
 层通过 display: table设置为表格，设置 table-layout: fixed`表示列宽自身宽度决定，而不是自动计
 算。
 内层的左中右通过 display: table-cell设置为表格单元。
 左右设置固定宽度，中间设置 width: 100% 填充剩下的宽度
-#### 5.3.5. 使用flex实现```html<style>.container {
+#### 5.3.5. 使用flex实现
+```
 height: 200px;
 line-height: 200px;
 text-align: center;
@@ -839,7 +854,8 @@ margin: 0 20px;
 但展示在中间
 代码如下：
 跟 flex 弹性布局一样的简单
-#### 5.3.6. grid网格布局```html<style>.wrap {
+#### 5.3.6. grid网格布局
+```
 display: grid;
 width: 100%;
 grid-template-columns: 300px auto 300px;
@@ -877,7 +893,8 @@ id选择器（#box），选择id为box的元素
 标签选择器（div），选择标签为div的所有元素
 ## 6. css选择器有哪些？优先级？哪些属性可以继承？
 
-### 6.1. 选择器```html
+### 6.1. 选择器
+```
 <div id="box">
 <div class="one">
 <p class="one_1">
@@ -944,7 +961,8 @@ D 的值等于 标签选择器 和 伪元素 出现的总次数
 [attribute^=value]：选择attribute属性开头为value的所有元素
 [attribute$=value]：选择attribute属性结尾为value的所有元素
 ```css
-#nav-global > ul > li > a.nav-link1```
+#nav-global > ul > li > a.nav-link1
+```
 套用上面的算法，依次求出  A   B   C   D  的值：
 因为没有内联样式 ，所以 A = 0
 ID选择器总共出现了1次， B = 1
@@ -1014,7 +1032,8 @@ display
 
 ## 7. css中，有哪些方式可以隐藏⻚面元素？区别?
 
-### 7.1. 前言```css
+### 7.1. 前言
+```
 cursor：箭头可以变成需要的形状1
 ```
 通过 css 隐藏元素的方法有很多种，它们看起来实现的效果是一致的
@@ -1038,7 +1057,8 @@ clip-path
 
 #### 7.2.1. display:none
 
-#### 7.2.2. visibility:hidden```css.hide {
+#### 7.2.2. visibility:hidden
+```
 display:none;
 }
 ```
@@ -1056,7 +1076,8 @@ opacity 属性表示元素的透明度，将元素的透明度设置为0后，�
 
 如果利用 animation 动画，对 opacity 做变化（animation会默认触发GPU加速），则只会触发 GPU
 层面的 composite，不会触发重绘
-#### 7.2.4. 设置height、width属性为0```css.hidden{
+#### 7.2.4. 设置height、width属性为0
+```
 visibility:hidden
 }
 ```
@@ -1076,7 +1097,8 @@ opacity:0;
 
 #### 7.2.6. clip-path
 
-#### 7.2.7. 小结```css.hiddenBox {margin:0;
+#### 7.2.7. 小结
+```
 border:0;
 padding:0;
 height:0;
@@ -1136,7 +1158,8 @@ text-overflow 只有在设置了  overflow:hidden 和  white-space:nowrap 才能
 举个例子
 ### 8.2. 实现方式
 
-#### 8.2.1. 单行文本溢出省略<style>p{
+#### 8.2.1. 单行文本溢出省略
+```html
 overflow: hidden;
 line-height: 40px;
 width:400px;
@@ -1148,6 +1171,7 @@ white-space: nowrap;
 </style>
 <p 这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本
 这是一些文本这是一些文本这是一些文本</p >
+```
 效果如下：
 ![图片](/img/posts/fe-interview-css/505cb21bee.png)
 
@@ -1206,6 +1230,7 @@ padding: 0 20px 0 10px;
 需要注意的是，如果文本为一段很⻓的英文或者数字，则需要添加 word-wrap: break-word 属性
 还能通过使用 javascript 实现配合  css ，实现代码如下所示：
 css结构如下：
+```html
 <style>
 p {
 width: 400px;
@@ -1219,8 +1244,8 @@ text-overflow: ellipsis;
 </style>
 <p>
 这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本
-这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本
 ```html
+```
 </p >
 ```
 ```css
@@ -1276,7 +1301,8 @@ $(this).removeClass("p-after");
 在以前也讲过盒子模型，默认情况下是一个矩形，实现也很简单
 效果如下图所示：
 将 border 设置  50px ，效果图如下所示：
-### 9.2. 实现过程```html<style>.border {
+### 9.2. 实现过程
+```
 width: 50px;
 height: 50px;
 border: 2px solid;
@@ -1345,7 +1371,8 @@ left: 0;
 取消一条边的时候，与这条边相邻的两条边的接触部分会变成直的
 当仅有邻边时， 两个边会变成对分的三⻆
 当保留边没有其他接触时，极限情况所有东⻄都会消失
-### 9.3. 原理分析```css
+### 9.3. 原理分析
+```
 .border:after {
 content: '';
 border-style: solid;
@@ -1416,7 +1443,8 @@ background-size: cover;
 background-position: center center;
 }
 ```
-#### 10.2.2. transform:translate3D```html<style>div {
+#### 10.2.2. transform:translate3D
+```
 height: 100vh;
 background: rgba(0, 0, 0, .7);
 color: #fff;
@@ -1520,8 +1548,10 @@ margin-bottom: 150px;
 translateY 相对屏幕（我们的眼睛），也是不一样的，这就达到了滚动视差的效果
 ## 11. CSS3新增了哪些新特性？
 
+```html
 <div class="three">three</div>
 </div>
+```
 css ，即层叠样式表（Cascading Style Sheets）的简称，是一种标记语言，由浏览器解释执行用来使
 ![图片](/img/posts/fe-interview-css/1a77ade994.png)
 
@@ -1701,7 +1731,8 @@ skew：倾斜
 一般配合 transition 过度使用
 注意的是， transform 不支持  inline 元素，使用前把它变成  block
 举个例子
-#### 12.2.2. transform 转变动画```html<style>.base {
+#### 12.2.2. transform 转变动画
+```
 width: 100px;
 height: 100px;
 display: inline-block;
@@ -1729,7 +1760,8 @@ border-color: #3a8ee6;
 ```
 可以看到盒子发生了旋转，倾斜，平移，放大
 animation 是由 8 个属性的简写，分别如下：
-#### 12.2.3. animation 实现自定义动画```html<style>.base {
+#### 12.2.3. animation 实现自定义动画
+```
 width: 100px;
 height: 100px;
 display: inline-block;
@@ -1796,7 +1828,8 @@ transform: rotate(360deg);
 定义好了关键帧后，下来就可以直接用它了：
 ### 12.3. 总结
 
-## 13. 介绍一下grid网格布局```css
+## 13. 介绍一下grid网格布局
+```
 @keyframes rotate{
 0%{
 transform: rotate(0deg);
@@ -1868,7 +1901,8 @@ grid-template-columns  属性设置列宽，  grid-template-rows  属性设置�
 auto-fill：示自动填充，让一行（或者一列）中尽可能的容纳更多的单元格
 #### 13.2.1. display 属性
 
-#### 13.2.2. grid-template-columns 属性，grid-template-rows 属性```css.wrapper {
+#### 13.2.2. grid-template-columns 属性，grid-template-rows 属性
+```
 display: grid;
 /*  声明了三列，宽度分别为 200px 200px 200px */
 grid-template-columns: 200px 200px 200px;
@@ -1912,7 +1946,8 @@ grid-template-columns: 100px auto 100px
 ⻓度
 #### 13.2.3. grid-row-gap 属性， grid-column-gap 属性， grid-gap 属性
 
-#### 13.2.4. grid-template-areas 属性```css.container {
+#### 13.2.4. grid-template-areas 属性
+```
 display: grid;
 grid-template-columns: 100px 100px 100px;
 grid-template-rows: 100px 100px 100px;
@@ -1930,7 +1965,8 @@ grid-template-areas: 'a b c'
 顺序就是由 grid-auto-flow 决定，默认为行，代表"先行后列"，即先填满第一行，再开始放入第二
 行
 当修改成 column 后，放置变为如下：
-#### 13.2.5. grid-auto-flow 属性```css
+#### 13.2.5. grid-auto-flow 属性
+```
 grid-template-areas: 'a a a'
 'b b b'
 'c c c';
@@ -2036,7 +2072,8 @@ stretch：拉伸，占满单元格的整个宽度（默认值）
 
 #### 13.2.11. justify-self 属性、align-self 属性以及 place-self 属性
 
-### 13.3. 应用场景```css.item-1 {
+### 13.3. 应用场景
+```
 grid-area: e;
 }
 ```
@@ -2091,7 +2128,8 @@ wrap-reverse：换行，第一行在上方
 默认情况是不换行，但这里也不会任由元素直接溢出容器，会涉及到元素的弹性伸缩
 #### 14.2.2. flex-wrap
 
-#### 14.2.3. flex-flow```css.container {
+#### 14.2.3. flex-flow
+```
 flex-direction: row | row-reverse | column | column-reverse;
 }
 ```
@@ -2109,7 +2147,8 @@ center：居中
 space-between：两端对⻬，项目之间的间隔都相等
 space-around：两个项目两侧间隔相等
 效果图如下：
-#### 14.2.4. justify-content```css.box {
+#### 14.2.4. justify-content
+```
 flex-flow: <flex-direction> || <flex-wrap>;
 }
 ```
@@ -2122,7 +2161,8 @@ justify-content: flex-start | flex-end | center | space-between | space
 定义项目在交叉轴上如何对⻬
 ![图片](/img/posts/fe-interview-css/231e8745cc.png)
 
-#### 14.2.5. align-items```css.box {
+#### 14.2.5. align-items
+```
 align-items: flex-start | flex-end | center | baseline | stretch;
 }
 ```
@@ -2141,7 +2181,8 @@ space-between：与交叉轴两端对⻬，轴线之间的间隔平均分布
 space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍
 stretch（默认值）：轴线占满整个交叉轴
 效果图如下：
-#### 14.2.6. align-content```css.box {
+#### 14.2.6. align-content
+```
 align-content: flex-start | flex-end | center | space-between | space-a
 round | stretch;
 }
@@ -2166,7 +2207,8 @@ align-self
 如果一个项目的 flex-grow 属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍
 #### 14.2.7. order
 
-#### 14.2.8. flex-grow```css.item {
+#### 14.2.8. flex-grow
+```
 order: <integer>;
 }
 ```
@@ -2191,7 +2233,8 @@ flex-grow: <number>;
 th 则元素尺寸由  width/height 决定（主轴方向），没有设置则由内容决定
 #### 14.2.9. flex-shrink
 
-#### 14.2.10. flex-basis```css.item {
+#### 14.2.10. flex-basis
+```
 flex-shrink: <number>; /* default 1 */
 }
 ```
@@ -2213,7 +2256,8 @@ flex:1  和  flex:auto  的区别，可以归结于  flex-basis:0 和  flex-basi
 默认值为 auto ，表示继承父元素的  align-items 属性，如果没有父元素，则等同于  stretch
 #### 14.2.11. flex
 
-#### 14.2.12. align-self```css.item {
+#### 14.2.12. align-self
+```
 flex-basis: <length> | auto; /* default auto */
 }
 ```
@@ -2230,7 +2274,8 @@ flex: none | [ <'flex-grow'> <'flex-shrink'>? || <'flex-basis'> ]
 包括现在在移动端、小程序这边的开发，都建议使用 flex 进行布局
 ### 14.3. 应用场景
 
-## 15. 说说设备像素、css像素、设备独立像素、dpr、```cssppi 之间的区别？.item {
+## 15. 说说设备像素、css像素、设备独立像素、dpr、
+```
 align-self: auto | flex-start | flex-end | center | baseline | stretch;
 }
 ```
@@ -2372,7 +2417,8 @@ vw ，就是根据窗口的宽度，分成100等份，100vw就表示满宽，50v
 在桌面端，指的是浏览器的可视区域
 #### 16.2.3. rem
 
-#### 16.2.4. vh、vw```html
+#### 16.2.4. vh、vw
+```
 <div class="big">
 我是14px=1.4rem<div class="small">我是12px=1.2rem</div>
 </div>
@@ -2435,7 +2481,8 @@ zoom:0.5，表示缩小到原来的一半
 需要注意的是，
 Zoom
 并不是标准属性，需要考虑其兼容性
-#### 17.2.2. -webkit-transform:scale()```html
+#### 17.2.2. -webkit-transform:scale()
+```
 <style type="text/css">
 .span1{
 font-size: 12px;
@@ -2684,7 +2731,8 @@ stylus
 less
 #### 19.3.1. 基本使用
 
-#### 19.3.2. 嵌套```css.box {
+#### 19.3.2. 嵌套
+```
 display: block;
 }
 ```
@@ -2703,7 +2751,8 @@ sass 声明的变量跟  less 十分的相似，只是变量名前面使用  @ �
 stylus 声明的变量没有任何的限定，可以使用  $ 开头，结尾的分号  ; 可有可无，但变量与变量值
 之间需要使用 =
 在 stylus 中我们不建议使用  @ 符号开头声明变量
-#### 19.3.3. 变量```css.a {&.b {
+#### 19.3.3. 变量
+```
 color: red;
 }
 }
@@ -2732,7 +2781,8 @@ sass 中不存在全局变量
 所以，在 sass 中最好不要定义相同的变量名
 less 与  stylus 的作用域跟  javascript 十分的相似，首先会查找局部定义的变量，如果没有找
 到，会像冒泡一样，一级一级往下查找，直到根为止
-#### 19.3.4. 作用域```css
+#### 19.3.4. 作用域
+```
 $color: black;
 .scoped {
 $bg: blue;
@@ -2759,7 +2809,8 @@ color:white;/*白色（无全局变量概念）*/
 可以在 Mixins 中定义变量或者默认参数
 在 less 中，混合的用法是指将定义好的  ClassA 中引入另一个已经定义的  Class ，也能使用够传
 递参数，参数变量为 @ 声明
-#### 19.3.5. 混入```css
+#### 19.3.5. 混入
+```
 @color: black;
 .scoped {
 @bg: blue;
@@ -2810,7 +2861,8 @@ stylus 中的混合和前两款  Css 预处理器语言的混合略有不同，�
 明 Mixins 名，然后在定义参数和默认值之间用等号（=）来连接
 模块化就是将 Css 代码分成一个个模块
 scss 、  less 、  stylus 三者的使用方法都如下所示
-#### 19.3.6. 代码模块化```css
+#### 19.3.6. 代码模块化
+```
 @mixin large-text {
 font: {
 family: Arial;
@@ -2857,7 +2909,8 @@ error(5px); /* 调用error mixins，并将参数$borderWidth的值指定为5px *
 
 ### 20.1. 前言
 
-### 20.2. 实现方式```css
+### 20.2. 实现方式
+```
 @import './common';
 @import './github-markdown';
 @import './mixin';
@@ -2920,7 +2973,8 @@ css样式文件有两种引入方式，一种是  link 元素，另一种是  @i
 
 #### 20.2.5. 减少使用昂贵的属性
 
-#### 20.2.6. 不要使用@import```html
+#### 20.2.6. 不要使用@import
+```
 <link rel="alternate stylesheet" href="mystyles.css" onload="this.rel='styl
 esheet'">
 ```

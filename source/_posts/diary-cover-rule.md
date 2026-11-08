@@ -21,7 +21,8 @@ tags:
 
 新文章必须有 `cover`，没有就不发。
 
-```yaml
+```yam
+l
 ---
 title: 文章标题
 cover: /img/covers/xxx.jpg   # 列表卡片

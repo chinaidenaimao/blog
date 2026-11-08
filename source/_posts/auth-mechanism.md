@@ -16,7 +16,8 @@ tags:
 
 本项目采用 **Token 认证**机制，使用 UUID 作为 Token，支持 `Bearer token` 格式。
 
-## 🔐 认证流程```
+## 🔐 认证流程
+```
 ┌─────────────────────────────────────────────────────────────┐
 │                      用户登录                                │
 │              POST /api/user/login                           │
@@ -66,7 +67,8 @@ tags:
 
 ## 👤 用户注册
 
-### 请求```http
+### 请求
+```
 POST /api/user/register
 Content-Type: application/json
 
@@ -76,7 +78,8 @@ Content-Type: application/json
 }
 ```
 
-### 响应```json{"code": 200,
+### 响应
+```
   "message": "注册成功",
   "data": {
     "token": "550e8400-e29b-41d4-a716-446655440000",
@@ -92,7 +95,8 @@ Content-Type: application/json
 }
 ```
 
-### 实现代码```python
+### 实现代码
+```
 # router/user.py
 @router.post("/register")
 async def register(user_data: UserRequest, db: AsyncSession = Depends(get_db)):
@@ -117,7 +121,8 @@ async def register(user_data: UserRequest, db: AsyncSession = Depends(get_db)):
 
 ## 🔑 用户登录
 
-### 请求```http
+### 请求
+```
 POST /api/user/login
 Content-Type: application/json
 
@@ -127,7 +132,8 @@ Content-Type: application/json
 }
 ```
 
-### 响应```json{"code": 200,
+### 响应
+```
   "message": "登录成功",
   "data": {
     "token": "550e8400-e29b-41d4-a716-446655440000",
@@ -143,7 +149,8 @@ Content-Type: application/json
 }
 ```
 
-### 实现代码```python
+### 实现代码
+```
 # router/user.py
 @router.post("/login")
 async def login(user_data: UserRequest, db: AsyncSession = Depends(get_db)):
@@ -165,12 +172,14 @@ async def login(user_data: UserRequest, db: AsyncSession = Depends(get_db)):
 
 ## 🔍 Token 验证
 
-### 请求```http
+### 请求
+```
 GET /api/user/info
 Authorization: Bearer 550e8400-e29b-41d4-a716-446655440000
 ```
 
-### 响应```json{"code": 200,
+### 响应
+```
   "message": "获取用户信息成功",
   "data": {
     "id": 1,
@@ -183,7 +192,8 @@ Authorization: Bearer 550e8400-e29b-41d4-a716-446655440000
 }
 ```
 
-### 实现代码```python
+### 实现代码
+```
 # utils/auth.py
 async def get_current_user(
         authorization: str = Header(..., alias="Authorization"),
@@ -205,7 +215,8 @@ async def get_current_user(
 
 ## 🗄️ 数据库实现
 
-### Token 存储```python
+### Token 存储
+```
 # crud/users.py
 async def create_token(db: AsyncSession, user_id: int):
     """创建或更新 Token"""
@@ -229,7 +240,8 @@ async def create_token(db: AsyncSession, user_id: int):
     return token
 ```
 
-### Token 验证```python
+### Token 验证
+```
 # crud/users.py
 async def get_user_info(db: AsyncSession, token: str):
     """根据 Token 获取用户信息"""
@@ -250,11 +262,13 @@ async def get_user_info(db: AsyncSession, token: str):
 
 ## 🔐 密码加密
 
-### 加密流程```
+### 加密流程
+```
 明文密码 → bcrypt.hashpw() → 哈希密码（存储到数据库）
 ```
 
-### 实现代码```python
+### 实现代码
+```
 # utils/security.py
 import bcrypt
 
@@ -270,14 +284,16 @@ def verify_password(plain_password, hashed_password):
     return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 ```
 
-### 使用示例```python
+### 使用示例
+```
 # 注册时加密密码
 hashed_password = get_hashed_password("123456")
 # 结果：$2b$12$LJ3m4ys3Lz0hQ8vQ8vQ8vO8vQ8vQ8vQ8vQ8vQ8vQ8vQ8vQ8vQ8v
 
 # 登录时验证密码
 is_valid = verify_password("123456", hashed_password)
-# 结果：True```
+# 结果：True
+```
 
 ## 🛡️ 安全特性
 
@@ -296,7 +312,8 @@ is_valid = verify_password("123456", hashed_password)
 - 支持 `Bearer token` 格式
 - 通过依赖注入自动验证
 
-## 📊 Token 数据结构```sql
+## 📊 Token 数据结构
+```
 CREATE TABLE `user_token` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '用户令牌ID',
   `user_id` int NOT NULL COMMENT '用户ID',

@@ -22,7 +22,8 @@ tags:
 4. 为什么 `arguments` 是**字符串**而不是对象，以及模型生成的 JSON 会怎样坏掉
 5. 并行工具调用在 wire 层的真实形态——一个 assistant 消息带多个 `tool_calls`
 
-## 前置要求```bash
+## 前置要求
+```
 pip install openai python-dotenv
 ```
 
@@ -66,7 +67,8 @@ graph LR
 
 > ⚠️ 反过来推：如果你写了一个 `run_bash(command: str)` 工具然后无条件执行，你就把「是否执行」的决定权完全交给了模型。这不是 Function Calling 的缺陷，是设计者放弃了自己的位置。
 
-## 二、一次完整调用的消息序列```mermaid
+## 二、一次完整调用的消息序列
+```
 sequenceDiagram
     autonumber
     participant U as 👤 用户
@@ -249,7 +251,8 @@ else:
         result = TOOL_IMPL[name](**args)                # 防坏法 2（TypeError）
     except TypeError as exc:
         result = {"error": f"参数与工具签名不匹配：{exc}，应为 {signature}"}
-    # 坏法 3 由工具自己判断，返回 {"error": "..."} 而不是 raise```
+    # 坏法 3 由工具自己判断，返回 {"error": "..."} 而不是 raise
+```
 
 注意每个分支都是**把错误转成字符串回填给模型**，而不是往外抛。这条原则在 工具错误回传与重试 里完整展开——核心是：工具的失败是「观察结果」，不是「异常」。
 
@@ -329,7 +332,8 @@ OpenAI 兼容接口在服务端做**配对校验**：`assistant.tool_calls` 里�
 
 **判据**：把 description 单独摘出来，给一个完全不了解你系统的人读。他能说出「什么时候该用、什么时候不该用、参数填什么格式」吗？不能就是写坏了。
 
-### 坑 3：把工具的返回做成了给人类看的自然语言```python
+### 坑 3：把工具的返回做成了给人类看的自然语言
+```
 return "北京今天 28 度，天气晴朗，空气质量良，建议穿短袖。"
 ```
 

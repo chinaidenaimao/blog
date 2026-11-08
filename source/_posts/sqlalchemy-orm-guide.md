@@ -40,7 +40,8 @@ ORM（Object-Relational Mapping）是一种编程技术，用于在面向对象�
 
 ## 2. 安装与配置
 
-### 2.1 安装 SQLAlchemy```bash
+### 2.1 安装 SQLAlchemy
+```
 # 基础安装
 pip install sqlalchemy
 
@@ -49,7 +50,8 @@ pip install sqlalchemy[asyncio]  # 异步支持
 pip install alembic  # 数据库迁移
 ```
 
-### 2.2 安装数据库驱动```bash
+### 2.2 安装数据库驱动
+```
 # SQLite（Python 内置）
 # 无需额外安装
 
@@ -64,7 +66,8 @@ pip install asyncpg  # PostgreSQL 异步
 pip install aiosqlite  # SQLite 异步
 ```
 
-### 2.3 验证安装```python
+### 2.3 验证安装
+```
 import sqlalchemy
 print(sqlalchemy.__version__)
 ```
@@ -73,7 +76,8 @@ print(sqlalchemy.__version__)
 
 ## 3. 数据库连接
 
-### 3.1 基本连接```python
+### 3.1 基本连接
+```
 from sqlalchemy.ext.asyncio import AsyncSession,async_sessionmaker,create_async_engine  
 #数据库配置  
 ASYNC_DATABASE_URL="mysql+aiomysql://root:123456@localhost:3306/learn_pdf?charset=utf8mb4"  
@@ -105,7 +109,8 @@ async def get_db():
             await session.close()
 ```
 
-### 3.2 异步连接```python
+### 3.2 异步连接
+```
 from sqlalchemy.ext.asyncio import create_async_engine
 
 # 异步 SQLite
@@ -115,7 +120,8 @@ engine = create_async_engine("sqlite+aiosqlite:///./sql_app.db")
 engine = create_async_engine("postgresql+asyncpg://user:password@localhost/dbname")
 ```
 
-### 3.3 连接池管理```python
+### 3.3 连接池管理
+```
 from sqlalchemy import create_engine
 from sqlalchemy.pool import QueuePool
 
@@ -138,7 +144,8 @@ with engine.connect() as connection:
 
 ## 4. 模型定义
 
-### 4.1 基本模型```python
+### 4.1 基本模型
+```
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
@@ -160,7 +167,8 @@ class User(Base):
         return f"<User(id={self.id}, name='{self.name}', email='{self.email}')>"
 ```
 
-### 4.2 字段类型```python
+### 4.2 字段类型
+```
 from sqlalchemy import (
     Column, Integer, String, Float, Boolean, 
     DateTime, Date, Time, Text, JSON, 
@@ -201,7 +209,8 @@ class Product(Base):
     status = Column(Enum(Status), default=Status.ACTIVE)
 ```
 
-### 4.3 约束和索引```python
+### 4.3 约束和索引
+```
 from sqlalchemy import Column, Integer, String, CheckConstraint, Index
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -227,7 +236,8 @@ class User(Base):
 
 ## 5. 创建数据
 
-### 5.1 创建表```python
+### 5.1 创建表
+```
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -249,7 +259,8 @@ Base.metadata.create_all(bind=engine)
 Base.metadata.drop_all(bind=engine)
 ```
 
-### 5.2 插入单条数据```python
+### 5.2 插入单条数据
+```
 from sqlalchemy.orm import Session
 
 # 创建会话
@@ -269,7 +280,8 @@ session.refresh(user)
 print(user.id)
 ```
 
-### 5.3 插入多条数据```python
+### 5.3 插入多条数据
+```
 # 批量创建users = [
     User(name="John", email="john@example.com"),
     User(name="Jane", email="jane@example.com"),
@@ -287,7 +299,8 @@ session.add(user)
 session.commit()
 ```
 
-### 5.4 批量插入```python
+### 5.4 批量插入
+```
 from sqlalchemy.orm import Session
 
 # 使用 bulk_save_objects
@@ -310,7 +323,8 @@ session.commit()
 
 ## 6. 查询数据
 
-### 6.1 基本查询```python
+### 6.1 基本查询
+```
 from sqlalchemy.orm import Session
 
 # 查询所有
@@ -329,7 +343,8 @@ user = session.query(User).filter(User.id == 1).one()
 count = session.query(User).count()
 ```
 
-### 6.2 过滤条件```python
+### 6.2 过滤条件
+```
 # 等于
 users = session.query(User).filter(User.name == "John").all()
 
@@ -365,7 +380,8 @@ users = session.query(User).filter(
 ).all()
 ```
 
-### 6.3 排序和分页```python
+### 6.3 排序和分页
+```
 # 排序
 users = session.query(User).order_by(User.name).all()
 users = session.query(User).order_by(User.name.desc()).all()
@@ -379,7 +395,8 @@ users = session.query(User).paginate(page=1, per_page=10).all()
 users = session.query(User.name).distinct().all()
 ```
 
-### 6.4 聚合查询```python
+### 6.4 聚合查询
+```
 from sqlalchemy import func
 
 # 计数
@@ -407,7 +424,8 @@ results = session.query(
 
 ## 7. 更新数据
 
-### 7.1 更新单条记录```python
+### 7.1 更新单条记录
+```
 # 查询并更新
 user = session.query(User).filter(User.id == 1).first()
 user.name = "Jane"
@@ -418,7 +436,8 @@ session.query(User).filter(User.id == 1).update({"name": "Jane"})
 session.commit()
 ```
 
-### 7.2 批量更新```python
+### 7.2 批量更新
+```
 # 批量更新
 session.query(User).filter(
     User.age < 18
@@ -435,7 +454,8 @@ session.execute(
 session.commit()
 ```
 
-### 7.3 更新并返回```python
+### 7.3 更新并返回
+```
 # 更新并返回更新后的对象
 user = session.query(User).filter(User.id == 1).first()
 user.name = "Jane"
@@ -448,7 +468,8 @@ print(user)
 
 ## 8. 删除数据
 
-### 8.1 删除单条记录```python
+### 8.1 删除单条记录
+```
 # 查询并删除
 user = session.query(User).filter(User.id == 1).first()
 session.delete(user)
@@ -459,7 +480,8 @@ session.query(User).filter(User.id == 1).delete()
 session.commit()
 ```
 
-### 8.2 批量删除```python
+### 8.2 批量删除
+```
 # 批量删除
 session.query(User).filter(User.is_active == False).delete()
 session.commit()
@@ -469,7 +491,8 @@ session.query(User).delete()
 session.commit()
 ```
 
-### 8.3 软删除```python
+### 8.3 软删除
+```
 class User(Base):
     __tablename__ = "users"
     
@@ -492,7 +515,8 @@ active_users = session.query(User).filter(User.is_deleted == False).all()
 
 ## 9. 关系映射
 
-### 9.1 一对一关系```python
+### 9.1 一对一关系
+```
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship, declarative_base
 
@@ -518,7 +542,8 @@ class Profile(Base):
     user = relationship("User", back_populates="profile")
 ```
 
-### 9.2 一对多关系```python
+### 9.2 一对多关系
+```
 class User(Base):
     __tablename__ = "users"
     
@@ -540,7 +565,8 @@ class Post(Base):
     author = relationship("User", back_populates="posts")
 ```
 
-### 9.3 多对多关系```python
+### 9.3 多对多关系
+```
 from sqlalchemy import Table, Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
@@ -571,7 +597,8 @@ class Role(Base):
     users = relationship("User", secondary=user_roles, back_populates="roles")
 ```
 
-### 9.4 关系查询```python
+### 9.4 关系查询
+```
 # 查询关系数据
 user = session.query(User).first()
 print(user.posts)  # 访问用户的所有文章
@@ -594,7 +621,8 @@ users = session.query(User).options(selectinload(User.posts)).all()
 
 ## 10. 查询构建
 
-### 10.1 复杂查询```python
+### 10.1 复杂查询
+```
 from sqlalchemy import and_, or_, not_, func
 
 # 复杂条件
@@ -620,7 +648,8 @@ subq = exists().where(Post.author_id == User.id)
 users = session.query(User).filter(subq).all()
 ```
 
-### 10.2 联合查询```python
+### 10.2 联合查询
+```
 from sqlalchemy import union, union_all, intersect, except_
 
 # UNION
@@ -636,7 +665,8 @@ result = session.query(User.name).filter(
 ).all()
 ```
 
-### 10.3 窗口函数```python
+### 10.3 窗口函数
+```
 from sqlalchemy import func, over
 
 # 排名
@@ -654,7 +684,8 @@ rank = func.rank().over(
 
 ## 11. 事务管理
 
-### 11.1 基本事务```python
+### 11.1 基本事务
+```
 from sqlalchemy.orm import Session
 
 # 创建会话
@@ -676,7 +707,8 @@ finally:
     session.close()
 ```
 
-### 11.2 上下文管理器```python
+### 11.2 上下文管理器
+```
 from contextlib import contextmanager
 
 @contextmanager
@@ -697,7 +729,8 @@ with get_session() as session:
     session.add(user)
 ```
 
-### 11.3 嵌套事务```python
+### 11.3 嵌套事务
+```
 # 使用 SAVEPOINT
 with session.begin():
     user = User(name="John", email="john@example.com")
@@ -713,7 +746,8 @@ with session.begin():
 
 ## 12. 性能优化
 
-### 12.1 预加载```python
+### 12.1 预加载
+```
 from sqlalchemy.orm import joinedload, subqueryload, selectinload
 
 # joinedload - 使用 JOIN 查询
@@ -729,7 +763,8 @@ users = session.query(User).options(selectinload(User.posts)).all()
 users = session.query(User).options(lazyload(User.posts)).all()
 ```
 
-### 12.2 批量操作```python
+### 12.2 批量操作
+```
 # 批量插入
 session.bulk_insert_mappings(User, [
     {"name": "User1", "email": "user1@example.com"},
@@ -746,7 +781,8 @@ session.bulk_update_mappings(User, [
 session.query(User).filter(User.is_active == False).delete()
 ```
 
-### 12.3 查询优化```python
+### 12.3 查询优化
+```
 # 只查询需要的列
 users = session.query(User.id, User.name).all()
 
@@ -764,7 +800,8 @@ users = session.query(User).filter(User.email == "john@example.com").all()
 
 ## 13. FastAPI 集成
 
-### 13.1 数据库配置```python
+### 13.1 数据库配置
+```
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -788,7 +825,8 @@ def get_db():
         db.close()
 ```
 
-### 13.2 CRUD 操作```python
+### 13.2 CRUD 操作
+```
 from sqlalchemy.orm import Session
 from . import models, schemas
 
@@ -828,7 +866,8 @@ def delete_user(db: Session, user_id: int):
     return db_user
 ```
 
-### 13.3 API 路由```python
+### 13.3 API 路由
+```
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from . import crud, schemas, dependencies
@@ -867,7 +906,8 @@ def read_user(user_id: int, db: Session = Depends(dependencies.get_db)):
 
 ## 14. 数据库迁移
 
-### 14.1 初始化 Alembic```bash
+### 14.1 初始化 Alembic
+```
 # 安装 Alembic
 pip install alembic
 
@@ -875,7 +915,8 @@ pip install alembic
 alembic init alembic
 ```
 
-### 14.2 配置 Alembic```python
+### 14.2 配置 Alembic
+```
 # alembic.ini[alembic]
 script_location = alembic
 sqlalchemy.url = sqlite:///./sql_app.db
@@ -889,7 +930,8 @@ config = context.config
 target_metadata = Base.metadata
 ```
 
-### 14.3 创建迁移```bash
+### 14.3 创建迁移
+```
 # 自动生成迁移
 alembic revision --autogenerate -m "add users table"
 
@@ -900,7 +942,8 @@ alembic upgrade head
 alembic downgrade -1
 ```
 
-### 14.4 手动编写迁移```python
+### 14.4 手动编写迁移
+```
 # alembic/versions/xxx_add_users_table.py
 from alembic import op
 import sqlalchemy as sa
@@ -922,7 +965,8 @@ def downgrade():
 
 ## 15. 测试策略
 
-### 15.1 测试数据库配置```python
+### 15.1 测试数据库配置
+```
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -949,7 +993,8 @@ def db_session():
         session.close()
 ```
 
-### 15.2 测试 CRUD 操作```python
+### 15.2 测试 CRUD 操作
+```
 def test_create_user(db_session):
     user = User(name="John", email="john@example.com")
     db_session.add(user)
@@ -993,7 +1038,8 @@ def test_delete_user(db_session):
 
 ## 16. 生产部署
 
-### 16.1 生产配置```python
+### 16.1 生产配置
+```
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -1027,7 +1073,8 @@ COPY ./app /code/app
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
 ```
 
-### 16.3 监控和日志```python
+### 16.3 监控和日志
+```
 import logging
 from sqlalchemy import event
 
@@ -1083,7 +1130,8 @@ if __name__ == '__main__':
 
 > 在这里记录你的学习笔记和心得
 
-### 常用代码片段```python
+### 常用代码片段
+```
 # 快速查询
 users = session.query(User).filter(User.is_active == True).all()
 

@@ -21,7 +21,8 @@ tags:
 3. 消息序列在 wire 层真实长什么样
 4. 工业级实现（`pi`、`pi-agent`）在这个最小版本上加了什么
 
-## 前置要求```bash
+## 前置要求
+```
 pip install openai python-dotenv
 ```
 
@@ -35,7 +36,8 @@ MIMO_MODEL=mimo-v2.5
 
 ---
 
-## 一、先看结论：Agent Loop 长什么样```mermaid
+## 一、先看结论：Agent Loop 长什么样
+```
 sequenceDiagram
     participant U as 用户
     participant A as 应用层(你的循环)
@@ -52,7 +54,8 @@ sequenceDiagram
 
 **关键点**：循环的**退出条件是「模型这一轮没有再要求调用工具」**，不是「模型说了什么」。模型永远在决定「继续调工具」还是「给出最终答案」，你的代码只负责执行和回填。
 
-## 二、最小可运行实现```python
+## 二、最小可运行实现
+```
 # demos/02-agent-loop.pyimport jsonimport os
 from datetime import date
 
@@ -192,7 +195,8 @@ OpenAI 兼容接口在服务端做校验：**每一个 `tool_call_id` 都要能�
 
 所以「把历史裁掉一半然后接着跑」这个看起来很自然的优化，会在这里炸——见 历史裁剪与边界吸附。
 
-### 规则 2：`assistant` 消息要**整体**回填常见错误是只回填文本：```python
+### 规则 2：`assistant` 消息要**整体**回填常见错误是只回填文本：
+```
 # ❌ 错的：tool_calls 丢了，下一轮的 tool 消息找不到配对
 messages.append({"role": "assistant", "content": msg.content})
 ```

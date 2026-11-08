@@ -12,7 +12,8 @@ tags:
   - 工程化
 ---
 
-## 1. 系统架构概览```
+## 1. 系统架构概览
+```
 ┌─────────────────────────────────────────────────────────────────┐
 │                        用户界面层 (Frontend)                     │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐        │
@@ -70,7 +71,8 @@ tags:
 
 ## 3. 核心模块设计
 
-### 3.1 文档处理模块 (Document Processor)```
+### 3.1 文档处理模块 (Document Processor)
+```
 文档上传 → 格式识别 → 内容提取 → 结构化解析 → 存储
    │           │           │           │
    ▼           ▼           ▼           ▼
@@ -93,7 +95,8 @@ class DocumentProcessor:
     async def parse_structure(text: str) -> DocumentStructure
 ```
 
-### 3.2 AI 提取模块 (AI Extractor)```
+### 3.2 AI 提取模块 (AI Extractor)
+```
 文档内容 → Prompt 构建 → LLM 调用 → 结果解析 → 题目结构化
    │           │           │           │
    ▼           ▼           ▼           ▼
@@ -112,7 +115,8 @@ extraction_chain = ChatPromptTemplate | llm | JsonOutputParser
 full_chain = document_processor | chunker | extraction_chain | validator
 ```
 
-### 3.3 排版引擎 (Layout Engine)```
+### 3.3 排版引擎 (Layout Engine)
+```
 题目数据 → 模板选择 → 样式应用 → 布局计算 → 预览/导出
    │           │           │           │
    ▼           ▼           ▼           ▼
@@ -128,7 +132,8 @@ full_chain = document_processor | chunker | extraction_chain | validator
 
 ## 4. 数据流设计
 
-### 4.1 文档上传流程```用户上传文件↓
+### 4.1 文档上传流程
+```
 前端校验 (格式/大小)
     ↓
 FormData 上传到后端
@@ -144,7 +149,8 @@ FormData 上传到后端
 显示处理结果
 ```
 
-### 4.2 AI 提取流程```用户触发 AI 提取↓
+### 4.2 AI 提取流程
+```
 后端加载文档内容
     ↓
 构建 LangChain Prompt
@@ -160,7 +166,8 @@ FormData 上传到后端
 返回题目列表
 ```
 
-### 4.3 排版生成流程```用户选择题目 + 模板↓
+### 4.3 排版生成流程
+```
 前端收集排版参数
     ↓
 发送排版请求到后端
@@ -190,7 +197,8 @@ api.interceptors.response.use(
 )
 ```
 
-### 5.2 后端错误处理```python
+### 5.2 后端错误处理
+```
 # 统一错误响应格式
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
@@ -204,7 +212,8 @@ async def http_exception_handler(request, exc):
     )
 ```
 
-### 5.3 AI 调用错误处理```python
+### 5.3 AI 调用错误处理
+```
 # 重试机制
 @retry(max_attempts=3, delay=1)
 async def call_llm(prompt: str) -> str:
@@ -270,7 +279,8 @@ async def call_llm(prompt: str) -> str:
 - 数据库可独立部署
 - 消息队列解耦 (未来)
 
-## 9. 开发环境架构```开发环境:
+## 9. 开发环境架构
+```
 ┌─────────────────────────────────────────┐
 │  前端 (Vite Dev Server)                  │
 │  - HMR 热更新                           │
@@ -288,7 +298,8 @@ async def call_llm(prompt: str) -> str:
 └─────────────────────────────────────────┘
 ```
 
-## 10. 生产环境架构```生产环境:
+## 10. 生产环境架构
+```
 ┌─────────────────────────────────────────┐
 │  Nginx (反向代理 + 静态资源)              │
 │  - 前端静态文件                          │

@@ -35,7 +35,8 @@ top_img: /img/cover-night.jpg
 
 打开编辑器，新建一个文件，写完 `hexo g`，看它出现在首页上——这个过程比在输入框里敲字然后点发布，要慢，但也要真实一点。
 
-```bash
+```bas
+h
 hexo new post "今天想写点什么"
 hexo g
 hexo d

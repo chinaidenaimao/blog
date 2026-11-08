@@ -45,7 +45,8 @@ FastAPI 是一个现代、快速（高性能）的 Web 框架，用于构建 API
 python --version
 ```
 
-### 2.2 创建虚拟环境```bash
+### 2.2 创建虚拟环境
+```
 # 创建虚拟环境
 python -m venv fastapi-env
 
@@ -57,7 +58,8 @@ fastapi-env\Scripts\activate
 source fastapi-env/bin/activate
 ```
 
-### 2.3 安装 FastAPI```bash
+### 2.3 安装 FastAPI
+```
 # 安装 FastAPI 和 uvicorn
 pip install fastapi uvicorn
 
@@ -68,7 +70,8 @@ pip install passlib[bcrypt]  # 密码加密
 pip install sqlalchemy  # 数据库 ORM
 ```
 
-### 2.4 创建项目结构```bash
+### 2.4 创建项目结构
+```
 mkdir fastapi-project
 cd fastapi-project
 mkdir app
@@ -93,7 +96,8 @@ def read_root():
     return {"Hello": "World"}
 ```
 
-### 3.2 运行应用```bash
+### 3.2 运行应用
+```
 uvicorn main:app --reload
 ```
 
@@ -106,12 +110,14 @@ uvicorn main:app --reload
 
 ## 4. 运行应用
 
-### 4.1 开发模式```bash
+### 4.1 开发模式
+```
 # 使用 --reload 参数，代码修改后自动重启
 uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### 4.2 生产模式```bash
+### 4.2 生产模式
+```
 # 不使用 --reload，使用多个 worker
 uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
 ```
@@ -126,19 +132,22 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
 
 ## 5. 路径参数
 
-### 5.1 基本路径参数```python
+### 5.1 基本路径参数
+```
 @app.get("/users/{user_id}")
 def read_user(user_id: int):
     return {"user_id": user_id}
 ```
 
-### 5.2 多个路径参数```python
+### 5.2 多个路径参数
+```
 @app.get("/users/{user_id}/items/{item_id}")
 def read_user_item(user_id: int, item_id: int):
     return {"user_id": user_id, "item_id": item_id}
 ```
 
-### 5.3 预定义路径参数```python
+### 5.3 预定义路径参数
+```
 from enum import Enum
 
 class ModelName(str, Enum):
@@ -157,7 +166,8 @@ def get_model(model_name: ModelName):
 
 ## 6. 查询参数
 
-### 6.1 基本查询参数```python
+### 6.1 基本查询参数
+```
 from typing import Optional
 
 @app.get("/items/")
@@ -165,7 +175,8 @@ def read_items(skip: int = 0, limit: int = 10):
     return {"skip": skip, "limit": limit}
 ```
 
-### 6.2 可选查询参数```python
+### 6.2 可选查询参数
+```
 @app.get("/items/{item_id}")
 def read_item(item_id: str, q: Optional[str] = None):
     if q:
@@ -173,7 +184,8 @@ def read_item(item_id: str, q: Optional[str] = None):
     return {"item_id": item_id}
 ```
 
-### 6.3 多个查询参数```python
+### 6.3 多个查询参数
+```
 @app.get("/search/")
 def search_items(
     keyword: str,
@@ -193,7 +205,8 @@ def search_items(
 
 ## 7. 请求体
 
-### 7.1 基本请求体```python
+### 7.1 基本请求体
+```
 from pydantic import BaseModel
 
 class Item(BaseModel):
@@ -207,13 +220,15 @@ def create_item(item: Item):
     return item
 ```
 
-### 7.2 请求体 + 路径参数```python
+### 7.2 请求体 + 路径参数
+```
 @app.put("/items/{item_id}")
 def update_item(item_id: int, item: Item):
     return {"item_id": item_id, **item.dict()}
 ```
 
-### 7.3 多个请求体```python
+### 7.3 多个请求体
+```
 class User(BaseModel):
     username: str
     email: str
@@ -235,7 +250,8 @@ def create_user_item(user_id: int, user: User, item: Item):
 
 ## 8. 响应模型
 
-### 8.1 基本响应模型```python
+### 8.1 基本响应模型
+```
 from pydantic import BaseModel
 
 class Item(BaseModel):
@@ -254,7 +270,8 @@ def create_item(item: Item):
     return item
 ```
 
-### 8.2 响应模型过滤```python
+### 8.2 响应模型过滤
+```
 class ItemCreate(BaseModel):
     name: str
     description: Optional[str] = None
@@ -280,7 +297,8 @@ def create_item(item: ItemCreate):
 
 ## 9. 数据验证
 
-### 9.1 Pydantic 验证```python
+### 9.1 Pydantic 验证
+```
 from pydantic import BaseModel, Field, EmailStr
 
 class User(BaseModel):
@@ -290,7 +308,8 @@ class User(BaseModel):
     password: str = Field(..., min_length=8)
 ```
 
-### 9.2 自定义验证器```python
+### 9.2 自定义验证器
+```
 from pydantic import validator
 
 class Item(BaseModel):
@@ -304,7 +323,8 @@ class Item(BaseModel):
         return v
 ```
 
-### 9.3 查询参数验证```python
+### 9.3 查询参数验证
+```
 from fastapi import Query
 
 @app.get("/items/")
@@ -320,7 +340,8 @@ def read_items(
 
 ## 10. 依赖注入
 
-### 10.1 基本依赖```python
+### 10.1 基本依赖
+```
 from fastapi import Depends
 
 async def common_parameters(q: Optional[str] = None, skip: int = 0, limit: int = 100):
@@ -331,7 +352,8 @@ async def read_items(commons: dict = Depends(common_parameters)):
     return commons
 ```
 
-### 10.2 类依赖```python
+### 10.2 类依赖
+```
 class QueryParams:
     def __init__(self, q: Optional[str] = None, skip: int = 0, limit: int = 100):
         self.q = q
@@ -343,7 +365,8 @@ async def read_items(params: QueryParams = Depends()):
     return {"q": params.q, "skip": params.skip, "limit": params.limit}
 ```
 
-### 10.3 数据库依赖```python
+### 10.3 数据库依赖
+```
 from sqlalchemy.orm import Session
 
 def get_db():
@@ -362,7 +385,8 @@ def read_users(db: Session = Depends(get_db)):
 
 ## 11. 中间件
 
-### 11.1 添加中间件```python
+### 11.1 添加中间件
+```
 from fastapi import Request
 import time
 
@@ -375,7 +399,8 @@ async def add_process_time_header(request: Request, call_next):
     return response
 ```
 
-### 11.2 CORS 中间件```python
+### 11.2 CORS 中间件
+```
 from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
@@ -387,7 +412,8 @@ app.add_middleware(
 )
 ```
 
-### 11.3 自定义中间件类```python
+### 11.3 自定义中间件类
+```
 class TimingMiddleware:
     def __init__(self, app):
         self.app = app
@@ -405,7 +431,8 @@ app.add_middleware(TimingMiddleware)
 
 ## 12. 错误处理
 
-### 12.1 HTTPException```python
+### 12.1 HTTPException
+```
 from fastapi import HTTPException
 
 @app.get("/items/{item_id}")
@@ -415,7 +442,8 @@ def read_item(item_id: int):
     return {"item_id": item_id}
 ```
 
-### 12.2 自定义错误处理```python
+### 12.2 自定义错误处理
+```
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 
@@ -432,7 +460,8 @@ async def custom_exception_handler(request: Request, exc: CustomException):
     )
 ```
 
-### 12.3 请求验证错误处理```python
+### 12.3 请求验证错误处理
+```
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
@@ -448,7 +477,8 @@ async def validation_exception_handler(request, exc):
 
 ## 13. 数据库集成
 
-### 13.1 SQLAlchemy 配置```python
+### 13.1 SQLAlchemy 配置
+```
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -463,7 +493,8 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 ```
 
-### 13.2 数据库模型```python
+### 13.2 数据库模型
+```
 from sqlalchemy import Column, Integer, String, Boolean
 from .database import Base
 
@@ -476,7 +507,8 @@ class User(Base):
     is_active = Column(Boolean, default=True)
 ```
 
-### 13.3 CRUD 操作```python
+### 13.3 CRUD 操作
+```
 from sqlalchemy.orm import Session
 from . import models, schemas
 
@@ -498,7 +530,8 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 ## 14. 用户认证
 
-### 14.1 JWT Token```python
+### 14.1 JWT Token
+```
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
@@ -517,7 +550,8 @@ def create_access_token(data: dict):
     return encoded_jwt
 ```
 
-### 14.2 认证路由```python
+### 14.2 认证路由
+```
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 
@@ -536,7 +570,8 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 ```
 
-### 14.3 保护路由```python
+### 14.3 保护路由
+```
 async def get_current_user(token: str = Depends(oauth2_scheme)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
@@ -565,7 +600,8 @@ async def read_users_me(current_user: schemas.User = Depends(get_current_user)):
 
 ## 15. 项目结构
 
-### 15.1 推荐项目结构```
+### 15.1 推荐项目结构
+```
 fastapi-project/
 ├── app/
 │   ├── __init__.py
@@ -587,7 +623,8 @@ fastapi-project/
 └── README.md
 ```
 
-### 15.2 配置文件```python
+### 15.2 配置文件
+```
 # app/config.py
 from pydantic import BaseSettings
 
@@ -602,7 +639,8 @@ class Settings(BaseSettings):
 settings = Settings()
 ```
 
-### 15.3 路由组织```python
+### 15.3 路由组织
+```
 # app/routers/users.py
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
@@ -639,7 +677,8 @@ COPY ./app /code/app
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
 ```
 
-### 16.2 Docker Compose```yaml
+### 16.2 Docker Compose
+```
 version: '3.8'
 
 services:
@@ -665,7 +704,8 @@ volumes:
   postgres_data:
 ```
 
-### 16.3 Nginx 配置```nginxserver {listen 80;
+### 16.3 Nginx 配置
+```
     server_name example.com;
 
     location / {
@@ -701,7 +741,8 @@ volumes:
 
 > 在这里记录你的学习笔记和心得
 
-### 常用命令```bash
+### 常用命令
+```
 # 安装依赖
 pip install -r requirements.txt
 
@@ -709,7 +750,8 @@ pip install -r requirements.txt
 
 # 格式化代码black .
 
-# 类型检查mypy .```
+# 类型检查mypy .
+```
 
 ### 常见问题
 1. **CORS 错误**：确保添加了 CORS 中间件

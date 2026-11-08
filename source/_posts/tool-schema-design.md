@@ -23,7 +23,8 @@ tags:
 5. **工具调用抖动 (thrash)** 的四类成因与可跑的诊断代码
 6. 一个用 Pydantic 定义工具 + 自动审计 schema 的检查清单
 
-## 前置要求```bash
+## 前置要求
+```
 pip install pydantic openai python-dotenv
 ```
 
@@ -34,21 +35,26 @@ pip install pydantic openai python-dotenv
 > 本仓库的 demo 已经全部改用 ASCII 标记（`[OK]` / `[WARN]` / `[FAIL]`）并把输出控制在 GBK 可编码范围内，所以直接跑不会炸。**但你一旦自己往 demo 里加 emoji 或生僻字符，就会立刻踩到。**
 >
 > 三种解法，任选其一：
-> ```bash
+>
+```
 > PYTHONIOENCODING=utf-8 python demos/04-schema-checklist.py     # ① 跑的时候带环境变量
 >                                                                 #   （本 demo 输出已全部改为 ASCII 标记，
 >                                                                 #    正常不需要这一行；只有你自己改出 emoji 时才要）
-> ```
-> ```python
+>
+```
+>
+```
 > import sys; sys.stdout.reconfigure(encoding="utf-8")            # ② 写在脚本开头
-> ```
+>
+```
 > 或者在 Windows 设置里打开「Beta: 使用 Unicode UTF-8 提供全球语言支持」。
 >
 > 这个坑在 `.venv` 里跑任何带 emoji 的教学 demo 都会遇到，**待验证**：本项目里是否所有 demo 都触发了它。
 
 ---
 
-## 一、Schema 税：工具越多，越贵也越蠢```mermaidgraph LR
+## 一、Schema 税：工具越多，越贵也越蠢
+```
     N["🔢 注册的工具数 ↑"] --> T["📏 每轮 prompt 的<br/>固定 token ↑"]
     N --> C["🎯 候选集变大<br/>相似工具互相干扰"]
     T --> T1["💸 成本与延迟线性上涨"]
@@ -111,7 +117,8 @@ pip install pydantic openai python-dotenv
 
 Anthropic 报告里，把多个细粒度工具合并成更少的粗粒度工具，**ROI 达到 733%**。这个数字看着离谱，但机制很清楚。
 
-### 2.1 为什么合并有效```mermaidgraph TD
+### 2.1 为什么合并有效
+```
     A["🧩 4 个细粒度工具"] --> B["Schema token ×4<br/>（每轮都付）"]
     A --> C["模型要在 4 个里选<br/>选择点 ×4"]
     C --> D["但它们的描述高度重叠<br/>→ 语义边界模糊"]
@@ -130,7 +137,8 @@ Anthropic 报告里，把多个细粒度工具合并成更少的粗粒度工具�
 
 > **把「选哪个工具」变成「填哪个枚举值」，等于把不可校验的判断变成可校验的输入。**
 
-### 2.2 代码对照```python
+### 2.2 代码对照
+```
 # ❌ 4 个细粒度工具：描述高度重叠，模型要在它们之间做语义选择
 FINE_GRAINED = [
     {"type": "function", "function": {
@@ -157,7 +165,9 @@ FINE_GRAINED = [
                        "required": ["path"]}}},
 ]
 # 问题：list_files 和 read_file 的 description 几乎无法区分"我想看这个目录里有什么"
-#       和"我想看这个文件里有什么"——而模型经常会搞混目录和文件。``````python
+#       和"我想看这个文件里有什么"——而模型经常会搞混目录和文件。
+```
+```python
 # ✅ 合并成 1 个工具：把 4 选 1 降级成 op 枚举
 FILE_TOOL = {
     "type": "function",
@@ -222,7 +232,8 @@ FILE_TOOL = {
 
 poka-yoke（防呆）的核心思想：**不是写文档叮嘱使用者别做错，而是让做错这件事在结构上更难发生。**
 
-### 3.1 用 `enum` 替代自由字符串```python
+### 3.1 用 `enum` 替代自由字符串
+```
 # ❌ 模型能生成无穷多种写法，你一个个兜底
 {"mode": {"type": "string", "description": "搜索模式，可以是字面量或正则"}}
 # 实际见到的值：'literal' / 'regex' / '字面量' / 'literal mode' / 'plain' / 'exact' ...
@@ -233,7 +244,8 @@ poka-yoke（防呆）的核心思想：**不是写文档叮嘱使用者别做错
 
 **为什么这条比看起来重要**：`enum` 不只是「提示模型」，它在**校验层**真的拦得住。`pi` 就用 TypeBox 在每次调用前跑 `validateToolArguments`；校验失败时不崩溃，而是把错误当返回值喂回去让模型自己改。**只写描述不校验 = 白写。**
 
-### 3.2 强制绝对路径```python
+### 3.2 强制绝对路径
+```
 # ❌ 描述里"建议"，实现里不检查
 "description": "文件路径，建议使用绝对路径"
 # 结果：模型传 "src/app.py"，你的进程 cwd 是 D:\ai-demo\langchian，
@@ -254,7 +266,8 @@ def read_text_file(path: str, offset: int = 0) -> dict:
 
 「相对路径」这类错误的可怕之处在于**它不一定报错**。它可能读到一个同名但无关的文件，返回一段看起来很正常的内容，然后模型基于它继续推理。这是**静默失败**的典型形态。
 
-### 3.3 必填 vs 可选的取舍 —— 以及「可选参数幻觉」```mermaidgraph TD
+### 3.3 必填 vs 可选的取舍 —— 以及「可选参数幻觉」
+```
     A{"这个信息模型<br/>自己能知道吗？"} -->|"只有调用方知道"| B["必填<br/>（如 path）"]
     A -->|"有合理默认值"| C["可选 + default<br/>+ 描述里说明默认值"]
     A -->|"模型不知道但你以为它知道"| D["❌ 必填 = 逼模型编造<br/>（如 user_id / session_id）"]
@@ -324,7 +337,8 @@ def dispatch(name: str, args: dict) -> dict:
 
 第二行是最常见的：**返回 `{"status": "ok"}` → 模型不知道发生了什么 → 再调一次看看**。这就是 ACI 里「有意义的返回」为什么是硬要求。
 
-### 5.2 诊断代码```python
+### 5.2 诊断代码
+```
 # demos/04-thrash-detector.py
 """从消息历史里诊断工具调用抖动。跑法：python demos/04-thrash-detector.py"""
 import json

@@ -21,7 +21,8 @@ tags:
 
 ---
 
-## 一、最小可用（8 行，只适合 demo）```python
+## 一、最小可用（8 行，只适合 demo）
+```
 from fastapi import FastAPI, UploadFile, File
 
 app = FastAPI()
@@ -44,7 +45,8 @@ async def upload(file: UploadFile = File(...)):
 
 ## 二、必须知道的三条底层事实
 
-### 2.1 依赖 `python-multipart`，否则直接 422```bash
+### 2.1 依赖 `python-multipart`，否则直接 422
+```
 pip install python-multipart
 ```
 
@@ -81,7 +83,8 @@ pip install python-multipart
 
 ## 三、生产级单文件上传
 
-### 3.1 目录结构```app/file/
+### 3.1 目录结构
+```
 ├── router.py           # 视图层
 ├── schema.py           # FileRespVO / FileQuery
 ├── service.py          # 业务：校验、落盘、入库
@@ -93,7 +96,8 @@ pip install python-multipart
     └── s3.py           # 对象存储实现（OSS/S3/MinIO 通用）
 ```
 
-### 3.2 数据表：存 `file_id`，不存 URL```python
+### 3.2 数据表：存 `file_id`，不存 URL
+```
 # app/file/model.py
 from datetime import datetime
 from sqlalchemy import String, BigInteger, DateTime, Index, func
@@ -128,7 +132,8 @@ class FileRecord(Base):
 > 存 `file_id` 后，URL 在下载接口里**动态生成**，存储迁移对业务表零影响。
 > 这是文件模块最重要的一条设计决策。
 
-### 3.3 常量与魔数表```python
+### 3.3 常量与魔数表
+```
 # app/file/constants.py
 MAX_FILE_SIZE = 20 * 1024 * 1024          # 单文件 20MB
 MAX_IMAGE_SIZE = 5 * 1024 * 1024          # 图片 5MB
@@ -168,7 +173,8 @@ def sniff_ok(head: bytes, ext: str) -> bool:
 > - `.docx` 与 `.zip` 无法用魔数区分 → 要区分只能解析 zip 内的 `[Content_Types].xml`
 > - 真正的安全要靠**白名单 + 存储隔离 + 不执行 + 病毒扫描**，而不是靠魔数
 
-### 3.4 存储抽象（关键：业务代码不碰 `open()`）```python
+### 3.4 存储抽象（关键：业务代码不碰 `open()`）
+```
 # app/file/storage/base.py
 from abc import ABC, abstractmethod
 from collections.abc import AsyncIterator
@@ -242,7 +248,8 @@ class LocalStorage(StorageBackend):
 > `anyio` 已经是 FastAPI 的间接依赖（Starlette 用 anyio 做线程池），
 > 直接用它**不引入新依赖**。`aiofiles` 也行，只是多一个包。
 
-### 3.5 Service：流式 + 限额 + 魔数 + 秒传```python
+### 3.5 Service：流式 + 限额 + 魔数 + 秒传
+```
 # app/file/service.py
 import hashlib
 from datetime import date
@@ -349,7 +356,8 @@ class FileService:
 > 写临时目录 + 校验通过后二次落位，能保证「存储里有的文件，库里一定有记录」。
 > 线上再配一个定时任务扫 `_tmp/` 清理超过 1 小时的残留即可。
 
-### 3.6 Router：鉴权 + 统一响应```python
+### 3.6 Router：鉴权 + 统一响应
+```
 # app/file/router.py
 from typing import Annotated
 
@@ -393,7 +401,8 @@ async def upload_batch(
 
 ---
 
-## 四、下载：三个必须处理的点```python
+## 四、下载：三个必须处理的点
+```
 # app/file/router.py（续）
 from urllib.parse import quote
 from fastapi.responses import StreamingResponse
@@ -438,9 +447,11 @@ async def download(
 
 > **💡 提示：断点续传下载**
 > 直接用 Starlette 的 `FileResponse` 就自带 `Range` 支持（本地文件场景）：
-> ```python
+>
+```
 > return FileResponse(path, filename=..., media_type=...)
-> ```
+>
+```
 > 但 `FileResponse` 只能读本地路径。对象存储场景要在 `StreamingResponse` 里
 > 自己解析 `Range` 头并 `seek`，或者更省事：**给对象存储发一个带签名的临时 URL，让浏览器直连下载**。
 
@@ -551,7 +562,8 @@ async def complete(upload_id: str, user: CurrentActiveUser):
 
 ## 七、前端配合（Vue + axios）
 
-### 7.1 上传：不要手动设 `Content-Type````ts
+### 7.1 上传：不要手动设 `Content-Type
+```
 // src/service/api/file.ts
 export const fileApi = {
   upload(file: File, bizType = 'common', onProgress?: (p: number) => void) {
@@ -574,7 +586,8 @@ export const fileApi = {
 > 手动设置 `'Content-Type': 'multipart/form-data'` 会**丢掉 boundary 参数**，
 > 后端报 `422` 或 `Expected multipart/form-data`。让浏览器自己设，一行都别写。
 
-### 7.2 下载：`blob` + 从响应头解析文件名```ts
+### 7.2 下载：`blob` + 从响应头解析文件名
+```
 async function download(fileId: number, fallbackName = 'download') {
   const res = await request.get<Blob>(`/files/${fileId}/download`, {
     responseType: 'blob',
@@ -597,9 +610,11 @@ async function download(fileId: number, fallbackName = 'download') {
 
 > **💡 提示：CORS 必须暴露这个头**
 > 跨域时浏览器默认**读不到** `Content-Disposition`，需要在后端 CORS 里加：
-> ```python
+>
+```
 > expose_headers=["Content-Disposition", "X-Request-Id"]
-> ```
+>
+```
 > 否则文件名永远是 `fallbackName`，这是"下载文件名不对"最常见的原因。
 
 ---

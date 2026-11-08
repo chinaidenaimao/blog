@@ -28,7 +28,8 @@ FastAPI 提供了 `File` 和 `UploadFile` 来处理文件上传。
 | 异步支持 | ❌          | ✅ `await file.read()` |
 | 推荐场景 | 小文件 (<1MB) | 所有场景                  |
 
-#### 1.2 基础用法```python
+#### 1.2 基础用法
+```
 from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
 import shutil
@@ -65,7 +66,8 @@ async def upload_file(file: UploadFile = File(...)):
 
 ### 二、进阶用法
 
-#### 2.1 限制文件大小和类型```python
+#### 2.1 限制文件大小和类型
+```
 from fastapi import FastAPI, File, UploadFile, HTTPException
 import magic  # python-magic 库
 
@@ -94,7 +96,8 @@ async def upload_validated(file: UploadFile = File(...)):
     return {"filename": file.filename, "type": mime}
 ```
 
-#### 2.2 多文件上传```python
+#### 2.2 多文件上传
+```
 from typing import List
 
 @app.post("/upload-multiple")
@@ -108,7 +111,8 @@ async def upload_multiple(files: List[UploadFile] = File(...)):
     return {"uploaded": results}
 ```
 
-#### 2.3 带额外数据的文件上传```python
+#### 2.3 带额外数据的文件上传
+```
 from pydantic import BaseModel
 
 class UploadMetadata(BaseModel):
@@ -133,7 +137,8 @@ async def upload_with_metadata(
     }
 ```
 
-### 三、异步文件处理（推荐）```python
+### 三、异步文件处理（推荐）
+```
 import aiofiles
 
 @app.post("/upload-async")
@@ -149,15 +154,18 @@ async def upload_async(file: UploadFile = File(...)):
     return {"filename": file.filename, "size": len(content)}
 ```
 
-### 四、静态文件服务（下载）```python
+### 四、静态文件服务（下载）
+```
 from fastapi.staticfiles import StaticFiles
 
 # 挂载上传目录为静态文件
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
-# 访问：http://localhost:8000/uploads/filename.jpg```
+# 访问：http://localhost:8000/uploads/filename.jpg
+```
 
-### 五、完整示例：图片上传服务```python
+### 五、完整示例：图片上传服务
+```
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.responses import FileResponse
 from pathlib import Path
@@ -205,7 +213,8 @@ async def get_image(filename: str):
 
 #### 6.1 主要问题
 
-##### 问题 1：内存溢出（最严重）```python
+##### 问题 1：内存溢出（最严重）
+```
 # ❌ 危险：小文件用 bytes，大文件会撑爆内存
 @app.post("/upload")
 async def upload(file: bytes = File(...)):  # 1GB 文件 → 内存占用 1GB
@@ -217,7 +226,8 @@ async def upload(file: bytes = File(...)):  # 1GB 文件 → 内存占用 1GB
 - 进程被 OOM Killer 杀死
 - 所有用户受影响
 
-##### 问题 2：请求超时```默认情况：
+##### 问题 2：请求超时
+```
 ├── 客户端超时：无限制（浏览器可能 300s）
 ├── FastAPI/Uvicorn：无默认超时
 ├── Nginx：60s
@@ -226,13 +236,16 @@ async def upload(file: bytes = File(...)):  # 1GB 文件 → 内存占用 1GB
 
 **表现：** 上传到 99% 突然失败，用户需要重头开始
 
-##### 问题 3：请求体大小限制```python
+##### 问题 3：请求体大小限制
+```
 # Uvicorn 默认无限制，但中间件/代理可能有限制
-# Nginx 默认：client_max_body_size 1m;  ← 只有 1MB！```
+# Nginx 默认：client_max_body_size 1m;  ← 只有 1MB！
+```
 
 **表现：** 返回 `413 Request Entity Too Large`
 
-##### 问题 4：临时文件问题```python
+##### 问题 4：临时文件问题
+```
 # UploadFile 使用 SpooledTemporaryFile
 # 小于 1MB → 存内存
 # 大于 1MB → 写入 /tmp 目录
@@ -240,9 +253,11 @@ async def upload(file: bytes = File(...)):  # 1GB 文件 → 内存占用 1GB
 # 问题：
 # - /tmp 磁盘空间不足
 # - 并发上传撑爆磁盘
-# - 临时文件未清理（内存泄漏）```
+# - 临时文件未清理（内存泄漏）
+```
 
-##### 问题 5：并发上传雪崩```
+##### 问题 5：并发上传雪崩
+```
 10 个用户同时上传 1GB 文件：
 ├── 内存需求：10GB
 ├── 磁盘 I/O：争抢
@@ -251,7 +266,8 @@ async def upload(file: bytes = File(...)):  # 1GB 文件 → 内存占用 1GB
 
 #### 6.2 解决方案
 
-##### 方案 1：流式处理（必须）```python
+##### 方案 1：流式处理（必须）
+```
 import aiofiles
 
 @app.post("/upload-stream")
@@ -266,7 +282,8 @@ async def upload_stream(file: UploadFile = File(...)):
     return {"size": save_path.stat().st_size}
 ```
 
-##### 方案 2：分块上传（断点续传）```python
+##### 方案 2：分块上传（断点续传）
+```
 # 前端分片
 # - 文件切成 5MB 一片
 # - 每片独立上传
@@ -295,7 +312,8 @@ async def upload_chunk(
     return {"uploaded": uploaded, "total": total_chunks}
 ```
 
-##### 方案 3：限制并发和大小```python
+##### 方案 3：限制并发和大小
+```
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 import asyncio
@@ -323,7 +341,8 @@ class UploadLimitMiddleware(BaseHTTPMiddleware):
         return await call_next(request)
 ```
 
-##### 方案 4：Nginx 配置```nginx
+##### 方案 4：Nginx 配置
+```
 # nginx.conf
 client_max_body_size 100m;  # 允许 100MB
 
@@ -335,7 +354,8 @@ proxy_send_timeout 300s;
 proxy_request_buffering off;  # 流式转发，不缓存整个请求体
 ```
 
-##### 方案 5：云存储直传（推荐）```python
+##### 方案 5：云存储直传（推荐）
+```
 # 不经过你的服务器，直接上传到 OSS/S3import boto3
 
 @app.get("/presigned-url")
@@ -352,7 +372,8 @@ async def get_presigned_url(filename: str):
 # 优点：
 # - 服务器零负载
 # - 自动利用 CDN
-# - 断点续传原生支持```
+# - 断点续传原生支持
+```
 
 #### 6.3 最佳实践总结
 
@@ -364,7 +385,8 @@ async def get_presigned_url(filename: str):
 | 并发雪崩 | 信号量限制并发数 | ⭐⭐ |
 | 服务器负载 | 云存储直传 | ⭐⭐⭐ |
 
-#### 6.4 推荐架构```小文件（<5MB）：
+#### 6.4 推荐架构
+```
 客户端 → FastAPI → 流式写入磁盘
 
 中文件（5MB-100MB）：

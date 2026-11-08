@@ -24,7 +24,8 @@ tags:
 6. 截断回合 (split turn) 与分支摘要 (Branch Summarization) 各自解决什么问题
 7. 五种压缩策略的对比表，以及一个可跑的最小 compaction 实现
 
-## 前置要求```bash
+## 前置要求
+```
 pip install openai python-dotenv
 ```
 
@@ -45,7 +46,8 @@ MIMO_MODEL=mimo-v2.5
 
 ---
 
-## 一、摘要压缩 vs 硬截断先把两者放在一起看：```mermaidgraph TD
+## 一、摘要压缩 vs 硬截断先把两者放在一起看：
+```
     subgraph TRIM["✂️ 硬截断（裁剪）"]
         T1["旧消息"] -->|"直接丢弃"| T2["🗑️ 信息永久消失"]
         T3["保留"] --> T4["最近 N 条原文"]
@@ -90,7 +92,8 @@ MIMO_MODEL=mimo-v2.5
 
 > 本篇参考实现：`earendil-works/pi`（TypeScript 大型实现），源码与官方文档 `packages/coding-agent/docs/compaction.md`，抓取于 2026-09。
 
-### 2.1 触发条件：几何式 token 阈值，不是消息条数```ts
+### 2.1 触发条件：几何式 token 阈值，不是消息条数
+```
 // pi 的判据（简化）
 if (contextTokens > contextWindow - reserveTokens) {
   await compact();
@@ -119,7 +122,8 @@ if (contextTokens > contextWindow - reserveTokens) {
 
 > ⚠️ 注意 `contextWindow - reserveTokens` 是一个**比例无关的绝对量**。这意味着窗口 200k 的模型和窗口 32k 的模型，都用同一个 `reserveTokens = 16384`——留出的**绝对**输出空间是一样的。这是刻意的：输出长度取决于任务，不取决于窗口。
 
-### 2.2 检查时机：三处，其中一处最关键```mermaid
+### 2.2 检查时机：三处，其中一处最关键
+```
 sequenceDiagram
     participant U as 用户
     participant A as pi 主循环
@@ -153,7 +157,8 @@ sequenceDiagram
 >
 > 正确的位置是：**每一轮工具结果 `append` 之后，立刻检查**。这不是「下一步的准备工作」，这是「同一个 run 的继续进行条件」。
 
-### 2.3 怎么算 contextTokens```ts// pi（简化）
+### 2.3 怎么算 contextTokens
+```
 function calculateContextTokens(usage) {
   return usage.totalTokens
       || usage.inputTokens + usage.outputTokens
@@ -182,7 +187,8 @@ if (msg.role === "assistant" && !msg.aborted && !msg.error) { ... }
 
 把它算进 `contextTokens` 会让阈值判断**虚高**，导致过早压缩（浪费一次 LLM 调用）；也可能让 `keepRecentTokens` 的累加计算错位。**待验证**：这条规则的具体边界（比如流式中途断开算不算 aborted）在 pi 文档里没有完全展开，实现时需自行定义并保持自洽。
 
-### 2.4 五步流程```mermaidflowchart TD
+### 2.4 五步流程
+```
     START(["contextTokens > window − reserve"]) --> S1
     S1["① 从最新消息往前累加 token<br/>累到 keepRecentTokens 就停<br/>→ 得到候选切点"] --> S2
     S2{"② 切点合法吗？<br/>只能是 user / assistant /<br/>BashExecution / custom<br/>❌ 绝不能是 tool result"} -->|"不合法"| S2b["往后/往前挪到最近合法位置"]
@@ -374,7 +380,8 @@ graph TD
 
 ## 三、钉住区块 (pinned)：让关键约束永不参与压缩
 
-### 3.1 先看一个可复现的翻车场景```
+### 3.1 先看一个可复现的翻车场景
+```
 第 3 轮   用户: "帮我优化这个查询，注意不要动 config/prod.yaml，那是生产配置。"
 第 4-25 轮 agent 读文件、改代码、跑测试、修 bug、再跑测试……（触发 2 次 compaction）
 第 26 轮  用户: "再加个索引试试"
@@ -421,7 +428,8 @@ graph TD
 
 > ⚠️ **pin 的容量纪律**：pinned 是**每一轮都付全价**的上下文，而且它处在 U 形曲线的高位（system 之后）。pin 到 20 条，你就重新制造了「上下文越长越安全」那个幻觉。经验上控制在 **5-10 条、总长 < 500 token**。
 
-### 3.4 实现骨架```python
+### 3.4 实现骨架
+```
 class PinnedBlock:
     """永不参与压缩的约束块。每次重建上下文时原样拼在 system 之后。"""
 

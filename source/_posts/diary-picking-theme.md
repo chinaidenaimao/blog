@@ -35,7 +35,8 @@ tags:
 
 第一次打开的时候我愣了几秒，然后做了个正确的决定：**没有直接改它**，而是复制到根目录变成 `_config.anzhiyu.yml` 做覆盖配置。后来主题更新了几次，这个决定救了我很多次。
 
-```bash
+```bas
+h
 cp themes/anzhiyu/_config.yml _config.anzhiyu.yml
 ```
 

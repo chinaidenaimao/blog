@@ -77,7 +77,8 @@ pip install passlib[argon2]
 
 ### 三、基本使用
 
-#### 1. 创建 CryptContext```python
+#### 1. 创建 CryptContext
+```
 from passlib.context import CryptContext
 
 # 推荐配置：使用 bcrypt + 自动加盐
@@ -87,7 +88,8 @@ pwd_context = CryptContext(
 )
 ```
 
-#### 2. 密码哈希```python
+#### 2. 密码哈希
+```
 # 原文密码
 password = "mypassword123"
 
@@ -102,7 +104,8 @@ print(hashed_password_2)
 # 输出: $2b$12$kR4m8x2Pz9wB6x3K5J3Y.8Q7X8V2N4M6B1C3D5E7F9G1H2I4
 ```
 
-#### 3. 密码验证```python
+#### 3. 密码验证
+```
 # 验证密码是否匹配
 password_to_check = "mypassword123"
 is_valid = pwd_context.verify(password_to_check, hashed_password)
@@ -114,7 +117,8 @@ is_valid = pwd_context.verify(wrong_password, hashed_password)
 print(is_valid)  # False
 ```
 
-#### 4. 检查是否需要重新哈希```python
+#### 4. 检查是否需要重新哈希
+```
 # 当算法或工作因子更新时，旧密码可能需要重新哈希
 needs_rehash = pwd_context.needs_update(hashed_password)
 print(needs_rehash)  # False (如果配置没变)
@@ -133,7 +137,8 @@ print(needs_rehash)  # True (需要重新哈希)
 
 ### 四、常用算法对比
 
-#### 1. bcrypt（经典选择）```python
+#### 1. bcrypt（经典选择）
+```
 from passlib.context import CryptContext
 
 pwd_context = CryptContext(
@@ -151,7 +156,8 @@ pwd_context = CryptContext(
 - 密码长度限制（72 字节）
 - 已经有 20 年历史
 
-#### 2. argon2（推荐）```python
+#### 2. argon2（推荐）
+```
 from passlib.context import CryptContext
 
 pwd_context = CryptContext(
@@ -171,7 +177,8 @@ pwd_context = CryptContext(
 **缺点：**
 - 需要额外安装 `passlib[argon2]`
 
-#### 3. scrypt```python
+#### 3. scrypt
+```
 from passlib.context import CryptContext
 
 pwd_context = CryptContext(
@@ -196,7 +203,8 @@ pwd_context = CryptContext(
 
 ### 五、FastAPI 实战示例
 
-#### 1. 完整的用户认证模块```python
+#### 1. 完整的用户认证模块
+```
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -315,7 +323,8 @@ async def login(
     return {"access_token": access_token, "token_type": "bearer"}
 ```
 
-#### 2. 使用 Pydantic 验证密码强度```python
+#### 2. 使用 Pydantic 验证密码强度
+```
 from pydantic import BaseModel, field_validator
 
 class UserCreate(BaseModel):
@@ -342,7 +351,8 @@ class UserCreate(BaseModel):
 
 ### 六、安全最佳实践
 
-#### 1. 密码策略```python
+#### 1. 密码策略
+```
 # 推荐的密码策略配置
 PASSWORD_CONFIG = {
     "min_length": 8,
@@ -370,7 +380,8 @@ def validate_password_strength(password: str) -> bool:
     return True
 ```
 
-#### 2. 防止时序攻击```pythonimport hmac
+#### 2. 防止时序攻击
+```
 
 def secure_compare(a: str, b: str) -> bool:
     """恒定时间比较，防止时序攻击"""
@@ -382,7 +393,8 @@ def verify_password_secure(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 ```
 
-#### 3. 速率限制```python
+#### 3. 速率限制
+```
 from fastapi import Request
 from slowapi import Limiter
 from slowapi.util import get_remote_address
@@ -396,7 +408,8 @@ async def login(request: Request, ...):
     pass
 ```
 
-#### 4. 环境变量管理```pythonimport os
+#### 4. 环境变量管理
+```
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -414,7 +427,8 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 ### 七、常见问题解答
 
-#### Q1: 为什么 bcrypt 密码长度限制 72 字节？```python
+#### Q1: 为什么 bcrypt 密码长度限制 72 字节？
+```
 # bcrypt 的设计限制，超过 72 字节的部分会被截断
 password = "a" * 100  # 100 个字符
 hashed = pwd_context.hash(password)
@@ -431,7 +445,8 @@ def hash_password_long(password: str) -> str:
     return pwd_context.hash(password)
 ```
 
-#### Q2: 如何迁移旧密码哈希？```python
+#### Q2: 如何迁移旧密码哈希？
+```
 # 假设旧系统使用 MD5（不推荐，仅作示例）
 import hashlib
 
@@ -461,7 +476,8 @@ async def login_with_migration(user: User, password: str):
             raise HTTPException(status_code=401, detail="密码错误")
 ```
 
-#### Q3: 如何测试密码哈希功能？```python
+#### Q3: 如何测试密码哈希功能？
+```
 import pytest
 from passlib.context import CryptContext
 
@@ -492,7 +508,8 @@ def test_password_hashing():
 
 ### 八、FastAPI 响应格式封装（补充）
 
-#### 1. 统一响应函数```python
+#### 1. 统一响应函数
+```
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 
@@ -505,7 +522,8 @@ def success_response(message: str = 'success', data=None):
 - `jsonable_encoder` - 将 Pydantic 模型、datetime 等转为 JSON 兼容格式
 - 统一返回结构：`{code, message, data}`
 
-#### 2. Pydantic 模型分层设计```python
+#### 2. Pydantic 模型分层设计
+```
 # 基础模型（可复用字段）
 class UserInfoBase(BaseModel):
     nickname: Optional[str] = None
@@ -537,7 +555,8 @@ class UserAuthResponse(BaseModel):
 | `alias='userInfo'` | Python 字段名 `user_info` → JSON 字段 `userInfo` |
 | `populate_by_name=True` | 允许用 `user_info=` 赋值（否则必须用 `userInfo=`） |
 
-#### 4. 使用流程```python
+#### 4. 使用流程
+```
 # 1. 创建用户
 userData = await create_user(db, user_data)
 
@@ -554,7 +573,8 @@ res_data = UserAuthResponse(
 return success_response(message='注册成功', data=res_data)
 ```
 
-#### 5. 最终 JSON 输出```json{"code": 200,
+#### 5. 最终 JSON 输出
+```
   "message": "注册成功",
   "data": {
     "token": "eyJhbGciOiJIUzI1NiIs...",
@@ -569,7 +589,8 @@ return success_response(message='注册成功', data=res_data)
 }
 ```
 
-#### 6. 扩展：错误响应函数```python
+#### 6. 扩展：错误响应函数
+```
 def error_response(message: str = 'error', code: int = 400):
     return JSONResponse(
         status_code=code,
@@ -584,7 +605,8 @@ def error_response(message: str = 'error', code: int = 400):
 
 ### 九、响应封装函数详解
 
-#### 1. `success_response()` 函数```python
+#### 1. `success_response()` 函数
+```
 def success_response(message: str = 'success', data=None):
     content = {'code': 200, 'message': message, 'data': data}
     return JSONResponse(content=jsonable_encoder(content))
@@ -599,7 +621,8 @@ def success_response(message: str = 'success', data=None):
 
 **返回：** `{code: 200, message: 'xxx', data: {...}}`
 
-#### 2. `jsonable_encoder()` 函数```python
+#### 2. `jsonable_encoder()` 函数
+```
 from fastapi.encoders import jsonable_encoder
 
 # 转换前data = {
@@ -612,7 +635,8 @@ jsonable_encoder(data)
 # {
 #     "user": {"id": 1, "username": "test"},  # 字典
 #     "time": "2026-07-07T10:00:00"  # 字符串
-# }```
+# }
+```
 
 **作用：** 将 Python 对象转为 JSON 兼容的字典
 
@@ -622,7 +646,8 @@ jsonable_encoder(data)
 - ✅ UUID → 字符串
 - ✅ 递归处理嵌套对象
 
-#### 3. `model_validate()` 方法```python
+#### 3. `model_validate()` 方法
+```
 # ORM 对象（来自 SQLAlchemy）
 userData = User(id=1, username="test", bio="hello")
 
@@ -639,11 +664,13 @@ user_response = UserInfoResponse.model_validate(user_dict)
 
 **前提：** 需要配置 `from_attributes=True`
 
-#### 4. `Field(..., alias='userInfo')` 别名配置```python
+#### 4. `Field(..., alias='userInfo')` 别名配置
+```
 class UserAuthResponse(BaseModel):
     token: str
     user_info: UserInfoResponse = Field(..., alias='userInfo')
-    #     ↑ Python 字段名                    ↑ JSON 字段名```
+    #     ↑ Python 字段名                    ↑ JSON 字段名
+```
 
 **作用：** 定义字段的别名（字段名转换）
 
@@ -652,7 +679,8 @@ class UserAuthResponse(BaseModel):
 | `...` | 必填字段 |
 | `alias='userInfo'` | JSON 中用 `userInfo`，Python 中用 `user_info` |
 
-#### 5. `populate_by_name=True` 配置```python
+#### 5. `populate_by_name=True` 配置
+```
 # 没有配置时（默认 False）
 res = UserAuthResponse(
     token="xxx",
@@ -663,11 +691,13 @@ res = UserAuthResponse(
 res = UserAuthResponse(
     token="xxx",
     user_info=user_info  # ✅ 用原字段名也可以
-    # userInfo=user_info  # ✅ 用 alias 也可以)```
+    # userInfo=user_info  # ✅ 用 alias 也可以)
+```
 
 **作用：** 允许同时用原字段名或 alias 赋值
 
-#### 6. `model_config` 配置总结```python
+#### 6. `model_config` 配置总结
+```
 model_config = ConfigDict(
     from_attributes=True,    # 允许从 ORM 对象创建模型
     populate_by_name=True    # 允许用原字段名赋值
@@ -679,7 +709,8 @@ model_config = ConfigDict(
 | `from_attributes` | `False` | ORM 对象 → Pydantic |
 | `populate_by_name` | `False` | 用原字段名而非 alias 赋值 |
 
-#### 7. 数据流转图```
+#### 7. 数据流转图
+```
 ORM 对象 (SQLAlchemy)
     ↓ model_validate()
 Pydantic 模型 (UserInfoResponse)
@@ -693,7 +724,8 @@ HTTP 响应 (JSON 字符串)
 
 ### 十、FastAPI 全局异常处理
 
-#### 1. 异常处理架构设计```python
+#### 1. 异常处理架构设计
+```
 import traceback
 from fastapi import HTTPException, Request
 from fastapi.responses import JSONResponse
@@ -704,7 +736,8 @@ from starlette import status
 DEBUG_MODE = True  # 生产环境设为 False
 ```
 
-#### 2. HTTP 异常处理器```python
+#### 2. HTTP 异常处理器
+```
 async def http_exception_handler(request: Request, exception: HTTPException) -> JSONResponse:
     """处理 HTTP 异常（400, 401, 403, 404 等）"""
     return JSONResponse(
@@ -722,7 +755,8 @@ async def http_exception_handler(request: Request, exception: HTTPException) -> 
 - `raise HTTPException(status_code=401, detail="未授权")`
 - `raise HTTPException(status_code=404, detail="用户不存在")`
 
-#### 3. 数据库完整性异常处理器```python
+#### 3. 数据库完整性异常处理器
+```
 async def integrity_exception_handler(request: Request, exception: IntegrityError) -> JSONResponse:
     """处理数据库完整性约束错误"""
     detail = None
@@ -760,7 +794,8 @@ async def integrity_exception_handler(request: Request, exception: IntegrityErro
 - 插入重复的唯一键（如用户名重复）
 - 外键约束失败（如引用不存在的记录）
 
-#### 4. SQLAlchemy 通用异常处理器```python
+#### 4. SQLAlchemy 通用异常处理器
+```
 async def sqlalchemy_error_handler(request: Request, exception: SQLAlchemyError) -> JSONResponse:
     """处理其他 SQLAlchemy 数据库错误"""
     error_data = None
@@ -788,7 +823,8 @@ async def sqlalchemy_error_handler(request: Request, exception: SQLAlchemyError)
 - 表不存在
 - 字段类型不匹配
 
-#### 5. 通用异常处理器```python
+#### 5. 通用异常处理器
+```
 async def exception_handler(request: Request, exception: Exception) -> JSONResponse:
     """处理所有未捕获的异常"""
     error_data = None
@@ -814,7 +850,8 @@ async def exception_handler(request: Request, exception: Exception) -> JSONRespo
 - 所有未被其他处理器捕获的异常
 - 兜底处理
 
-#### 6. 注册异常处理器```python
+#### 6. 注册异常处理器
+```
 from fastapi import FastAPI
 from fastapi import HTTPException
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
@@ -838,7 +875,8 @@ app = FastAPI()
 register_exception_handlers(app)
 ```
 
-#### 7. 异常处理优先级```
+#### 7. 异常处理优先级
+```
 请求 → HTTPException? → Yes → http_exception_handler
                   ↓ No
            IntegrityError? → Yes → integrity_exception_handler
@@ -848,7 +886,8 @@ register_exception_handlers(app)
              Exception? → Yes → exception_handler (兜底)
 ```
 
-#### 8. 生产环境配置建议```python
+#### 8. 生产环境配置建议
+```
 # 生产环境
 DEBUG_MODE = False
 

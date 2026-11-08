@@ -55,7 +55,8 @@ graph TD
 
 ---
 
-## 二、写一个自定义中间件```python
+## 二、写一个自定义中间件
+```
 from langchain.agents.middleware import before_model, wrap_tool_call
 
 audit: list[str] = []
@@ -98,7 +99,8 @@ before_model: 3 条消息
 >
 > 第 3 点是最常见的 bug：写完包装逻辑忘了调 `handler`，工具静默不执行，模型拿不到结果。
 
-### 2.1 `wrap_model_call` 做重试与降级```python
+### 2.1 `wrap_model_call` 做重试与降级
+```
 @wrap_model_call
 def resilient_model(request, handler):
     for attempt in range(3):
@@ -163,7 +165,8 @@ if result.get("__interrupt__"):
 > 没有 checkpointer，图暂停后无法恢复（会报 `No checkpointer set`）。
 > 人机协同 + 持久化是绑定出现的，见 15-检查点、中断与持久化。
 
-### 3.2 PII 脱敏 `PIIMiddleware````python
+### 3.2 PII 脱敏 `PIIMiddleware
+```
 from langchain.agents.middleware import PIIMiddleware
 
 PIIMiddleware(
@@ -217,7 +220,8 @@ SummarizationMiddleware(
 
 ---
 
-## 四、中间件的执行顺序```python
+## 四、中间件的执行顺序
+```
 agent = create_agent(
     model=model,
     tools=[...],

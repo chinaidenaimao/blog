@@ -52,7 +52,8 @@ tags:
 | **按域分包式** | fastapi-best-practices 推荐 | 18,194 | `src/{auth,posts,profiles}/{router,schemas,service,dependencies}.py` | ✅✅ 域内高内聚，适合中大型 |
 | **控制器式** | vue-fastapi-admin | 2,270 | `app/{api/v1,controllers,models,schemas,settings,utils}` | ✅ 简单直观，适合中小 |
 
-### 1.3 推荐：三层架构 + 按域分包（融合两者）```backend/
+### 1.3 推荐：三层架构 + 按域分包（融合两者）
+```
 ├── main.py                     # 仅做应用装配，不写业务
 ├── app/
 │   ├── router.py               # 聚合所有模块路由
@@ -89,7 +90,8 @@ tags:
 ```
 
 > **📝 说明：fastapi-best-architecture 的真实顶层目录（API 实测）**
-> ```
+>
+```
 > backend/
 > ├── app/           # router.py + admin/ + task/
 > ├── common/        # cache, context, dataclasses, enums, exception/, i18n, lifespan,
@@ -101,7 +103,8 @@ tags:
 > ├── plugin/        # code_generator, config, dict, email, notice, oauth2（各带 plugin.toml）
 > ├── utils/         # 28 个工具模块（含 trace_id.py, snowflake.py, serializers.py）
 > ├── locale/  scripts/  static/  tests/
-> ```
+>
+```
 
 ---
 
@@ -141,7 +144,8 @@ def _enforce_non_default_secrets(self) -> Self:
     return self
 ```
 
-### 2.2 落地实现：分层配置 + 多环境```python
+### 2.2 落地实现：分层配置 + 多环境
+```
 # core/conf.py
 from functools import lru_cache
 from typing import Literal
@@ -256,7 +260,8 @@ settings = get_settings()
 > **对外 Open API** 用裸响应 + HTTP 状态码。
 > 二者可共存：加一个 `/api/v1/open/*` 前缀走裸响应。
 
-### 3.2 落地实现```python
+### 3.2 落地实现
+```
 # common/response/response_code.py
 from enum import IntEnum
 
@@ -422,7 +427,8 @@ backend/common/exception/
 └── exception_handler.py      # 处理器注册
 ```
 
-### 4.2 落地实现：异常体系```python
+### 4.2 落地实现：异常体系
+```
 # common/exception/errors.py
 from typing import Any
 
@@ -505,7 +511,8 @@ class UserDisabledException(ForbiddenException):
     msg = "账号已被停用，请联系管理员"
 ```
 
-### 4.3 落地实现：处理器注册```python
+### 4.3 落地实现：处理器注册
+```
 # common/exception/exception_handler.py
 import logging
 
@@ -639,7 +646,8 @@ def register_exception_handlers(app: FastAPI) -> None:
 > **💬 引用：fastapi-best-practices 的核心观点**
 > 「Dependency calls are cached」——同一请求内，同一个依赖只执行一次，可以放心地层层复用。
 
-### 5.1 官方模板的范式：`Annotated` 类型别名```python
+### 5.1 官方模板的范式：`Annotated` 类型别名
+```
 # backend/app/api/deps.py（官方模板真实代码节选）
 from collections.abc import Generator
 from typing import Annotated
@@ -685,7 +693,8 @@ CurrentUser = Annotated[User, Depends(get_current_user)]
 > 2. **可覆盖**：测试里 `app.dependency_overrides[get_db]` 直接换成测试库；
 > 3. **类型安全**：IDE 能推导出 `session` 是 `Session`，而不是 `Any`。
 
-### 5.2 依赖的四种形态```python
+### 5.2 依赖的四种形态
+```
 # app/system/user/dependencies.py
 
 # ---- 形态 1：函数依赖（最常用）----
@@ -784,7 +793,8 @@ async def create_user(
 >
 > **结论**：横切**基础设施**用中间件；**业务上下文**（当前用户、DB）用依赖。
 
-### 6.2 落地实现：TraceId 中间件（最高性价比）```python
+### 6.2 落地实现：TraceId 中间件（最高性价比）
+```
 # common/context.py
 from contextvars import ContextVar
 
@@ -861,7 +871,8 @@ class AccessLogMiddleware(BaseHTTPMiddleware):
         return response
 ```
 
-### 6.3 应用装配（`main.py` 只做装配）```python
+### 6.3 应用装配（`main.py` 只做装配）
+```
 # main.py
 from contextlib import asynccontextmanager
 
@@ -957,7 +968,8 @@ app = create_app()
 | 分级 + 轮转 + 保留 | `rotation="100 MB"`, `retention="30 days"` |
 | 第三方库降噪 | `logging.getLogger("uvicorn.access").setLevel(WARNING)` |
 
-### 7.2 落地实现（loguru）```python
+### 7.2 落地实现（loguru）
+```
 # common/log.py
 import logging
 import sys
@@ -1051,7 +1063,8 @@ __all__ = ["logger", "setup_logging"]
 | 数据权限 | 行级过滤（部门/本人） | RuoYi-Vue-Plus / yudao |
 | 多端登录 | 单点/多点登录控制 | gin-vue-admin「多点登录拦截」 |
 
-### 8.2 落地实现```python
+### 8.2 落地实现
+```
 # common/security/jwt.py
 from datetime import UTC, datetime, timedelta
 from typing import Any, Literal
@@ -1192,7 +1205,8 @@ async def load_user_permissions(session: AsyncSession, user: User) -> set[str]:
 | `crud` | 单表增删改查、查询构造 | 不写业务判断 |
 | `model` | 表结构、关系、约束 | 不含业务方法 |
 
-### 9.2 落地实现```python
+### 9.2 落地实现
+```
 # database/db.py
 from collections.abc import AsyncGenerator
 
@@ -1342,7 +1356,8 @@ class UserService:
 | **L2 模块注册器** | 模块自带路由/中间件/生命周期，由注册器统一装配 | FBA `core/registrar.py` |
 | **L3 插件化** | 模块可独立启停、带独立配置与依赖，运行时可插拔 | FBA `plugin/*/plugin.toml`、cool-admin |
 
-### 10.2 落地实现：L2 注册器（性价比最高）```python
+### 10.2 落地实现：L2 注册器（性价比最高）
+```
 # core/registrar.py
 from dataclasses import dataclass, field
 from fastapi import APIRouter
@@ -1467,7 +1482,8 @@ async def ready(db: SessionDep):
 ```
 
 > **💡 提示：测试用依赖覆盖（来自 `fastapi-best-practices`）**
-> ```python
+>
+```
 > # conftest.py
 > @pytest.fixture
 > async def client(app):
@@ -1475,7 +1491,8 @@ async def ready(db: SessionDep):
 >     app.dependency_overrides[get_current_user] = lambda: fake_user
 >     async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as c:
 >         yield c
-> ```
+>
+```
 > 因为鉴权、DB 都做成了依赖，测试里替换它们只需两行——**这就是把能力做成依赖而非中间件的最大回报**。
 
 ---

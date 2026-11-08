@@ -16,7 +16,8 @@ tags:
 
 路由层（Router）负责定义 API 接口，处理 HTTP 请求和响应。
 
-## 📁 文件结构```router/
+## 📁 文件结构
+```
 ├── news.py         # 新闻接口
 ├── user.py         # 用户接口
 ├── favorite.py     # 收藏接口
@@ -25,7 +26,8 @@ tags:
 
 ## 📰 第一步：实现新闻路由
 
-### router/news.py```python
+### router/news.py
+```
 from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from crud.news import (
@@ -123,7 +125,8 @@ async def get_news_detail(
 
 ## 👤 第二步：实现用户路由
 
-### router/user.py```python
+### router/user.py
+```
 from fastapi import HTTPException, APIRouter, Depends, status
 from schemas.users import (
     UserRequest,
@@ -230,7 +233,8 @@ async def update_password(
 
 ## ⭐ 第三步：实现收藏路由
 
-### router/favorite.py```python
+### router/favorite.py
+```
 from fastapi import APIRouter, Depends, Query, HTTPException, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 from crud.favorite import (
@@ -332,7 +336,8 @@ async def clear_favorite(
 
 ## 📜 第四步：实现历史记录路由
 
-### router/history.py```python
+### router/history.py
+```
 from fastapi import APIRouter, Depends, Query, HTTPException, Body
 from sqlalchemy.ext.asyncio import AsyncSession
 from config.db_config import get_db
@@ -420,7 +425,8 @@ async def clear_history_func(
     return success_response(message='清空成功', data={'deleted': count})
 ```
 
-## 🔗 第五步：注册路由到 main.py```python
+## 🔗 第五步：注册路由到 main.py
+```
 from fastapi import FastAPI
 import models
 from router import news, user, favorite, history

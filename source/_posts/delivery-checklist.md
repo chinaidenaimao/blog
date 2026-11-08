@@ -20,7 +20,8 @@ tags:
 
 ## 一、完整目录树
 
-### 1.1 前端（Vue 3 + Vite + TS + Pinia + Element Plus）```web/
+### 1.1 前端（Vue 3 + Vite + TS + Pinia + Element Plus）
+```
 ├── .env                      # 共享配置
 ├── .env.development          # 开发（走 Vite 代理）
 ├── .env.test                 # 测试环境
@@ -115,7 +116,8 @@ tags:
 │           └── menu/index.vue
 ```
 
-### 1.2 后端（FastAPI + SQLAlchemy 2.0 + Pydantic v2）```server/
+### 1.2 后端（FastAPI + SQLAlchemy 2.0 + Pydantic v2）
+```
 ├── main.py                   # 入口：create_app()
 ├── run.py                    # 本地启动脚本
 ├── pyproject.toml            # uv / poetry 依赖
@@ -241,7 +243,8 @@ tags:
 
 ## 三、前后端契约（必须先定，再写代码）
 
-### 3.1 统一响应体```jsonc// 成功
+### 3.1 统一响应体
+```
 { "code": 200, "msg": "success", "data": { "id": 1, "username": "admin" } }
 
 // 分页成功

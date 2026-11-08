@@ -15,7 +15,8 @@ tags:
 ## 🎯 项目目标
 构建一个完整的 TODO 应用，包含用户认证、CRUD 操作、数据库集成。
 
-## 📁 项目结构```todo-app/├── app/
+## 📁 项目结构
+```
 │   ├── __init__.py
 │   ├── main.py
 │   ├── config.py
@@ -41,7 +42,8 @@ tags:
 
 ## 📄 核心文件
 
-### 1. 主应用入口 (app/main.py)```python
+### 1. 主应用入口 (app/main.py)
+```
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import users, todos
@@ -80,7 +82,8 @@ def health_check():
     return {"status": "healthy"}
 ```
 
-### 2. 数据库模型 (app/models.py)```python
+### 2. 数据库模型 (app/models.py)
+```
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
@@ -117,7 +120,8 @@ class Todo(Base):
     owner = relationship("User", back_populates="todos")
 ```
 
-### 3. Pydantic 模型 (app/schemas.py)```python
+### 3. Pydantic 模型 (app/schemas.py)
+```
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional, List
 from datetime import datetime
@@ -186,7 +190,8 @@ class TokenData(BaseModel):
     username: Optional[str] = None
 ```
 
-### 4. CRUD 操作 (app/crud.py)```python
+### 4. CRUD 操作 (app/crud.py)
+```
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
 from datetime import datetime
@@ -279,7 +284,8 @@ def get_user_todos_by_status(db: Session, user_id: int, completed: bool):
     ).all()
 ```
 
-### 5. 认证模块 (app/auth.py)```python
+### 5. 认证模块 (app/auth.py)
+```
 from datetime import datetime, timedelta
 from typing import Optional
 from jose import JWTError, jwt
@@ -334,7 +340,8 @@ async def get_current_active_user(current_user: schemas.User = Depends(get_curre
     return current_user
 ```
 
-### 6. 路由模块 (app/routers/todos.py)```python
+### 6. 路由模块 (app/routers/todos.py)
+```
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
@@ -434,7 +441,8 @@ def get_todo_stats(
 
 ## 🚀 启动项目
 
-### 1. 安装依赖```bash
+### 1. 安装依赖
+```
 pip install -r requirements.txt
 ```
 
@@ -449,11 +457,13 @@ ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
 
-### 3. 启动应用```bash
+### 3. 启动应用
+```
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-### 4. 测试 API```bash
+### 4. 测试 API
+```
 # 1. 注册用户
 curl -X POST "http://localhost:8000/users/" \
   -H "Content-Type: application/json" \
@@ -477,9 +487,10 @@ curl -X GET "http://localhost:8000/todos/" \
 
 ## 🧪 测试
 
-### 运行测试```bashpytest```
+### 运行测试
 
-### 测试示例```python
+### 测试示例
+```
 # tests/test_todos.py
 import pytest
 from fastapi.testclient import TestClient

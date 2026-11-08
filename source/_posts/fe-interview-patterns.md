@@ -542,7 +542,8 @@ observers.forEach(observer => observer.notified(message));
 发布-订阅是一种消息范式，消息的发送者（称为发布者）不会将消息直接发送给特定的接收者（称为订
 阅者）。而是将发布的消息分为不同的类别，无需了解哪些订阅者（如果有的话）可能存在
 同样的，订阅者可以表达对一个或多个类别的兴趣，只接收感兴趣的消息，无需了解哪些发布者存在
-### 5.2. 发布订阅模式```c
+### 5.2. 发布订阅模式
+```
 class Observer {
 constructor(name, subject) {
 this.name = name;

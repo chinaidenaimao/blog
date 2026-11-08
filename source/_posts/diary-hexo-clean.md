@@ -49,7 +49,8 @@ INFO  385 files generated in 3.29 s
 
 把 `hexo clean` 换掉，直接用 `fs.rmSync`：
 
-```json
+```jso
+n
 {
   "scripts": {
     "clean": "node -e \"const f=require('fs');f.rmSync('public',{recursive:true,force:true});f.rmSync('db.json',{force:true})\"",

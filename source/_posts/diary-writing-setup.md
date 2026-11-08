@@ -27,7 +27,8 @@ tags:
 
 双链把笔记变成一张网：
 
-```markdown
+```markdow
+n
 JWT 的验签流程见 [[认证机制详解]]，和 [[事务边界该由谁提交]] 是两类问题。
 ```
 
@@ -55,7 +56,8 @@ Obsidian 的语法不是标准 Markdown：
 
 现在从 Obsidian 到博客，只有一条命令：
 
-```bash
+```bas
+h
 python tools/import-obsidian.py
 ```
 

@@ -43,14 +43,17 @@ app = graph.compile(
 > - 崩溃恢复
 >
 > 调用 `get_state` 时会直接报：
-> ```
+>
+```
 > ValueError: No checkpointer set
-> ```
+>
+```
 > 这是最常见的配置遗漏。
 
 ---
 
-## 二、`thread_id`：会话的身份证```python
+## 二、`thread_id`：会话的身份证
+```
 config = {"configurable": {"thread_id": "user-42-session-7"}}
 
 app.invoke({"messages": [HumanMessage("我叫小王")]}, config)
@@ -68,7 +71,8 @@ app.invoke({"messages": [HumanMessage("我叫什么")]}, config)   # 能记住
 
 ---
 
-## 三、`interrupt()`：执行到一半，交还控制权```python
+## 三、`interrupt()`：执行到一半，交还控制权
+```
 from langgraph.graph import END, START, StateGraph
 from langgraph.types import Command
 from langgraph.checkpoint.memory import InMemorySaver
@@ -116,7 +120,8 @@ print(r2["value"])                  # 已确认:同意
 >
 > 所以 `interrupt()` 后面的代码才是「人批准之后要做的事」。
 
-### 3.1 多个中断点```python
+### 3.1 多个中断点
+```
 def node(state):
     a = interrupt("第一步审批")
     b = interrupt("第二步审批")
@@ -157,10 +162,12 @@ result = app.invoke(input, {"configurable": {"thread_id": "job-1"}})
 
 ---
 
-## 五、时间旅行：回滚到任意历史状态```python
+## 五、时间旅行：回滚到任意历史状态
+```
 history = list(app.get_state_history(cfg))
 # 实跑输出：快照数=3，各快照 n 值=[1, 0, None]
-#            ↑ 最新的在最前面```
+#            ↑ 最新的在最前面
+```
 
 每个 `StateSnapshot` 包含：
 
@@ -187,13 +194,16 @@ print(app.get_state(cfg).values["n"])  # 从旧状态重新跑出来的结果
 >
 > 这是 LangGraph 相比「自己写 Agent 循环」最独特的优势。
 
-### 5.1 直接改状态```python
+### 5.1 直接改状态
+```
 app.update_state(cfg, {"value": "人工修正后的值"})
-# 之后从这一点继续执行```
+# 之后从这一点继续执行
+```
 
 ---
 
-## 六、`Store`：跨会话的长期记忆```python
+## 六、`Store`：跨会话的长期记忆
+```
 from langgraph.store.memory import InMemoryStore
 
 store = InMemoryStore()
@@ -205,13 +215,16 @@ item = store.get(("users",), "u1")
 # Item(namespace=['users'], key='u1', value={'pref': {'lang': 'zh'}}, created_at=..., updated_at=...)
 
 values = store.search(("users",))
-# [{'pref': {'lang': 'zh'}}]```
+# [{'pref': {'lang': 'zh'}}]
+```
 
 > **📝 说明：`namespace` 是元组，`key` 是字符串**
-> ```python
+>
+```
 > store.put(("users", "u1"), {...})        # ✗ 报错：missing 1 required positional argument: 'value'
 > store.put(("users",), "u1", {...})       # ✓
-> ```
+>
+```
 > namespace 用元组表达层级，天然支持「按租户/按用户/按项目」隔离。
 
 **在 Agent 里用：**

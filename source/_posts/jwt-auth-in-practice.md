@@ -49,30 +49,38 @@ tags:
 > | 8,9,10 | `teacher01`/`teacher02`/`lisi` | argon2 ✅ | 🟢 HTTP 200 |
 >
 > 500 的响应体：
-> ```json
+>
+```
 > {"code":500,"msg":"服务器异常:hash could not be identified","data":null}
-> ```
+>
+```
 
 > **⚠️ 注意：为什么是 500 而不是 401 —— 这是真正的 bug**
 > `utils/password.py` 里：
-> ```python
+>
+```
 > pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
-> ```
+>
+```
 > **只注册了 argon2 一种算法**。
 > `pwd_context.verify()` 遇到无法识别的哈希格式时，**不是返回 False，而是抛 `UnknownHashError`**。
 >
 > 于是 `server/user.py` 的这段逻辑失效了：
-> ```python
+>
+```
 > if db_user is None or not verify_password(user.password, db_user.password):
 >     raise HTTPException(401, "用户名或密码错误")
 > #                          ↑ 根本走不到这里，verify_password 先抛异常了
-> ```
+>
+```
 > 异常一路冒泡到 全局异常处理 → **500 + MySQL/库内部错误信息**。
 >
 > 对比实测（argon2 用户传错密码）：
-> ```
+>
+```
 > HTTP 401 {"detail":"用户名或密码错误"}     ← 正常路径 ✅
-> ```
+>
+```
 > 同一个接口，**表现不一致**。
 
 ### 修复方式（二选一）
@@ -95,7 +103,8 @@ def verify_password(plain_password, hashed_password) -> bool:
     try:
         return pwd_context.verify(plain_password, hashed_password)
     except Exception:
-        # 明文/损坏的哈希会抛异常，统一按"验证失败"处理，避免变成 500return False```
+        # 明文/损坏的哈希会抛异常，统一按"验证失败"处理，避免变成 500return False
+```
 
 > **📝 说明：`deprecated="auto"` 是关键**
 > 它的语义是：「**能验证**用旧算法（bcrypt）存的密码，但**新哈希只用首选算法**（argon2）」。
@@ -117,12 +126,14 @@ DELETE FROM user WHERE password NOT LIKE '$argon2%';
 > id=1 的 `string` / `string` 是**明文密码**直接入库的，
 > 无论从安全还是功能角度都必须处理掉。见 密码加密。
 
-### 验证```bash
+### 验证
+```
 # 修复后再测，应该返回 401 而不是 500
 curl -i -X POST http://127.0.0.1:8000/api/user/login \
   -H "Content-Type: application/json" \
   -d "{\"username\":\"string\",\"password\":\"whatever\"}"
-# 预期 HTTP 401 {"detail":"用户名或密码错误"}```
+# 预期 HTTP 401 {"detail":"用户名或密码错误"}
+```
 
 详见 用户表 user · 密码加密 · 待办与已知问题
 
@@ -151,7 +162,8 @@ curl -i -X POST http://127.0.0.1:8000/api/user/login \
 
 ## ⚙️ 第 2 步：加配置
 
-### 2.1 生成密钥```bash
+### 2.1 生成密钥
+```
 .venv\Scripts\python.exe -c "import secrets; print(secrets.token_urlsafe(32))"
 ```
 
@@ -161,7 +173,8 @@ curl -i -X POST http://127.0.0.1:8000/api/user/login \
 >
 > 而且**绝对不要把真实密钥提交到 git**。
 
-### 2.2 修改 `.env````ini
+### 2.2 修改 `.env
+```
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
@@ -175,7 +188,8 @@ JWT_ALGORITHM=HS256
 JWT_EXPIRE_MINUTES=60
 ```
 
-### 2.3 修改 `core/config.py````python
+### 2.3 修改 `core/config.py
+```
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file='.env', env_file_encoding='utf-8')
     ENV: str = 'development'
@@ -245,18 +259,22 @@ def decode_token(token: str) -> dict:
 
 > **🚫 危险：两个必须注意的安全点**
 > **① `sub` 必须是字符串**
-> ```python
+>
+```
 > "sub": str(user_id),   # ✅
 > "sub": user_id,        # ❌ int，PyJWT 2.10+ 解码时直接报错
-> ```
+>
+```
 > JWT 规范（RFC 7519）要求 `sub` 是字符串。
 > 你的 `user.id` 是 `int`，这里**必须转换**，否则会踩坑。
 >
 > **② `algorithms` 必须显式指定**
-> ```python
+>
+```
 > jwt.decode(token, key, algorithms=["HS256"])   # ✅
 > jwt.decode(token, key)                          # ❌ PyJWT 会直接报错
-> ```
+>
+```
 > 如果不指定算法，攻击者可以把 header 改成 `{"alg": "none"}` 伪造 token。
 > 指定了算法就杜绝了这种攻击。PyJWT 2.x 强制要求传这个参数。
 
@@ -413,7 +431,8 @@ def build_token_response(user: User) -> TokenResponse:
 > `login` 负责**校验身份**，`build_token_response` 负责**签发令牌**。
 > 以后加「刷新 token」「第三方登录」时，签发逻辑可以直接复用。
 
-### 6.2 修改 `router/user.py````python
+### 6.2 修改 `router/user.py
+```
 from schema.user import UserCreate, UserResponse, TokenResponse
 from server.user import create_user, get_user_by_id, login, build_token_response
 from core.deps import get_current_user
@@ -430,7 +449,8 @@ async def login_router(user: UserCreate, db: AsyncSession = Depends(get_db)):
 > `{access_token, token_type, expires_in}`。
 > **前端必须同步改**：登录后要把 `access_token` 存起来。
 
-### 6.3 新增 `/me` 接口（获取当前用户）```python
+### 6.3 新增 `/me` 接口（获取当前用户）
+```
 @router.get("/me", response_model=UserResponse)
 async def read_me(current_user: User = Depends(get_current_user)):
     """用 token 换取当前登录用户信息。"""
@@ -442,10 +462,12 @@ async def read_me(current_user: User = Depends(get_current_user)):
 > `/{user_id}` 匹配走，然后 `int("me")` 转换失败报 **422**。
 >
 > 正确顺序：
-> ```python
+>
+```
 > @router.get("/me", ...)          # ← 具体路径在前
 > @router.get("/{user_id}", ...)   # ← 通配路径在后
-> ```
+>
+```
 > FastAPI 按**声明顺序**匹配，先声明先命中。
 
 ---
@@ -472,19 +494,22 @@ router = APIRouter(
 > 一个模块的所有接口**通常都需要登录**。
 > 写在 `APIRouter` 上只改一处，新增接口**自动继承**，不会漏。
 
-### 方式 B：单个接口保护```python
+### 方式 B：单个接口保护
+```
 @router.get("", dependencies=[Depends(get_current_user)])
 async def list_students(db: AsyncSession = Depends(get_db)):
     ...
 ```
 
-### 方式 C：既要鉴权又要用用户对象```python
+### 方式 C：既要鉴权又要用用户对象
+```
 @router.get("")
 async def list_students(
     current_user: User = Depends(get_current_user),   # ← 拿到用户对象
     db: AsyncSession = Depends(get_db),
 ):
-    # 比如：只返回当前用户班级的学生...```
+    # 比如：只返回当前用户班级的学生...
+```
 
 > **📝 说明：三个模块都要改**
 > 学生模块 · 课程模块 · 成绩模块 各改一行。
@@ -494,17 +519,20 @@ async def list_students(
 
 ## ✅ 第 8 步：测试
 
-### 8.1 启动服务```bash
+### 8.1 启动服务
+```
 .venv\Scripts\python.exe -m uvicorn main:app --reload
 ```
 
-### 8.2 先注册一个用户```bash
+### 8.2 先注册一个用户
+```
 curl -X POST http://127.0.0.1:8000/api/user/create ^
   -H "Content-Type: application/json" ^
   -d "{\"username\":\"admin\",\"password\":\"123456\"}"
 ```
 
-### 8.3 登录拿 token```bash
+### 8.3 登录拿 token
+```
 curl -X POST http://127.0.0.1:8000/api/user/login ^
   -H "Content-Type: application/json" ^
   -d "{\"username\":\"admin\",\"password\":\"123456\"}"
@@ -520,14 +548,16 @@ curl -X POST http://127.0.0.1:8000/api/user/login ^
 }
 ```
 
-### 8.4 带 token 访问受保护接口```bash
+### 8.4 带 token 访问受保护接口
+```
 curl http://127.0.0.1:8000/api/student ^
   -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 ```
 
 预期：`200` + 学生数组
 
-### 8.5 验证鉴权真的生效```bash
+### 8.5 验证鉴权真的生效
+```
 # 不带 token → 应该 401
 curl -i http://127.0.0.1:8000/api/student
 
@@ -555,7 +585,8 @@ curl -i http://127.0.0.1:8000/api/student -H "Authorization: abc123"
 
 ---
 
-## 🧭 完整流程图```mermaid
+## 🧭 完整流程图
+```
 sequenceDiagram
     autonumber
     participant C as 客户端
@@ -615,7 +646,8 @@ sequenceDiagram
 | **11** | `router/score.py` | **改** | ⬜ | 挂 `dependencies` 一行 |
 | 12 | `core/deps.py` | 改 | 🟡 可选 | 加 `require_role()` 做 RBAC |
 
-### 完成后的自检清单```mermaidflowchart TD
+### 完成后的自检清单
+```
     A["登录返回 access_token"] --> B["带 token 访问 /api/student 返回 200"]
     B --> C["不带 token 返回 401"]
     C --> D["乱写 token 返回 401"]

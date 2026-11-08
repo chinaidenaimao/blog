@@ -48,11 +48,13 @@ tags:
 ### 一、先把事实钉死：连续 commit 到底会不会炸（✅ 实测）
 
 > **🧪 示例：探针 1 · 复跑命令（stdin 方式，未写任何文件）**
-> ```bash
+>
+```
 > .venv/Scripts/python.exe - <<'PY'
 > # SELECT 一行 → 连续 commit 三次 → 每次观察 in_transaction 与 SQL 日志
 > PY
-> ```
+>
+```
 
 **实测结果**（`expire_on_commit` 实测打印为 `True`）：
 
@@ -92,12 +94,14 @@ tags:
 
 > **🧪 示例：探针 5 · 复跑方式**
 > 模拟「业务层先 commit，之后同请求内再抛异常」：
-> ```python
+>
+```
 > await s.execute(text("SELECT 1"))   # 只读，不碰业务表
 > await s.commit()                    # 业务层提交
 > raise RuntimeError("后续步骤出错")    # 业务层后来出错了
 > # get_db 的 except 分支：await s.rollback()
-> ```
+>
+```
 
 **实测结果**：
 
@@ -118,12 +122,14 @@ rollback 后 in_transaction = False
 > （SQLAlchemy 在无活动事务时不会发），因为它**没有任何东西可回滚**。
 >
 > **一个具体的坏场景**：将来你做「改密码 + 写审计日志」两步写：
-> ```python
+>
+```
 > await db.commit()                       # ① 密码改了，已落库 ✅
 > await db.add(AuditLog(...))             # ② 写审计日志
 > await db.commit()                       # ② 这里失败了 💥
 > # → 密码已改、日志没写，数据不一致；get_db 的 rollback 无能为力
-> ```
+>
+```
 > 只要业务层**提前** commit 过一次，这个请求在数据库眼里就**不再是原子操作**了。
 
 ---
@@ -132,13 +138,15 @@ rollback 后 in_transaction = False
 
 > **🧪 示例：探针 3 · 依赖收尾的执行时机**
 > 用真实 uvicorn + `Depends` 里 `yield` 后 `await asyncio.sleep(3)` 模拟慢 commit：
-> ```text
+>
+```
 > dep-enter            t=0.09s
 > handler              t=0.09s
 > dep-exit-begin       t=0.09s
 > client got b'{"ok":1}' t=0.09s   ← 客户端已经拿到 200
 > dep-exit-end         t=3.10s     ← 依赖收尾 3 秒后才结束
-> ```
+>
+```
 
 **源码依据**：`fastapi/routing.py:140-147`
 
@@ -156,11 +164,13 @@ async with AsyncExitStack() as request_stack:     # :140 ← request 作用域�
 > 用 `register_exception_handler(app)`（`core/exceptions.py:21`）注册项目自己的处理器，
 > 依赖 `yield` 之后抛 `UserNotFound`：
 >
-> ```text
+>
+```
 > client got status=200 body=b'{"ok":1}'   t=0.06s   ← 客户端：干净的 200
 > dep-exit: 模拟 commit 失败 -> raise UserNotFound  t=1.58s
 > RuntimeError: Caught handled exception, but response already started.
-> ```
+>
+```
 >
 > 两个后果叠加，比"错误只进日志"还严重：
 > 1. **客户端拿到的是完整的 200 成功响应**，连 `code/msg` 错误体都收不到；
@@ -187,13 +197,15 @@ async def delete_student(db: AsyncSession, student_id: str) -> None:
 ```
 
 > **🧪 示例：探针 6 · `await db.delete(obj)` 到底发不发 SQL（✅ 实测，操作后已 rollback，净零改动）**
-> ```text
+>
+```
 > SELECT user... (取值)
 > session.deleted = ['zhangsan']
 > 此时 in_transaction = True（日志里**没有任何 DELETE 语句**）
 > ROLLBACK
 > rows(id=3) still = 1
-> ```
+>
+```
 > **DELETE 是延迟到 flush/commit 才发出的。** 所以 `delete_student` 能跑通，
 > **100% 靠的是 `get_db` 在响应之后补的那一刀 commit** —— 它自己一个字都没提交。
 
@@ -264,7 +276,8 @@ async def delete_student(db: AsyncSession, student_id: str) -> None:
 
 ---
 
-### 六、两个方案的事务时序对比（重点看 commit 落点）```mermaid
+### 六、两个方案的事务时序对比（重点看 commit 落点）
+```
 sequenceDiagram
     autonumber
     participant C as 客户端
@@ -353,7 +366,8 @@ Q-14-修改用户密码怎么写 已经实测过：**`commit()` 之后不 `refre
 > 而如果换成**方案 B 的 UPDATE 场景**，这句可以不要。
 > 探针 7 实测（改一个普通列 → `flush()` → 回滚，净零改动）：
 >
-> ```text
+>
+```
 > UPDATE user SET email=%s WHERE user.id = %s
 > after UPDATE flush
 > in_transaction = True
@@ -363,7 +377,8 @@ Q-14-修改用户密码怎么写 已经实测过：**`commit()` 之后不 `refre
 > read create_time -> 2026-09-07 19:03:56   ← 读得出来，不炸
 > read update_time -> 2026-09-07 19:03:56
 > read role -> student
-> ```
+>
+```
 >
 > **UPDATE + flush 不会让对象过期**（因为列的值是你自己赋的，不缺数据）；
 > 只有 **INSERT + flush** 才会过期那些 `server_default` 列。
@@ -516,11 +531,13 @@ async def update_user(db: AsyncSession, user: User, password: update_password) -
 > 4. 方案 A 的那个缺点（忘记 commit → 静默丢数据）**用测试兜**，比方案 B 的缺点好兜。
 >
 > **落地三步**：
-> ```text
+>
+```
 > ① db/session.py:24  删掉 await session.commit()
 > ② server/student.py:52  补 await db.commit()
 > ③ 全项目 grep -n "await db.commit()" 对照一遍，确认每个写操作都有、且多步写只提交一次
-> ```
+>
+```
 
 ---
 
@@ -528,19 +545,23 @@ async def update_user(db: AsyncSession, user: User, password: update_password) -
 
 > **⚠️ 注意：坑 1：「旧密码错误」现在返回 **400**，不是 401**
 > `server/user.py:47-51` 当前的两条校验分支都抛 `ValidationError`：
-> ```python
+>
+```
 > if not verify_password(password.old_password, user.password):
 >     raise ValidationError("旧密码错误")            # :49 → code 400001 → HTTP 400
 > if password.new_password == password.old_password:
 >     raise ValidationError("新密码不能与旧密码相同")   # :51 → code 400001 → HTTP 400
-> ```
+>
+```
 > `ValidationError` 的 code 是 `PARAM_INVALID = 400001`（`core/errors.py:46`）。
 > 实测（`await update_user(None, fake_user, data)`，命中第二条分支，不碰数据库）：
-> ```text
+>
+```
 > type       : core.errors.ValidationError
 > code       : 400001
 > http_status: 400
-> ```
+>
+```
 > 代码是对的、import 也是全的（`server/user.py:8` 的 `ValidationError` 来自 `core.errors`）。
 > **只是错误码语义值得掂量**：「旧密码不对」本质是**认证失败**（401/403），
 > 现在被归到「参数不合法」400。前端通常会拿 401 触发"清 token / 跳登录"，

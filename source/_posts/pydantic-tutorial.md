@@ -39,7 +39,8 @@ Pydantic 是一个基于 Python 类型提示的数据验证库，它使用 Pytho
 
 ## 2. 安装与环境
 
-### 2.1 安装 Pydantic```bash
+### 2.1 安装 Pydantic
+```
 # 基础安装
 pip install pydantic
 
@@ -48,12 +49,14 @@ pip install pydantic[email]  # 邮箱验证
 pip install pydantic-settings  # 配置管理
 ```
 
-### 2.2 验证安装```python
+### 2.2 验证安装
+```
 import pydantic
 print(pydantic.__version__)
 ```
 
-### 2.3 创建第一个模型```python
+### 2.3 创建第一个模型
+```
 from pydantic import BaseModel
 
 class User(BaseModel):
@@ -70,7 +73,8 @@ print(user)
 
 ## 3. 基础模型
 
-### 3.1 基本模型定义```python
+### 3.1 基本模型定义
+```
 from pydantic import BaseModel
 from typing import Optional
 
@@ -86,7 +90,8 @@ user = User(id=1, name="John", email="john@example.com")
 print(user.dict())  # 转换为字典
 ```
 
-### 3.2 字段类型```python
+### 3.2 字段类型
+```
 from pydantic import BaseModel
 from typing import List, Dict, Optional
 from datetime import datetime
@@ -101,7 +106,8 @@ class Product(BaseModel):
     is_available: bool = True
 ```
 
-### 3.3 模型操作```python
+### 3.3 模型操作
+```
 # 创建模型
 user = User(id=1, name="John", email="john@example.com")
 
@@ -126,7 +132,8 @@ user_copy.name = "Jane"
 
 ## 4. 字段验证
 
-### 4.1 基本验证```python
+### 4.1 基本验证
+```
 from pydantic import BaseModel, Field
 
 class User(BaseModel):
@@ -137,7 +144,8 @@ class User(BaseModel):
     password: str = Field(..., min_length=8)
 ```
 
-### 4.2 字段约束```python
+### 4.2 字段约束
+```
 from pydantic import BaseModel, Field, EmailStr, HttpUrl
 
 class User(BaseModel):
@@ -153,7 +161,8 @@ class User(BaseModel):
     website: Optional[HttpUrl] = None
 ```
 
-### 4.3 错误处理```python
+### 4.3 错误处理
+```
 from pydantic import BaseModel, Field, ValidationError
 
 class User(BaseModel):
@@ -171,7 +180,8 @@ except ValidationError as e:
 
 ## 5. 字段类型
 
-### 5.1 基本类型```python
+### 5.1 基本类型
+```
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Set, Tuple
 from datetime import datetime, date, time
@@ -209,7 +219,8 @@ class AllTypes(BaseModel):
     color: Color
 ```
 
-### 5.2 特殊类型```python
+### 5.2 特殊类型
+```
 from pydantic import BaseModel, Field
 from typing import Annotated
 from pydantic import Field
@@ -234,7 +245,8 @@ class User(BaseModel):
     credit_card: str = Field(..., pattern=r'^\d{4}-\d{4}-\d{4}-\d{4}$')
 ```
 
-### 5.3 自定义类型```python
+### 5.3 自定义类型
+```
 from pydantic import BaseModel, Field, validator
 from typing import Annotated
 
@@ -252,7 +264,8 @@ class Product(BaseModel):
 
 ## 6. 模型验证
 
-### 6.1 验证方法```python
+### 6.1 验证方法
+```
 from pydantic import BaseModel, ValidationError
 
 class User(BaseModel):
@@ -277,7 +290,8 @@ user = User.parse_raw(json_str)
 user = User.parse_file("user.json")
 ```
 
-### 6.2 自定义验证```python
+### 6.2 自定义验证
+```
 from pydantic import BaseModel, validator
 
 class User(BaseModel):
@@ -298,7 +312,8 @@ class User(BaseModel):
         return v
 ```
 
-### 6.3 模型验证```python
+### 6.3 模型验证
+```
 from pydantic import BaseModel, validator, root_validator
 
 class User(BaseModel):
@@ -321,7 +336,8 @@ class User(BaseModel):
 
 ## 7. 模型序列化
 
-### 7.1 转换方法```python
+### 7.1 转换方法
+```
 from pydantic import BaseModel
 from typing import List
 
@@ -350,7 +366,8 @@ json_data = user_list.json()
 json_pretty = user_list.json(indent=2)
 ```
 
-### 7.2 序列化选项```python
+### 7.2 序列化选项
+```
 from pydantic import BaseModel
 from typing import Optional
 
@@ -380,7 +397,8 @@ company = Company(name="ACME", users=[user])
 print(company.dict(exclude={"users": {"password"}}))
 ```
 
-### 7.3 自定义序列化```python
+### 7.3 自定义序列化
+```
 from pydantic import BaseModel
 from pydantic.json import pydantic_encoder
 
@@ -402,7 +420,8 @@ print(user.json())
 
 ## 8. 嵌套模型
 
-### 8.1 基本嵌套```python
+### 8.1 基本嵌套
+```
 from pydantic import BaseModel
 from typing import List, Optional
 
@@ -423,7 +442,8 @@ address = Address(street="123 Main St", city="New York", country="USA", postal_c
 user = User(id=1, name="John", address=address, addresses=[address])
 ```
 
-### 8.2 复杂嵌套```python
+### 8.2 复杂嵌套
+```
 from pydantic import BaseModel
 from typing import List, Dict, Optional
 
@@ -451,7 +471,8 @@ product = Product(
 )
 ```
 
-### 8.3 循环引用```python
+### 8.3 循环引用
+```
 from pydantic import BaseModel
 from typing import Optional, List
 
@@ -474,7 +495,8 @@ user2.friends.append(user1)
 
 ## 9. 自定义验证器
 
-### 9.1 字段验证器```python
+### 9.1 字段验证器
+```
 from pydantic import BaseModel, field_validator
 
 class User(BaseModel):
@@ -497,7 +519,8 @@ class User(BaseModel):
         return v.lower()
 ```
 
-### 9.2 模型验证器```python
+### 9.2 模型验证器
+```
 from pydantic import BaseModel, model_validator
 
 class User(BaseModel):
@@ -511,7 +534,8 @@ class User(BaseModel):
         return self
 ```
 
-### 9.3 可重用验证器```python
+### 9.3 可重用验证器
+```
 from pydantic import BaseModel, validator
 from functools import partial
 
@@ -538,7 +562,8 @@ class User(BaseModel):
 
 ## 10. 模型配置
 
-### 10.1 基本配置```python
+### 10.1 基本配置
+```
 from pydantic import BaseModel
 
 class User(BaseModel):
@@ -555,7 +580,8 @@ class User(BaseModel):
         }
 ```
 
-### 10.2 Pydantic v2 配置```python
+### 10.2 Pydantic v2 配置
+```
 from pydantic import ConfigDict, BaseModel
 
 class User(BaseModel):
@@ -580,7 +606,8 @@ class User(BaseModel):
     )
 ```
 
-### 10.3 环境变量配置```python
+### 10.3 环境变量配置
+```
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -601,7 +628,8 @@ settings = Settings()
 
 ## 11. 继承与混合
 
-### 11.1 基本继承```python
+### 11.1 基本继承
+```
 from pydantic import BaseModel
 
 class BaseUser(BaseModel):
@@ -617,7 +645,8 @@ class AdminUser(User):
     permissions: List[str] = []
 ```
 
-### 11.2 Mixin 混合```python
+### 11.2 Mixin 混合
+```
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
@@ -636,7 +665,8 @@ class User(TimestampMixin, SoftDeleteMixin, BaseModel):
     email: str
 ```
 
-### 11.3 抽象基类```python
+### 11.3 抽象基类
+```
 from abc import ABC, abstractmethod
 from pydantic import BaseModel
 
@@ -657,7 +687,8 @@ class User(AbstractBase):
 
 ## 12. 泛型模型
 
-### 12.1 基本泛型```python
+### 12.1 基本泛型
+```
 from pydantic import BaseModel
 from typing import TypeVar, Generic, List
 
@@ -686,7 +717,8 @@ users_response = Response[List[User]](
 )
 ```
 
-### 12.2 分页响应```python
+### 12.2 分页响应
+```
 from pydantic import BaseModel
 from typing import TypeVar, Generic, List
 
@@ -717,7 +749,8 @@ users = PaginatedResponse[User](
 
 ## 13. API 请求模型
 
-### 13.1 创建请求模型```python
+### 13.1 创建请求模型
+```
 from pydantic import BaseModel, Field, EmailStr
 from typing import Optional
 
@@ -733,7 +766,8 @@ class UserUpdate(BaseModel):
     age: Optional[int] = Field(None, gt=0, lt=150)
 ```
 
-### 13.2 登录请求```python
+### 13.2 登录请求
+```
 from pydantic import BaseModel, Field, EmailStr
 
 class LoginRequest(BaseModel):
@@ -747,7 +781,8 @@ class RegisterRequest(BaseModel):
     password_confirm: str
 ```
 
-### 13.3 搜索请求```python
+### 13.3 搜索请求
+```
 from pydantic import BaseModel, Field
 from typing import Optional, List
 
@@ -764,7 +799,8 @@ class SearchRequest(BaseModel):
 
 ## 14. API 响应模型
 
-### 14.1 基本响应```python
+### 14.1 基本响应
+```
 from pydantic import BaseModel
 from typing import Optional, Any
 
@@ -779,7 +815,8 @@ class ErrorResponse(BaseModel):
     detail: Optional[str] = None
 ```
 
-### 14.2 用户响应```python
+### 14.2 用户响应
+```
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
@@ -799,7 +836,8 @@ class UserListResponse(BaseModel):
     page_size: int
 ```
 
-### 14.3 分页响应```python
+### 14.3 分页响应
+```
 from pydantic import BaseModel
 from typing import TypeVar, Generic, List
 
@@ -818,7 +856,8 @@ class PaginatedResponse(BaseModel, Generic[T]):
 
 ## 15. 数据库模型
 
-### 15.1 SQLAlchemy 模型```python
+### 15.1 SQLAlchemy 模型
+```
 from sqlalchemy import Column, Integer, String, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from datetime import datetime
@@ -837,7 +876,8 @@ class User(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 ```
 
-### 15.2 Pydantic 模型转换```python
+### 15.2 Pydantic 模型转换
+```
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
@@ -869,7 +909,8 @@ class UserResponse(UserBase):
 
 ## 16. 配置管理
 
-### 16.1 使用 pydantic-settings```python
+### 16.1 使用 pydantic-settings
+```
 from pydantic_settings import BaseSettings
 from typing import Optional
 
@@ -900,7 +941,8 @@ class Settings(BaseSettings):
 settings = Settings()
 ```
 
-### 16.2 环境变量文件```bash
+### 16.2 环境变量文件
+```
 # .env
 APP_NAME=My FastAPI App
 SECRET_KEY=your-secret-key-here
@@ -908,7 +950,8 @@ DATABASE_URL=postgresql://user:password@localhost/dbname
 REDIS_URL=redis://localhost:6379
 ```
 
-### 16.3 多环境配置```python
+### 16.3 多环境配置
+```
 from pydantic_settings import BaseSettings
 from typing import Optional
 
@@ -957,7 +1000,8 @@ def get_settings():
 
 > 在这里记录你的学习笔记和心得
 
-### 常用代码片段```python
+### 常用代码片段
+```
 # 快速创建模型
 from pydantic import BaseModel
 

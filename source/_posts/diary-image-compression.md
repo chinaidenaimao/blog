@@ -30,7 +30,8 @@ tags:
 
 ## 脚本
 
-```javascript
+```javascrip
+t
 const img = sharp(file, { failOn: 'none' });
 const meta = await img.metadata();
 
@@ -67,7 +68,8 @@ if (ext === '.png') {
 
 修法很简单，拷贝前判断一下：
 
-```python
+```pytho
+n
 if not os.path.exists(dst2):
     shutil.copyfile(src, dst2)
 ```
@@ -78,7 +80,8 @@ if not os.path.exists(dst2):
 
 统一裁掉底部 70px：
 
-```javascript
+```javascrip
+t
 await sharp(p)
   .extract({ left: 0, top: 0, width: m.width, height: m.height - 70 })
   .toFile(tmp);

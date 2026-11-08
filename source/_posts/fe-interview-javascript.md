@@ -311,7 +311,8 @@ DOM 像原子包含着亚原子微粒那样，也有很多类型的  DOM 节点�
 但这并不代表原生操作不重要。相反， DOM 操作才能有助于我们理解框架深层的内容
 下面就来分析 DOM 常⻅的操作，主要分为：
 创建节点
-### 3.2. 操作```html<html><head>
+### 3.2. 操作
+```
 <title>Page</title>
 </head>
 <body>
@@ -430,7 +431,7 @@ p.style.color = '#ff0000';
 p.style.fontSize = '20px'; // 驼峰命名
 p.style.paddingTop = '2em';
 ```
-如果这个DOM节点是空的，例如，  <div></div> ，那么，直接使用  innerHTML = '<span>chil
+如果这个DOM节点是空的，例如，  &lt;div&gt;&lt;/div&gt; ，那么，直接使用  innerHTML = '&lt;span&gt;chil
 d</span>' 就可以修改  DOM 节点的内容，相当于添加了新的  DOM 节点
 如果这个DOM节点不是空的，那就不能这么做，因为  innerHTML 会直接替换掉原来的所有子节点
 把一个子节点添加到父节点的最后一个子节点
@@ -4711,9 +4712,9 @@ XSS 的攻击目标是为了盗取存储在客户端的  cookie 或者其他网�
 
 一个搜索⻚面，根据 url 参数决定关键词的内容
 这里看似并没有问题，但是如果不按套路出牌呢？
-用户输入 "><script>alert('XSS');</script> ，拼接到 HTML 中返回给浏览器。形成了如下
+用户输入 "&gt;&lt;script&gt;alert('XSS');&lt;/script&gt; ，拼接到 HTML 中返回给浏览器。形成了如下
 的 HTML：
-浏览器无法分辨出  <script>alert('XSS');</script>  是恶意代码，因而将其执行，试想一下，
+浏览器无法分辨出  &lt;script&gt;alert('XSS');&lt;/script&gt;  是恶意代码，因而将其执行，试想一下，
 如果是获取 cookie 发送对黑客服务器呢？
 根据攻击的来源， XSS 攻击可以分成：
 存储型
@@ -4728,17 +4729,17 @@ DOM 型
 这种攻击常⻅于带有用户保存数据的网站功能，如论坛发帖、商品评论、用户私信等
 #### 31.2.1. 存储型
 
-<input type="text" value="<%= getParameter("keyword") %>">
+&lt;input type="text" value="&lt;%= getParameter("keyword") %&gt;"&gt;
 <button>搜索</button>
-<div>
+&lt;div&gt;
 您搜索的关键词是：<%= getParameter("keyword") %>
 ```html
 </div>
 ```
-<input type="text" value=""><script>alert('XSS');</script>">
+&lt;input type="text" value=""&gt;&lt;script&gt;alert('XSS');&lt;/script&gt;"&gt;
 <button>搜索</button>
-<div>
-您搜索的关键词是："><script>alert('XSS');</script>
+&lt;div&gt;
+您搜索的关键词是："&gt;&lt;script&gt;alert('XSS');&lt;/script&gt;
 ```html
 </div>
 ```
@@ -4873,7 +4874,8 @@ Sql 注入攻击，是通过将恶意的  Sql 查询或添加语句插入到应�
 利用工具查找Web后台管理入口
 入侵和破坏
 预防方式如下：
-### 31.4. SQL注入```html
+### 31.4. SQL注入
+```
 <input type=”hidden” name=”csrftoken” value=”tokenvalue”/>1
 ```
 严格检查输入变量的类型和格式

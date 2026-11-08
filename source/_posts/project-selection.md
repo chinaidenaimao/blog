@@ -30,7 +30,8 @@ tags:
 | 分层 | 有明确目录分层，非全塞 `views/` | 关键可维护性指标 |
 | 许可 | 有明确 License（MIT / Apache-2.0 优先） | 商用合规前提 |
 
-### 1.2 加权评分（同门槛内排序）```
+### 1.2 加权评分（同门槛内排序）
+```
 总分 = 0.30 × Star归一化
      + 0.25 × 封装完整度（拦截器/守卫/权限/异常/DI 覆盖项数 ÷ 8）
      + 0.20 × 活跃度（近 90 天提交密度）
@@ -195,7 +196,8 @@ tags:
 
 > **🧪 示例：数据可复现**
 > 本页所有数字来自下面这段最小脚本（Node 22+，无需 token）：
-> ```js
+>
+```
 > const repos = ["vbenjs/vue-vben-admin", "fastapi-practices/fastapi_best_architecture"];
 > for (const r of repos) {
 >   const res = await fetch(`https://api.github.com/repos/${r}`, {
@@ -204,7 +206,8 @@ tags:
 >   const d = await res.json();
 >   console.log(d.full_name, d.stargazers_count, d.language, d.pushed_at);
 > }
-> ```
+>
+```
 > 未认证配额为 60 次/小时，批量抓取需加 `await new Promise(r => setTimeout(r, 700))`。
 
 ---
