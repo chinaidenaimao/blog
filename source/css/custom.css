@@ -4,7 +4,7 @@
 
 /* 首页顶部横幅：换成自己的图，并让标题可读 */
 #random-banner {
-  background: url('/img/cover-night.jpg') center / cover no-repeat !important;
+  background: url('../img/cover-night.jpg') center / cover no-repeat !important;
   position: relative;
 }
 
@@ -45,7 +45,7 @@
 /* 普通页面（分类/标签/友链/关于）的头图横幅 */
 #page-header.not-home-page {
   background: linear-gradient(rgba(18, 14, 36, 0.45), rgba(18, 14, 36, 0.45)),
-    url('/img/banner.jpg') center / cover no-repeat;
+    url('../img/banner.jpg') center / cover no-repeat;
 }
 
 #page-header.not-home-page #site-title {
