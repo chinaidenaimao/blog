@@ -144,7 +144,7 @@ avatar:
 disable_top_img: false
 
 # The banner image of home page
-index_img: ""  # 首页横幅背景由 themes/anzhiyu/source/css/_extra/custom.css 控制
+index_img: "background: var(--anzhiyu-main) top / cover no-repeat"  # 真正的背景图在 _extra/custom.css 里覆盖
 
 # If the banner of page not setting, it will show the top_img
 default_top_img: /img/banner.jpg

@@ -71,3 +71,9 @@
   background: var(--anzhiyu-theme);
   border-radius: 8px;
 }
+
+/* 首页横幅：主题把 index_img 当内联样式输出（不走 url_for），子路径下会 404，
+   这里用样式表覆盖，相对路径在 / 和 /blog/ 下都能正确解析 */
+#page-header.full_page {
+  background: url('../img/cover-night.jpg') center / cover no-repeat !important;
+}
