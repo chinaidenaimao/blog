@@ -38,8 +38,8 @@ if home_top_config.enable
               - let swiper_list = sort_attr_post("swiper_list")
               each item in swiper_list
                 .blog-slider__item.swiper-slide(style='width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;')
-                  a.blog-slider__img(href=item.path, title=item.title)
-                    img(width='48' height='48'  src=item.cover alt='图片' onerror=`this.src=` + error_img + `; this.onerror = null;`)
+                  a.blog-slider__img(href=url_for(item.path), title=item.title)
+                    img(width='48' height='48'  src=url_for(item.cover) alt='图片' onerror=`this.src=` + error_img + `; this.onerror = null;`)
                   .blog-slider__content
                     if (timemode === 'updated' )
                       span.blog-slider__code= item.updated.format('YYYY-MM-DD')
@@ -48,9 +48,9 @@ if home_top_config.enable
                     - const content = strip_html(item.content)
                     - let expert = content.substring(0, theme.index_post_content.length) 
                     - content.length > theme.index_post_content.length ? expert += ' ...' : ''
-                    a.blog-slider__title(href=item.path, alt=item.title)= item.title
+                    a.blog-slider__title(href=url_for(item.path), alt=item.title)= item.title
                     .blog-slider__text= item.description ? item.description : expert
-                    a.blog-slider__button(href=item.path, alt=item.title) 详情   
+                    a.blog-slider__button(href=url_for(item.path), alt=item.title) 详情   
             //- 轮播图组件
             .blog-slider__pagination.swiper-pagination-clickable.swiper-pagination-bullets
 
@@ -59,11 +59,11 @@ if home_top_config.enable
             each item in top_group_list
               .top-group-list-item
                 .post_cover.left_radius
-                  a(href=item.path title=item.title)
+                  a(href=url_for(item.path) title=item.title)
                     span.top-group-text 荐
-                    img.post_bg(alt=item.title, src=item.cover, onerror=`this.src=` + error_img + `; this.onerror = null;`)
+                    img.post_bg(alt=item.title, src=url_for(item.cover), onerror=`this.src=` + error_img + `; this.onerror = null;`)
                 .top-group-info
-                  a.article-title(href=item.path title=item.title)=item.title
+                  a.article-title(href=url_for(item.path) title=item.title)=item.title
             .top-group-list-none
             .top-group-list-none
             .top-group-list-none
@@ -78,11 +78,11 @@ if home_top_config.enable
           each item, index in top_group_list.slice(0, 6)
             .recent-post-item(onclick=`pjax.loadUrl("${url_for(item.path)}")`)
               .post_cover.left_radius
-                a(href=item.path, title=item.title)
+                a(href=url_for(item.path), title=item.title)
                   span.recent-post-top-text 荐
-                  img.post_bg(onerror=`this.onerror=null;this.src='${url_for(theme.error_img.post_page)}'`, alt='cover',  src=item.cover)
+                  img.post_bg(onerror=`this.onerror=null;this.src='${url_for(theme.error_img.post_page)}'`, alt='cover',  src=url_for(item.cover))
               .recent-post-info
-                a.article-title(href=item.path, title=item.title)=item.title
+                a.article-title(href=url_for(item.path), title=item.title)=item.title
           a#todayCard.todayCard(href=top_group_banner_link, style='z-index: 1;')
             .todayCard-info
               .todayCard-tips=top_group_banner_tips
