@@ -157,27 +157,50 @@ node tools/gen-covers.js          # 给新增文章补封面
 - `atom.xml`：RSS 订阅
 - Open Graph 元标签：主题已开启
 
-## 部署
+## 部署（GitHub Pages）
 
-**Vercel / Netlify**：构建命令 `npm run build`，发布目录 `public`。
+线上地址：**https://chinaidenaimao.github.io/blog/**
+仓库：https://github.com/chinaidenaimao/blog
 
-**GitHub Pages**：
+### 怎么发布
 
 ```bash
-npm install hexo-deployer-git --save
+git add -A
+git commit -m "更新文章"
+git push
 ```
 
-```yaml
-# _config.yml
-deploy:
-  type: git
-  repo: git@github.com:yourname/yourname.github.io.git
-  branch: main
-```
+推上去之后 GitHub Actions 自动构建并部署，大约 1–2 分钟生效。看进度：
+https://github.com/chinaidenaimao/blog/actions
 
-然后 `npx hexo clean && npx hexo g -d`。
+### 本地 vs 线上
 
-> 部署前记得把 `_config.yml` 的 `url` 改成正式域名，否则 sitemap、RSS 和分享链接会指向 localhost。
+| | 配置 | root |
+| --- | --- | --- |
+| 本地预览 | `_config.yml` | `/` |
+| 线上构建 | `_config.yml` + `_config.prod.yml` | `/blog/` |
+
+工作流里用的是 `npx hexo generate --config _config.yml,_config.prod.yml`，所以本地预览不用改任何东西。
+
+### 两个必须知道的坑
+
+1. **主题是直接放在仓库里的，不是 submodule。**
+   最早用 submodule，CI 检出时 `themes/anzhiyu` 是空目录，Hexo 生成出一堆 0 字节的 HTML，页面全白。
+   现在主题文件都提交在仓库里。想升级主题：把新版解压覆盖 `themes/anzhiyu/`，再 `git add -A` 提交。
+   原来的 `.git` 备份在 `D:/ai-demo/anzhiyu-theme-git-backup`。
+
+2. **子路径下不能写死绝对路径。**
+   站点在 `/blog/` 下，任何 `url(/img/xxx.jpg)` 都会 404。已经处理过的地方：
+   - `source/css/custom.css` → 并入 `themes/anzhiyu/source/css/_extra/custom.css`（随主题样式包一起打包）
+   - `themes/anzhiyu/layout/includes/additional-js.pug` → `random.js` 改用 `url_for()`
+   - `themes/anzhiyu/layout/category.pug` / `includes/categoryGroup.pug` → 面包屑改用 `url_for()`
+   - `index_img` 是内联样式不走 `url_for`，改为在 `custom.css` 里覆盖 `#page-header.full_page`
+
+以后加自定义 CSS，写进 `_extra/custom.css`，用相对路径 `../img/xxx` 就不会错。
+
+### 其他平台
+
+Vercel / Netlify：构建命令 `npm run build`，发布目录 `public`，记得把 `_config.yml` 的 `url` 改成正式域名。
 
 ## 已知事项
 
